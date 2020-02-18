@@ -1,0 +1,528 @@
+---
+layout: rustwasm
+title: How to create and access HTML objects in Rust Webassembly?
+description: How to create and access HTML objects in Rust Webassembly?
+keyword: html objects, create html objects, access html objects
+---
+<h5>How to create and access HTML objects in Rust Webassembly?</h5>
+<p>
+    The following illustrates how to create and access each of the HTML objects, and its properties and methods.
+</p>
+<p>
+    <a class="button" href="dom_anchor.html" style="text-transform:lowercase;color:black">anchor</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">area</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">audio</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">base</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">body</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">br</a>&nbsp; 
+    <a class="button" href="dom_button.html" style="text-transform:lowercase;color:black">button</a>&nbsp; 
+    <a class="button" href="dom_canvas.html" style="text-transform:lowercase;color:black">canvas</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">collection</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">dlist</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">data</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">datalist</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">details</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">dialog</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">directory</a>
+    <a class="button" href="dom_div" style="text-transform:lowercase;color:black">div</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">document</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">embed</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">fieldset</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">font</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">formcontrolscollection</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">form</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">frame</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">frameset</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">head</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">heading</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">hr</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">html</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">iframe</a>
+    <a class="button" href="dom_image" style="text-transform:lowercase;color:black">image</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">input</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">label</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">legend</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">li</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">link</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">map</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">media</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">menu</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">menuitem</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">meta</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">meter</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">mod</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">olist</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">object</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">optgroup</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">option</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">optionscollection</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">output</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">paragraph</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">param</a>
+    <a class="button" href="dom_picture" style="text-transform:lowercase;color:black">picture</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">pre</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">progress</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">quote</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">script</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">select</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">slot</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">source</a>
+    <a class="button" href="dom_span" style="text-transform:lowercase;color:black">span</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">style</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">tablecaption</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">tablecell</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">tablecol</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">table</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">tablerow</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">tablesection</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">template</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">textarea</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">time</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">title</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">track</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">ulist</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">unknown</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">video</a>
+
+    <!--
+
+    <a class="button" href="#" style="text-transform:lowercase;color:black">a</a>&nbsp;    
+    <a class="button" href="#" style="text-transform:lowercase;color:black">abbr</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">address</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">area</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">article</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">aside</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">audio</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">b</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">base</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">bdo</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">blockquote</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">body</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">br</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">button</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">canvas</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">caption</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">cite</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">code</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">col</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">colgroup</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">datalist</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">dd</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">del</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">details</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">dfn</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">dialog</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">div</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">dl</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">dt</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">em</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">embed</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">fieldset</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">figcaption</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">figure</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">footer</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">form</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">head</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">header</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">h1</a>&nbsp;
+    <a class="button" href="#" style="text-transform:lowercase;color:black">h2</a>&nbsp;
+    <a class="button" href="#" style="text-transform:lowercase;color:black">h3</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">h4</a>&nbsp;
+    <a class="button" href="#" style="text-transform:lowercase;color:black">h5</a>&nbsp;
+    <a class="button" href="#" style="text-transform:lowercase;color:black">h6</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">hr</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">html</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">i</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">iframe</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">img</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">ins</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">input button</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">input checkbox</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">input color</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">input date</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">input datetime</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">input datetime-local</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">input email</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">input file</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">input hidden</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">input image</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">input month</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">input number</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">input password</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">input radio</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">input range</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">input reset</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">input search</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">input submit</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">input text</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">input time</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">input url</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">input week</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">kbd</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">label</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">legend</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">li</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">link</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">map</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">mark</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">menu</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">menuitem</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">meta</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">meter</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">nav</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">object</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">ol</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">optgroup</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">option</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">output</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">p</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">param</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">pre</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">progress</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">q</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">s</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">samp</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">script</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">section</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">select</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">small</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">source</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">span</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">strong</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">style</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">sub</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">summary</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">sup</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">table</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">tbody</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">td</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">tfoot</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">th</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">thead</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">tr</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">textarea</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">time</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">title</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">track</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">u</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">ul</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">var</a>&nbsp; 
+    <a class="button" href="#" style="text-transform:lowercase;color:black">video</a>&nbsp;
+    -->
+
+
+<!--
+a    
+abbr 
+address 
+area 
+article 
+aside 
+audio 
+b 
+base 
+bdo 
+blockquote 
+body 
+br 
+button 
+canvas 
+caption 
+cite 
+code 
+col 
+colgroup 
+datalist 
+dd 
+del 
+details 
+dfn 
+dialog 
+div 
+dl 
+dt 
+em 
+embed 
+fieldset 
+figcaption 
+figure 
+footer 
+form 
+head 
+header 
+h1
+h2
+h3 
+h4
+h5
+h6 
+hr 
+html 
+i 
+iframe 
+img 
+ins 
+input 
+button 
+input 
+checkbox 
+input 
+color 
+input 
+date 
+input 
+datetime 
+input 
+datetime-local 
+input 
+email 
+input 
+file 
+input 
+hidden 
+input 
+image 
+input 
+month 
+input 
+number 
+input 
+password 
+input 
+radio 
+input 
+range 
+input 
+reset 
+input 
+search 
+input 
+submit 
+input 
+text 
+input 
+time 
+input 
+url 
+input 
+week 
+kbd 
+label 
+legend 
+li 
+link 
+map 
+mark 
+menu 
+menuitem 
+meta 
+meter 
+nav 
+object 
+ol 
+optgroup 
+option 
+output 
+p 
+param 
+pre 
+progress 
+q 
+s 
+samp 
+script 
+section 
+select 
+small 
+source 
+span 
+strong 
+style 
+sub 
+summary 
+sup 
+table 
+tbody 
+td 
+tfoot 
+th 
+thead 
+tr 
+textarea 
+time 
+title 
+track 
+u 
+ul 
+var 
+video
+-->
+    <!--HtmlElement?
+        actual list in websys
+
+
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">anchor</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">area</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">audio</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">base</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">body</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">br</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">button</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">canvas</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">collection</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">dlist</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">data</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">datalist</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">details</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">dialog</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">directory</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">div</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">document</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">embed</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">fieldset</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">font</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">formcontrolscollection</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">form</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">frame</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">frameset</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">head</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">heading</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">hr</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">html</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">iframe</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">image</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">input</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">label</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">legend</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">li</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">link</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">map</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">media</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">menu</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">menuitem</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">meta</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">meter</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">mod</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">olist</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">object</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">optgroup</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">option</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">optionscollection</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">output</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">paragraph</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">param</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">picture</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">pre</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">progress</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">quote</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">script</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">select</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">slot</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">source</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">span</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">style</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">tablecaption</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">tablecell</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">tablecol</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">table</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">tablerow</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">tablesection</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">template</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">textarea</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">time</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">title</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">track</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">ulist</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">unknown</a>
+    <a class="button" href="#" style="text-transform:lowercase;color:lightgray">video</a>
+
+    -->
+
+    <!--HtmlElement?
+        actual list in websys
+    <a class="button" href="#" style="text-transform:lowercase;color:black">
+
+anchor
+area
+audio
+base
+body
+br
+button
+canvas
+collection
+dlist
+data
+datalist
+details
+dialog
+directory
+div
+document
+embed
+fieldset
+font
+formcontrolscollection
+form
+frame
+frameset
+head
+heading
+hr
+html
+iframe
+image
+input
+label
+legend
+li
+link
+map
+media
+menu
+menuitem
+meta
+meter
+mod
+olist
+object
+optgroup
+option
+optionscollection
+output
+paragraph
+param
+picture
+pre
+progress
+quote
+script
+select
+slot
+source
+span
+style
+tablecaption
+tablecell
+tablecol
+table
+tablerow
+tablesection
+template
+textarea
+time
+title
+track
+ulist
+unknown
+video
+
+    -->
+</p>
+
+<p></p>
+<p></p>
+<h6>Source Code</h6>
+<ul class="list-marked">
+<li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/create_access_html_objects rel="nofollow">create_access_html_objects</a></li>
+<ul></ul>            

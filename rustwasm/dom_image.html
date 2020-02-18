@@ -1,0 +1,82 @@
+---
+layout: rustwasm
+title: HTML DOM image Object for Rust WebAssembly
+description: HTML DOM image Object for Rust WebAssembly
+keyword: image, dom image, html image, rust webassembly image, rustwasm image, image element
+---
+<h5>HTML DOM image Object for Rust WebAssembly</h5>
+<p></p>
+<h6>Create a image Object</h6>
+<p>You can create an &lt;image> object using the document.create_element method.</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+    let image = document.create_element("image")
+    .unwrap()
+    .dyn_into::&lt;web_sys::HtmlImageElement>()
+    .unwrap();
+</code></pre>                  
+</div>                           
+<p></p>
+{% include aa1.html %}
+
+<h6>Access a image Object</h6>
+<p>You can access an &lt;image> object using the document.get_element_by_id method.</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+    let button = document.get_element_by_id("my-image")
+    .unwrap()
+    .dyn_into::&lt;web_sys::HtmlImageElement>()
+    .unwrap();
+</code></pre>                  
+</div>                           
+<p></p>
+{% include aa2.html %}
+
+<h6>Properties</h6>
+<ul class="list-marked">
+    <li><p>width - The width of the image.</p>
+        <a class="button" href="#" style="text-transform:lowercase;color:lightgray">width</a>
+        <a class="button" href="#" style="text-transform:lowercase;color:lightgray">set_width</a>
+    </li>    
+    <li><p>height - The height of the image.</p>
+        <a class="button" href="#" style="text-transform:lowercase;color:lightgray">height</a>
+        <a class="button" href="#" style="text-transform:lowercase;color:lightgray">set_height</a>
+    </li>    
+</ul>
+
+{% include aa3.html %}
+<p></p>
+<h6>Functions</h6>
+<ul class="list-marked">
+    <li></li>
+</ul>
+
+{% include aa4.html %}
+<p></p>
+
+
+
+            <h6>features/dependencies</h6>
+            <ul class="list-marked">
+            <li>web-sys HtmlImageElement</li>
+        </ul>
+<p></p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+        features = [
+        'HtmlImageElement',
+        ]
+</code></pre>                  
+</div>                           
+<p></p>
+                
+
+            <p></p>
+            <h6>Source Code</h6>
+            <ul class="list-marked">
+            <li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/create_access_html_objects rel="nofollow">create_access_html_objects</a></li>
+            <ul></ul>            
+                    
+{% include aa5.html %}

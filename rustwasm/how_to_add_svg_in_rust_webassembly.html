@@ -1,0 +1,55 @@
+---
+layout: rustwasm
+title: How to add SVG in Rust webassembly?
+description: How to add SVG in Rust webassembly?
+keyword: svg rust webassembly, rust svg, webassembly svg
+---
+<h5>How to add SVG in Rust webassembly?</h5>
+<p>
+
+</p>
+<h6>Example</h6>
+<p>This example creates an svg element and then use the style getter method to get the CssStyleDeclaration element. After which, the set_property method of CssStyleDeclaration is called to set the border property. Finally a circle with blue fill and black stroke is added to the svg container.</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+    pub fn svgelement_set_attribute()-> Result<(), JsValue>
+    {
+        let window = web_sys::window().expect("global window does not exists");    
+        let document = window.document().expect("expecting a document on window");
+        let body = document.body().expect("document expect to have have a body");
+        
+        let svg = document.create_element_ns(Some("http://www.w3.org/2000/svg"), "svg")
+        .unwrap()
+        .dyn_into::&lt;web_sys::SvgElement>()
+        .map_err(|_| ())
+        .unwrap();
+    
+        svg
+        .style()
+        .set_property("border", "solid")?;
+    
+        svg.set_attribute("width","500")?;
+        svg.set_attribute("height","500")?;
+        svg.set_attribute("viewBox", "0 0 500 500")?;
+    
+        let circle = document.create_element_ns(Some("http://www.w3.org/2000/svg"), "circle")?;
+        circle.set_attribute("cx", "100")?;
+        circle.set_attribute("cy", "100")?;
+        circle.set_attribute("r", "60")?;
+        circle.set_attribute("stroke", "black")?;
+        circle.set_attribute("fill", "blue")?;
+        svg.append_child(&circle)?;
+    
+        body.append_child(&svg)?;
+    
+        Ok(())
+    }
+    </code></pre>                  
+</div>                        
+
+<!--WebAssemblyMan Placeholder-->
+<p></p>
+<h6>Source Code</h6>
+<ul class="list-marked">
+<li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/web_sys_svgelement rel="nofollow">web_sys_svgelement</a></li>
+<ul></ul>            

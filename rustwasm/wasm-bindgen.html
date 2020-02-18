@@ -1,0 +1,105 @@
+---
+layout: rustwasm
+title: wasm-bindgen
+description: wasm-bindgen for facilitting high-level interactions between wasm modules and JavaScript
+keyword: wasm-bindgen, rustwasm
+---
+               <h5>wasm-bindgen</h5>
+                <p>wasm-bindgen is used for facilitting high-level interactions between wasm modules and JavaScript. You can use it to import Javascript functions/Web APIs for use in Rust or export WASM functions defined in Rust for use in Javascript.
+                   This interoperability is useful in ensuring that a rustwasm program have access to all the available APIs of the browser and existing Javascript applications can flexibly plug in a wasm module to speed up performance.  
+                </p>
+                <h6>Import Javascript Functions for use in rustwasm</h6>
+                <p>The following lib.rs import the 'window.alert' function from the web to rustwasm.</p>
+                <div class="quote-bordered" style="text-align:left;background:black"> 
+                  <pre><code style="color:white;">use wasm_bindgen::prelude::*;
+
+#[wasm_bindgen]
+extern "C" {
+    fn alert(s: &str);
+}
+
+#[wasm_bindgen(start)]
+pub fn main() -> Result<(), JsValue> {
+	alert("Hello World"); 
+    Ok(())
+}
+</code></pre>                  
+</div>
+<p>After compiling the above, simply use the following HTML to run the wasm-bindgen 'Hello World' example.</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+    <pre><code style="color:white;">
+&lt;html>
+    &lt;head>
+        &lt;meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+    &lt;/head>
+    &lt;body>
+            
+        &lt;script type="module">
+            import init from './pkg/hello_web.js';  
+            async function run() {
+            await init();
+            }    
+            run();
+        &lt;/script>
+    &lt;/body>  
+&lt;/html>
+</code></pre>                  
+</div>
+<p></p>
+<h6>Export rustwasm function for use in Javascript</h6>
+<p></p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+    <pre><code style="color:white;">use wasm_bindgen::prelude::*;
+
+    #[wasm_bindgen]
+    extern "C" {
+        fn alert(s: &str);
+    }
+    
+    #[wasm_bindgen]
+    pub fn add(a: u32, b: u32) -> u32 
+    {
+        a + b
+    }
+
+    #[wasm_bindgen(start)]
+    pub fn main() -> Result<(), JsValue> {
+        alert("Hello World"); 
+        Ok(())
+    }
+    </code></pre>                  
+</div>
+
+        <p>Use exported Rust things from JavaScript with ECMAScript modules!</p>
+        <div class="quote-bordered" style="text-align:left;background:black"> 
+            <pre><code style="color:white;">
+        &lt;html>
+            &lt;head>
+                &lt;meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+            &lt;/head>
+            &lt;body>
+                    
+                &lt;script type="module">
+                    import init from './pkg/hello_web.js';  
+                    async function run() {
+                    await init();
+                    const result = add(1, 2);
+                    console.log(`1 + 2 = ${result}`);
+                    if (result !== 3)
+                      throw new Error("wasm addition doesn't work!");    
+                    }    
+                    run();
+                &lt;/script>
+            &lt;/body>  
+        &lt;/html>
+
+        </code></pre>                  
+        </div>
+                        
+        <p></p>
+        <h6>Structs</h6>
+        <ul class="list-marked">
+            <li><a href=wasm_bindgen_jsvalue.html>wasm_bindgen::JsValue</a></li>
+        </ul>

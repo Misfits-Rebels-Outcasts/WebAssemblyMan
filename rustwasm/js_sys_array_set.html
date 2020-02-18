@@ -1,0 +1,43 @@
+---
+layout: rustwasm
+title: js_sys::Array::set function
+description: js_sys::Array::set function
+keyword: js_sys::Array::set function
+---
+               <h5>js_sys::Array::set function</h5>
+               <p></p>
+               <h6>Example</h6>
+                <p>Sets an element at the specified index and enlarges the array if the index is out of range.</p>
+               <div class="quote-bordered" style="text-align:left;background:black"> 
+                <pre><code style="color:white;">
+pub fn array_set() {
+    web_sys::console::log_1(&"Start".into());
+    let arr = js_sys::Array::new_with_length(3);
+    arr.set(0,JsValue::from_f64(1.0));    
+    arr.set(1,JsValue::from_f64(2.0));    
+    arr.set(2,JsValue::from_f64(3.0));    
+    web_sys::console::log(&arr);
+}
+                                    </code></pre>                  
+                </div>                        
+   
+           <!--WebAssemblyMan Placeholder-->
+           <p></p>
+           <h6>Function</h6>
+           <p></p>
+
+           <div class="" style="text-align:left;background:whitesmoke"><pre><code style="color:#000;background:whitesmoke">
+            pub fn set(&self, index: u32, value: JsValue)
+           </code></pre></div>                        
+           <p></p>
+
+           <h6>features/dependencies</h6>
+           <ul class="list-marked">
+            <li><a href=js_sys_Array.html6js-sys Array</a></li>
+        6/ul>
+            <p></p>
+           <h6>Source Code</h6>
+           <ul class="list-marked">
+            <li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/js_sys_array rel="nofollow">js_sys_array</a></li>
+           <ul></ul>
+        

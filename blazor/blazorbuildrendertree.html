@@ -1,0 +1,136 @@
+---
+layout: blazor
+title: Blazor BuildRenderTree 
+description: Blazor BuildRenderTree
+keyword: blazor BuildRenderTree, BuildRenderTree, RenderTreeBuilder
+---
+<h3>Blazor BuildRenderTree</h3>
+
+<p>
+In Blazor, all components and pages end up as a generated class by the compiler. The generated class inherits from the BlazorComponent base class
+and uses the BuildRenderTree function to generate the contents. Instead of depending on this class generation process, you can also write your own C# class directly to generate the contents.
+</p>
+<p>
+Basically, your class need to inherit from ComponentBase and override the BuildRenderTree  function to generate dynamic content.
+</p>
+<p>
+Pages/ClassOnlyComponent.cs
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+    <pre><code style="color:white;">
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.RenderTree;
+using Microsoft.AspNetCore.Components.Rendering;
+using Blazor_Dashboard.Shared;
+
+namespace BlazorDashboard.Pages
+{
+    [Route("/classrender")]
+    [Layout(typeof(MainLayout))]
+    public class ClassOnlyComponent :ComponentBase
+{
+    protected override void BuildRenderTree(RenderTreeBuilder builder)
+    {
+        var seq = 0;
+        builder.OpenElement(seq, "h3");
+        builder.AddContent(++seq, "BuildRenderTree");
+        builder.CloseElement();
+    }
+}
+}
+</code></pre></div>
+<p>
+A more interesting example below shows you how to a draw a Rectangle in SVG (Scalable Vector Graphics). 
+</p>
+<p>
+Pages/ClassOnlyComponent.cs
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+    <pre><code style="color:white;">
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.RenderTree;
+using Microsoft.AspNetCore.Components.Rendering;
+using Blazor_Dashboard.Shared;
+
+namespace BlazorDashboard.Pages
+{
+    [Route("/classrender")]
+    [Layout(typeof(MainLayout))]
+    public class ClassOnlyComponent :ComponentBase
+{
+    protected override void BuildRenderTree(RenderTreeBuilder builder)
+    {
+            var seq = 0;
+
+            builder.OpenElement(seq, "figure");
+            builder.OpenElement(++seq, "div");
+            builder.AddAttribute(++seq, "class", "doughnut-main");
+
+            builder.OpenElement(++seq, "svg");
+            builder.AddAttribute(++seq, "width", "100%");
+            builder.AddAttribute(++seq, "height", "100%");
+            builder.AddAttribute(++seq, "viewBox", "0 0 42 42");
+
+            builder.OpenElement(++seq, "rect");
+            builder.AddAttribute(++seq, "width", "100%");
+            builder.AddAttribute(++seq, "height", "100%");
+            builder.AddAttribute(++seq, "fill", "cyan");
+            builder.CloseElement();
+            builder.CloseElement();
+            builder.CloseElement();
+            builder.CloseElement();
+    }
+}
+}
+</code></pre></div>
+<p>
+Besides adding child elements or attributes, you can also bind to variables or functions. 
+The following shows you how to bind a variable and function in BuildRenderTree. The behavior is such that when the button is clicked, the title is updated.
+</p>
+<p>
+When the button is clicked, title changes
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+    <pre><code style="color:white;">
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.RenderTree;
+using Microsoft.AspNetCore.Components.Rendering;
+using Microsoft.AspNetCore.Components.Web;
+using Blazor_Dashboard.Shared;
+using System.Threading.Tasks;
+using System;
+
+namespace BlazorDashboard.Pages
+{
+    [Route("/classrender")]
+    [Layout(typeof(MainLayout))]
+    public class ClassOnlyComponent : ComponentBase
+    {
+        protected override void BuildRenderTree(RenderTreeBuilder builder)
+        {
+            var seq = 0;
+            builder.OpenElement(seq, "h3");
+            builder.AddContent(++seq, title);
+            builder.CloseElement();
+            builder.OpenElement(++seq, "button");
+            builder.AddAttribute(++seq, "onclick",  
+                EventCallback.Factory.Create<MouseEventArgs>(this, onclick));
+            builder.AddContent(++seq, "Click");
+            builder.CloseElement();
+            base.BuildRenderTree(builder);
+        }        
+             
+        protected string title = "BuildRenderTree Action";
+        public void onclick(UIMouseEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("Hello");
+            title = "Hello OnClick";
+
+        }
+        
+    }
+}
+</code></pre></div>
+
+
+

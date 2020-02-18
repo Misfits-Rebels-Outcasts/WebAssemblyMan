@@ -1,0 +1,56 @@
+---
+layout: rustwasm
+title: gloo_events::EventListener Struct
+description: gloo_events::EventListener Struct
+keyword: gloo_events, Event Listener Struct
+---
+               <h5>gloo_events::EventListener Struct</h5>
+                <p>The gloo_events::EventListener Struct used to manage DOM event listeners. It is higher level and is easier to use than using web-sys and Closures to handle DOM events.
+                    EventListener is a RAII type, which when dropped, will automatically deregister the event listener and clean up the colsure's memory.</p>
+                <p>Cargo.toml</p>
+
+                <div class="quote-bordered" style="text-align:left;background:black"> 
+                    <pre><code style="color:white;">[package]
+name = "web_sys_document"
+version = "0.1.0"
+authors = ["www.webassemblyman.com"]
+edition = "2019"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+wasm-bindgen = "0.2.50"
+gloo = "0.2.0"
+
+[dependencies.web-sys]
+version = "0.3.4"
+features = [
+  'Document',
+  'Element',
+  'HtmlElement',
+  'Node',
+  'Window',
+  'console',
+]
+        </code></pre>                  
+        </div>
+<p></p>
+                <h6>Functions</h6>
+                <p>
+                <ul class="list-marked">
+                    <li><a href=gloo_events_eventlistener_new.html>new</a></li>
+                </ul>
+                </p>
+
+                <h6>features/dependencies</h6>
+                <ul class="list-marked">
+                 <li><a href=gloo_events_eventlistener.html>gloo-events EventListener</a></li>
+             </ul>
+                 <p></p>
+                <h6>Source Code</h6>
+                <ul class="list-marked">
+                 <li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/gloo_events_eventlistener rel="nofollow">gloo_events_eventlistener</a></li>
+                <ul></ul>
+             
+     

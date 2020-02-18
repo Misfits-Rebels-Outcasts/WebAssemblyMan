@@ -1,0 +1,52 @@
+---
+layout: rustwasm
+title: js_sys::Array::find function
+description: js_sys::Array::find function
+keyword: js_sys::Array::find function
+---
+               <h5>js_sys::Array::find function</h5>
+               <p></p>
+               <h6>Example</h6>
+                <p>The find() method returns the value of the first element in the array that satisfies the provided function.</p>
+               <div class="quote-bordered" style="text-align:left;background:black"> 
+                <pre><code style="color:white;">
+#[wasm_bindgen]
+pub fn array_find() {
+    
+    let arr= js_sys::Array::new();
+    arr.push(&JsValue::from("John"));
+    arr.push(&JsValue::from("Jane"));    
+    arr.push(&JsValue::from("James"));    
+
+    let find_item=arr.find(&mut |obj, idx, _arr|     
+        JsValue::as_string(&obj).unwrap()=="Jane"   
+    );    
+    web_sys::console::log_2(&"item found: %s".into(),&find_item);
+    
+}
+                                    </code></pre>                  
+                </div>                        
+   
+           <!--WebAssemblyMan Placeholder-->
+           <p></p>
+           <h6>Function</h6>
+           <p></p>
+
+           <div class="" style="text-align:left;background:whitesmoke"><pre><code style="color:#000;background:whitesmoke">
+        pub fn find(
+            &self, 
+            predicate: &mut dyn FnMut(JsValue, u32, Array) -> bool
+        ) -> JsValue
+           </code></pre></div>                        
+           <p></p>
+
+           <h6>features/dependencies</h6>
+           <ul class="list-marked">
+            <li><a href=js_sys_Array.html>js-sys Array</a></li>
+        </ul>
+            <p></p>
+           <h6>Source Code</h6>
+           <ul cla6s="list-marked">
+            <li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/js_sys_array rel="nofollow">js_sys_array</a></li>
+           <ul></ul>
+        

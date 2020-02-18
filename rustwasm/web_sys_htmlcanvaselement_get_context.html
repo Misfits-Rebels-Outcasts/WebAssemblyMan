@@ -1,0 +1,60 @@
+---
+layout: rustwasm
+title: web_sys::HtmlCanvasElement::get_context function
+description: web_sys::HtmlCanvasElement::get_context function
+keyword: web_sys::HtmlCanvasElement::get_context function
+---
+<h5>web_sys::HtmlCanvasElement::get_context function</h5>
+<p>
+
+</p>
+<h6>Example</h6>
+<p>Get the drawing context on the canvas.</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+pub fn htmlcanvaselement_get_context()
+{
+    let document = web_sys::window().unwrap().document().unwrap();
+    let canvas = document.get_element_by_id("canvas").unwrap();
+    let canvas: web_sys::HtmlCanvasElement = canvas
+        .dyn_into::&lt;web_sys::HtmlCanvasElement>()
+        .map_err(|_| ())
+        .unwrap();
+
+    let context = canvas
+        .get_context("2d")
+        .unwrap()
+        .unwrap()
+        .dyn_into::&lt;web_sys::CanvasRenderingContext2d>()
+        .unwrap();
+
+    context.begin_path();
+
+    context
+        .rect(75.0, 75.0, 50.0, 50.0);
+
+    context.stroke();
+
+}
+</code></pre>                  
+</div>                        
+
+<!--WebAssemblyMan Placeholder-->
+<p></p>
+<h6>Function</h6>
+<p></p>
+<div class="" style="text-align:left;background:whitesmoke"><pre><code style="color:#000;background:whitesmoke">
+	pub fn get_context(&self, context_id: &str) -> Result&lt;Option&lt;Object>, JsValue>
+
+</code></pre></div>                        
+<p></p>
+
+<h6>features/dependencies</h6>
+<ul class="list-marked">
+<li><a href=web_sys_htmlcanvaselement.html>web-sys HtmlCanvasElement</a></li>
+</ul>
+<p></p>
+<h6>Source Code</h6>
+<ul class="list-marked">
+<li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/web_sys_htmlcanvaselement rel="nofollow">web_sys_htmlcanvaselement</a></li>
+<ul></ul>            

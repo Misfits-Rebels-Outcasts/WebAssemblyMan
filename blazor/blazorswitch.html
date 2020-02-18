@@ -1,0 +1,49 @@
+---
+layout: blazor
+title: Blazor switch statement
+description: Blazor switch statement
+keyword: blazor switch statement, switch keyword
+---
+               <h3>Blazor switch statement</h3>
+
+<p>A switch statement is used to test several conditions and executing a block of codes based on a specific condition.</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+  <pre><code style="color:white;">@page "/"
+
+@switch (itemIndex)
+{
+    case 0:
+        &lt;p>Do Item 1&lt;/p>
+        break;
+    case 1:
+        &lt;p>Do Item 2&lt;/p>
+        break;
+    case 2:
+        &lt;p>Do Item 3&lt;/p>
+        break;
+    default:
+        &lt;p>Do Nothing&lt;/p>
+        break;
+}
+
+@functions {
+
+int itemIndex = 1;
+
+}
+</code></pre>                  
+
+</div>
+
+<p>The switch statement with the condition of itemIndex equal to 1 produces the following:</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+  <pre><code style="color:white;">
+&lt;p>Do Item 2&lt;/p>
+</code></pre>                  
+
+
+</div>
+             
+<p>The break keyword exits from the switch statement while default keyword is a catch all if none of the switch conditions match.</p>

@@ -1,0 +1,96 @@
+---
+layout: blazor
+title: Blazor if, else and else if statement
+description: Blazor if else if statement
+keyword: blazor if else if statement, if else if keyword
+---
+               <h3>Blazor if, else and else if</h3>
+
+<p>if, else and else if are conditional statements that are used to execute different block of codes depending on different conditions.</p>
+
+<p>In the following, the item "Check in" is displayed if the condition "@item is not null" is true.</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+  <pre><code style="color:white;">@page "/"
+
+@if (item == null)
+{
+    &lt;p>Error&lt;/p>
+}
+else
+{
+    @item
+}
+
+@functions {
+    string item = "Check in";
+
+}
+</code></pre>                  
+</div>
+<br />
+<h4>Syntax</h4>
+<br />
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+  <pre><code style="color:white;">if (condition) {
+    block of code to be executed if the condition is true
+} 
+
+if (condition) {
+    block of code to be executed if the condition is true
+} else { 
+    block of code to be executed if the condition is false
+}
+
+if (condition1) {
+    block of code to be executed if condition1 is true
+} else if (condition2) {
+    block of code to be executed if the condition1 is false and condition2 is true
+} else {
+    block of code to be executed if the condition1 is false and condition2 is false
+}
+</code></pre>                  
+</div>
+
+<p>Expanding on the example to add in else if.</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+  <pre><code style="color:white;">@page "/"
+
+@if (items == null)
+{
+  &lt;p>Error&lt;/p>
+}
+else if (items.Length == 1)
+{
+  @items[0]
+}
+else
+{
+  &lt;ul>
+  @foreach (var item in items)
+  {
+      &lt;li>
+          @item
+      &lt;/li>
+  }
+  &lt;/ul>
+}
+
+@functions {
+	string[] items = { "Check in", "Unpack" };
+}
+</code></pre>                  
+</div>
+    
+<p>The above will give you the following:</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+  <pre><code style="color:white;">&lt;ul>
+    &lt;li>Check in&lt;/li>
+    &lt;li>Unpack&lt;/li>
+&lt;/ul>
+
+</code></pre>                  
+</div>

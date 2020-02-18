@@ -1,0 +1,44 @@
+---
+layout: rustwasm
+title: js_sys::Array::last_index_of function
+description: js_sys::Array::last_index_of function
+keyword: js_sys::Array::last_index_of function
+---
+               <h5>js_sys::Array::last_index_of function</h5>
+               <p></p>
+               <h6>Example</h6>
+                <p>Returns the last index of an element found in the array, searching backwards, starting at fromIndex. A value of -1 is returned if the element is not found.</p>
+                <div class="quote-bordered" style="text-align:left;background:black"> 
+                <pre><code style="color:white;">
+pub fn array_last_index_of() {
+    let arr = js_sys::Array::new();
+    arr.push(&JsValue::from("Jane"));    
+    arr.push(&JsValue::from("John"));
+    arr.push(&JsValue::from("Jane"));    
+    arr.push(&JsValue::from("James"));
+    let idx=arr.last_index_of(&JsValue::from("Jane"),1);   
+    web_sys::console::log_2(&"Index Found : %d ".into(),&JsValue::from(idx));
+    //Index Found : 0
+}                                      
+                </code></pre>                  
+                </div>                        
+   
+           <!--WebAssemblyMan Placeholder-->
+           <p></p>
+           <h6>Function</h6>
+           <p></p>
+           <div class="" style="text-align:left;background:whitesmoke"><pre><code style="color:#000;background:whitesmoke">
+            pub fn last_index_of(&self, value: &JsValue, from_index: i32) -> i32
+           </code></pre></div>                        
+           <p></p>
+
+           <h6>features/dependencies</h6>
+           <ul class="list-marked">
+            <li><a href=js_sys_Array.html>js-sys Array</a></li>
+        </ul>
+            <p></p>
+           <h6>Source Code</h6>
+           <ul class="list-marked">
+            <li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/js_sys_array rel="nofollow">js_sys_array</a></li>
+           <ul></ul>
+        

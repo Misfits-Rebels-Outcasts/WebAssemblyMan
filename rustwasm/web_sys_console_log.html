@@ -1,0 +1,41 @@
+---
+layout: rustwasm
+title: web_sys::console::log
+description: web_sys::console_log function
+keyword: web_sys::console::log, console log function
+---
+               <h5>web_sys::console::log function</h5>
+               <p></p>
+               <h6>Example</h6>
+               <p>The log function output a message to the web console.</p>                
+
+               <div class="quote-bordered" style="text-align:left;background:black"> 
+                <pre><code style="color:white;">
+pub fn console_log() {
+     let array = js_sys::Array::new();
+     array.push(&"Hello Console Log".into());
+     web_sys::console::log(&array);
+}
+                </code></pre>                  
+                </div>                        
+   
+           <!--WebAssemblyMan Placeholder-->
+           <p></p>
+           
+           <h6>Function</h6>
+           <p></p>
+           <div class="" style="text-align:left;background:whitesmoke"><pre><code style="color:#000;background:whitesmoke">
+                pub fn log(data: &Array)
+           </code></pre></div>                        
+           <p></p>
+           <h5>features/dependencies</h5>
+           <ul class="list-marked">
+            <li><a href=web_sys_console.html>web-sys console</a></li>
+        </ul>
+        <p></p>
+        <h6>Source Code</h6>
+        <ul class="list-marked">
+         <li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/web_sys_console rel="nofollow">web_sys_console</a></li>
+        <ul></ul>
+  
+     

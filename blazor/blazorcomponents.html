@@ -1,0 +1,134 @@
+---
+layout: blazor
+title: Blazor Components 
+description: Blazor Components
+keyword: blazor components, blazor component libraries, webassembly components
+---
+<h3>Blazor Components</h3>
+<p>
+    Blazor provides you with the ability to easily create components and component libraries. In fact, the Blazor framework is component-based. This means every Blazor Page or Blazor Tag you develop is a component. A Blazor component usually consists of the following parts: C#, CSS and HTML/Blazor template. These different parts get compiled and bundled as a .NET class by the Blazor toolchain.
+    There are several ways to develop and program Blazor components. They are Inline, Code Behind and Class Only component.
+</p>
+<h4>Inline Component</h4>
+<p>
+    Inline Component is where HTML markup (View) and C# programming codes (Logic) are structured in the same file. This is the most common way of developing a component and is the default provided by the Visual Studio IDE. The following illustrates an Inline Component. As described previously, the Blazor toolchain converts the HTML markup into C# programming codes and combine them with the programming codes specified in @functions into a .NET class.
+</p>
+<p>
+InlineComponent.razor
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+    <pre><code style="color:white;">@page "/"
+&lt;h3>Inline Component&lt;/h3>
+
+&lt;button @onclick=Print>Click Here&lt;/button>
+
+@functions {
+    //C# Programming Codes
+}
+</code></pre></div>
+<br />
+<h4>Code Behind Component</h4>
+<p>
+    Code Behind Component is where the HTML markup (View) and C# programming codes (Logic) is separated into different files. The following illustrates a Code Behind Component.
+</p>
+<p>
+    Note - Partial Classes that works the same way in XAML/ASP will be available in the future. This will make the View and Code separation even cleaner.     
+</p>
+<p>
+    CodeBehindBase.cs      
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+    <pre><code style="color:white;">
+public class CodeBehindBase: ComponentBase
+{
+	public const string Title = "Code Behind Component";
+}</code></pre></div>
+<p>
+    CodeBehind.cshtml
+</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+&lt;h3>@Title&lt;/h3></code></pre></div>
+<br />
+<h4>Class Only Component</h4>
+<p>
+    Class Only Component is where the HTML markup (View) are written in an API manner together with the C# codes in a class. The following illustrates a Class Only Component.
+</p>
+<p>
+    ClassOnly.cs
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+public class ClassOnly : ComponentBase
+{
+	public const string Title = "Class Only Component";
+	protected override void BuildRenderTree(RenderTreeBuilder builder)
+	{
+		builder.OpenElement(1,"h3")
+		builder.OpenElement(2,Title);
+		builder.CloseElement();
+	}
+}
+</code></pre></div>
+<br />
+<h4>Creating a Blazor Component Library</h4>
+<p>
+    A Blazor project can be structured in a manner where the components are developed separately and made available as a component library (nuget). This enables the HTML, CSS and C# parts of the component to be segregated from the main project.    
+    The steps below show how to create a component library and how to use the component tag in the main Blazor project.    
+</p>
+<p>
+Using the dotnet CLI, create a new Blazor project
+</p>
+<kbd>dotnet new blazorwasm -o BlazorProject</kbd>
+<p>
+Create a new Blazor Component Library
+</p>
+<kbd>dotnet new razorclasslib -n BlazorComponentLibrary</kbd>
+<p>
+Add a reference from the BlazorProject to BlazorComponent Library. Go to the BlazorProject folder, edit the BlazorProject.csproj and add in the following:
+</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+    <pre><code style="color:white;">
+&lt;Project...> 
+.
+.
+.
+&lt;ItemGroup>
+    &lt;ProjectReference Include="..\BlazorComponentLibrary\BlazorComponentLibrary.csproj" />
+&lt;/ItemGroup>
+&lt;/Project>
+</code></pre></div>
+<p>
+
+Edit Index.razor in the Pages folder of the BlazorProject
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+@using BlazorComponentLibrary
+
+@page "/"
+
+&lt;h1>Hello, world!&lt;/h1>
+
+Welcome to your new app.
+&lt;Component1>&lt;/Component1>
+&lt;SurveyPrompt Title="How is Blazor working for you?" />
+</code></pre></div>
+<p>
+@using enables us to use the BlazorComponentLibrary.  &lt;Component1> is the tag where we declare to use our component
+</p>
+<p>
+Run the BlazorProject
+</p>
+<kbd>dotnet run</kbd>
+<p>
+    You should see the following line on the web page indicating the successful use of our Blazor component:
+</p>
+<p>
+    This Blazor component is defined in the MyBlazorLibrary package. 
+</p>
+
+
+

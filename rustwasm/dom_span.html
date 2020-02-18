@@ -1,0 +1,82 @@
+---
+layout: rustwasm
+title: HTML DOM span Object for Rust WebAssembly
+description: HTML DOM span Object for Rust WebAssembly
+keyword: span, dom span, html span, rust webassembly span, rustwasm span, span element
+---
+<h5>HTML DOM span Object for Rust WebAssembly</h5>
+<p></p>
+<h6>Create a span Object</h6>
+<p>You can create an &lt;span> object using the document.create_element method.</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+    let span = document.create_element("span")
+    .unwrap()
+    .dyn_into::&lt;web_sys::HtmlSpanElement>()
+    .unwrap();
+</code></pre>                  
+</div>                           
+<p></p>
+{% include aa1.html %}
+
+<h6>Access a span Object</h6>
+<p>You can access an &lt;span> object using the document.get_element_by_id method.</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+    let button = document.get_element_by_id("my-span")
+    .unwrap()
+    .dyn_into::&lt;web_sys::HtmlSpanElement>()
+    .unwrap();
+</code></pre>                  
+</div>                           
+<p></p>
+{% include aa2.html %}
+
+<h6>Properties</h6>
+<ul class="list-marked">
+    <li><p>width - The width of the span.</p>
+        <a class="button" href="#" style="text-transform:lowercase;color:lightgray">width</a>
+        <a class="button" href="#" style="text-transform:lowercase;color:lightgray">set_width</a>
+    </li>    
+    <li><p>height - The height of the span.</p>
+        <a class="button" href="#" style="text-transform:lowercase;color:lightgray">height</a>
+        <a class="button" href="#" style="text-transform:lowercase;color:lightgray">set_height</a>
+    </li>    
+</ul>
+
+{% include aa3.html %}
+<p></p>
+<h6>Functions</h6>
+<ul class="list-marked">
+    <li></li>
+</ul>
+
+{% include aa4.html %}
+<p></p>
+
+
+
+            <h6>features/dependencies</h6>
+            <ul class="list-marked">
+            <li>web-sys HtmlSpanElement</li>
+        </ul>
+<p></p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+        features = [
+        'HtmlSpanElement',
+        ]
+</code></pre>                  
+</div>                           
+<p></p>
+                
+
+            <p></p>
+            <h6>Source Code</h6>
+            <ul class="list-marked">
+            <li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/create_access_html_objects rel="nofollow">create_access_html_objects</a></li>
+            <ul></ul>            
+                    
+{% include aa5.html %}

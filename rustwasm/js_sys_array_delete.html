@@ -1,0 +1,48 @@
+---
+layout: rustwasm
+title: js_sys::Array::delete function
+description: js_sys::Array::delete function
+keyword: js_sys::Array::delete function
+---
+               <h5>js_sys::Array::delete function</h5>
+               <p></p>
+                <h6>Example</h6>
+                <p>Set the element at the index to undefined. The array is not resized and stays the same length. If the index is out of range, the function does nothing.</p>
+                <div class="quote-bordered" style="text-align:left;background:black"> 
+                <pre><code style="color:white;">
+#[wasm_bindgen]
+pub fn array_delete() {
+    let arr = js_sys::Array::new();
+    arr.push(&JsValue::from("John"));
+    arr.push(&JsValue::from("Jane"));    
+    arr.push(&JsValue::from("James"));    
+    web_sys::console::log_2(&"Array Length: %d".into(),&JsValue::from(arr.length()));
+    arr.delete(1);
+    web_sys::console::log_2(&"Array Length: %d".into(),&JsValue::from(arr.length()));
+    web_sys::console::log_2(&"Array Item 1: %s".into(),&arr.get(0));
+    web_sys::console::log_2(&"Array Item 2: %s".into(),&arr.get(1));
+    web_sys::console::log_2(&"Array Item 3: %s".into(),&arr.get(2));                    
+}
+                                    </code></pre>                  
+                </div>                        
+   
+           <!--WebAssemblyMan Placeholder-->
+           <p></p>
+           <h6>Function</h6>
+           <p></p>
+
+           <div class="" style="text-align:left;background:whitesmoke"><pre><code style="color:#000;background:whitesmoke">
+            pub fn delete(&self, index: u32)
+           </code></pre></div>                        
+           <p></p>
+
+           <h6>features/dependencies</h6>
+           <ul class="list-marked">
+            <li><a href=js_sys_Array.html>js-sys Array</a></li>
+        </ul>
+            <p></p>
+           <h6>Source Code</h6>
+           <ul class="list-marked">
+            <li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/js_sys_array rel="nofollow">js_sys_array</a></li>
+           <ul></ul>
+        

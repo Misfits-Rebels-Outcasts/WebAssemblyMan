@@ -1,0 +1,427 @@
+---
+layout: toplevelcontent
+title: WebAssembly Web Components and Custom Elements
+description: Develop Web Components with rustwasm WebAssembly.
+keyword: webassembly web component, wasm custom element, wasm web components
+---
+<h4>Develop Web Components with rustwasm WebAssembly</h4>
+<p>      
+I have previously written about using <a href=https://www.barcoderesource.com/pwa_webcomponents_webassembly.shtml>Emscripten to develop W3C Web Components with WebAssembly</a>. The process involves the use of JavaScript to define a Web Component, which in turn loads a WebAssembly module to perform the necessary tasks.  
+</p><p>In this article we are going to illustrate how to create a W3C Web Component with rustwasm WebAssembly "natively". In case you have not used the Rust programming language before, the overview below should get you up to speed quickly.
+</p> 
+<h5>Overview</h5>
+<p>
+Rust is a programming language that empowers everyone to build reliable and efficient software. An important characteristic is its rich type system and ownership memory-safety, enabling it to not require a garbage collector. This results in Rust applications to be blazingly fast, memory-efficient and have no unpredictable garbage collection pauses. 
+</p>
+<p>
+rustwasm is an open source project by Mozilla that enables you to write Rust programs and compile it to WebAssembly (wasm). Without requiring a runtime or garbage collector, WebAssembly (wasm) modules written in rustwasm is small and contains no extra bloat.
+</p>
+<p>
+wasm-bindgen is part of rustwasm that is used for facilitating high-level interactions between wasm modules and JavaScript. You can use it to import JavaScript functions/Web APIs for use in Rust or export WASM functions defined in Rust for use in JavaScript. This interoperability is useful in ensuring that a rustwasm program have access to all the available APIs of the browser and existing JavaScript applications can flexibly plug in a wasm module and interact with it.    
+</p>
+
+<h5>How to develop a Web Component with rustwasm?</h5>
+<p></p>
+<h6>Prerequisites</h6>
+
+<ul class="list-marked">
+<li>Rust is installed - See https://www.rust-lang.org/tools/install</li>
+<li>Python3 is installed - For use as a development HTTP server. This is not required if you are using other development web server.</li>
+</ul>
+<p>
+</p>
+
+<p>
+1. In our Linux, Windows or Mac Terminal, enter the following command to install wasm-bindgen. 
+</p>
+<p>
+<kbd>cargo install wasm-bindgen-cli</kbd>
+</p>
+<p>
+</p><p>  
+2. Next, create a new rustwasm (Rust WebAssembly) project with the following command.
+</p>
+<p>
+<kbd>cargo new webassembly_webcomponent --lib</kbd>
+</p>
+<p>
+
+You should see the following message. 
+</p>
+<div class="" style="text-align:left;background:whitesmoke"><pre><code style="color:#000;background:whitesmoke">
+        Created library `webassembly_webcomponent` package
+        A new "webassembly_webcomponent" rustwasm package has been created. 
+    </code></pre></div>                        
+<p>
+3. Using a text editor, open "Cargo.toml", and see that it contains the following.
+</p>
+
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+[package]
+name = "webassembly_webcomponent"
+version = "0.1.0"
+authors = ["djembe-waka <support@webassemblyman.com>"]
+edition = "2018"
+
+[dependencies]
+            </code></pre>                  
+        </div>
+<p>
+Change the contents to the following.
+</p>
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+[package]
+name = "webassembly_webcomponent"
+version = "0.1.0"
+authors = ["djembe-waka <support@webassemblyman.com>"]
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+js-sys = "0.3.4"
+wasm-bindgen = "0.2.54"
+console_error_panic_hook = "0.1.6"
+
+[dependencies.web-sys]
+version = "0.3.4"
+
+features = [
+    'console',
+    'Window',
+    'Document',
+    'DocumentFragment',
+    'Node',
+    'Element',
+    'HtmlElement',
+    'HtmlSlotElement',
+    'HtmlTemplateElement',
+    'CustomElementRegistry',
+    'ShadowRoot',
+    'ShadowRootInit',
+    'ShadowRootMode',
+]            </code></pre>                  
+        </div>
+<p>
+<p>
+In the above, we specify the use of <a href=https://www.webassemblyman.com/rustwasm/wasm-bindgen.html>wasm-bindgen</a> (0.2.52 or above is required), <a href=https://www.webassemblyman.com/rustwasm/web-sys.html>web-sys</a> and <a href=https://www.webassemblyman.com/rustwasm/js-sys.html>js-sys</a>.  
+As described earlier, wasm-bindgen is used for 
+facilitating high-level interactions between wasm modules and JavaScript. 
+For example, if we need to use the browsers "Window" or "Document" objects or other functions in our rustwasm application, we can use wasm-bindgen to import and use them.  
+It is a low-level library to ensure that everything we require from the browser (all Web APIs and JavaScript objects) can be imported to our rustwasm application.
+</p>
+<p>
+In our Web Component, we also web-sys and js-sys, which are built on top of wasm-bindgen, to further ease our development process. 
+In the above, we have specified the use the "console", "Window", "Document", "Node" and "Element" and other features from web-sys.
+When our application is compiled, all the wasm-bindgen bindings and imports will be automatically generated for us, saving us a lot of work. 
+</p>
+<p>With the features specified above, we can write a rustwasm application
+that uses the different browser objects to add a "Hello World" paragraph element as shown below.
+</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+        <pre><code style="color:white;">
+use wasm_bindgen::prelude::*;
+
+#[wasm_bindgen(start)]
+pub fn run() -> Result&lt;(), JsValue> {
+
+    let window = web_sys::window().expect("no window exists");
+    let document = window.document().expect("window should have a document");
+    let body = document.body().expect("document should have a body");                
+    let val = document.create_element("p")?;
+    val.set_inner_html("Hello World from webassemblyMan!");                
+    body.append_child(&val)?;                
+    Ok(())
+}       
+</code></pre>                  
+</div>
+<p>
+<!--
+    To summarize, web_sys is a crate, a library in Rust, that contains Raw API bindings for Web APIs using wasm-bindgen. We use it to enable features in "Cargo.toml" so that we have access to the browser objects, modules and functions.
+-->
+The addition thing to note in "Cargo.toml" is that we have also enabled "HtmlElement" and "ShadowRoot" etc. which are objects we require for defining a Web Component.
+</p>
+
+<p>
+4. Next, use a text editor and create a "index.html" file. Change the content of the file to the following:
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+&lt;html>
+
+&lt;head>
+&lt;meta charset="utf-8">
+&lt;title>WebAssembly WebComponent&lt;/title>  
+&lt;script src="main.js" defer>&lt;/script>  
+&lt;/head>
+&lt;body>
+
+&lt;h1>WebComponent Template&lt;/h1>
+&lt;template id="webassembly-webcomponent">
+    &lt;style>
+    p {
+    color: white;
+    background-color: #666;
+    padding: 5px;
+
+    }
+    &lt;/style>
+    &lt;p>&lt;slot name="webcomponent-text">Default Text&lt;/slot>&lt;/p>
+&lt;/template>
+
+&lt;webassembly-webcomponent>
+    &lt;span slot="webcomponent-text">Hello World!&lt;/span>
+&lt;/webassembly-webcomponent>
+
+&lt;webassembly-webcomponent>
+    &lt;ul slot="webcomponent-text">
+    &lt;li>rustwasm&lt;/li>
+    &lt;li>Emscripten&lt;/li>
+    &lt;li>Blazor&lt;/li>
+    &lt;/ul>
+&lt;/webassembly-webcomponent>
+&lt;/body>
+&lt;/html>
+        </code></pre>                  
+        </div>
+<p>
+This is a HTML file that defines a template and CSS style for our Web Component. 
+</p>
+<p>
+By now, you would have noticed that we have defined a "webassembly-webcomponent" tag.
+To use this tag (Web Component), we can specify the following in our HTML file.
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+&lt;webassembly-webcomponent>
+    &lt;span slot="webcomponent-text">Hello World!&lt;/span>
+&lt;/webassembly-webcomponent>
+</code></pre>                  
+</div>
+        
+<p>
+5. Create a "main.js" to load our wasm (WebAssembly) module.
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+export default import('./pkg').catch(console.error);
+</code></pre>                  
+</div>
+        
+<p>
+6. Use a text editor, open "src/lib.rs" and change the contents of the file to the following:
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+use wasm_bindgen::prelude::*;
+use wasm_bindgen::JsCast;
+
+#[wasm_bindgen(prototype=web_sys::HtmlElement)]    
+pub struct WebAssemblyWebComponent;
+
+#[wasm_bindgen]
+impl WebAssemblyWebComponent {
+#[wasm_bindgen(constructor)]
+pub fn new() -> WasmType&lt;WebAssemblyWebComponent> {
+
+    let owned = instantiate! {
+        super();
+        WebAssemblyWebComponent
+    };
+
+    let this = owned.borrow();
+    let window = web_sys::window().unwrap();
+    let document = window.document().unwrap();
+    let template = document
+        .get_element_by_id("webassembly-webcomponent").unwrap()
+        .unchecked_into::&lt;web_sys::HtmlTemplateElement>();
+
+    let template_content = template.content();
+    this.attach_shadow(
+        &web_sys::ShadowRootInit::new(web_sys::ShadowRootMode::Open)
+    ).unwrap()
+        .append_child(&template_content.clone_node_with_deep(true)
+        .unwrap()).unwrap();
+}
+}
+        
+#[wasm_bindgen(start)]        
+pub fn main() {
+
+    console_error_panic_hook::set_once();
+    let window = web_sys::window().unwrap();
+    let document = window.document().unwrap();
+
+    window.custom_elements().define(
+        webassembly-webcomponent",
+        &js_sys::Function::of::&lt;WebAssemblyWebComponent>(),
+
+    ).unwrap();
+
+    let slotted_span = 
+        document.query_selector("webassembly-webcomponent span")
+        .unwrap().unwrap();        
+    web_sys::console::log_1(&slotted_span.assigned_slot().unwrap());        
+    web_sys::console::log_1(&slotted_span.slot().into());
+
+} 
+                </code></pre>                  
+            </div>
+<p>
+    The first part of the rustwasm code above defines a "WebAssemblyWebComponent" struct using "web_sys::HtmlElement". 
+    The template we defined in our HTML page is read in (imported) with the Rust code below.
+</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+.
+.
+.
+let template = document
+.get_element_by_id("webassembly-webcomponent").unwrap()
+.unchecked_into::<web_sys::HtmlTemplateElement>();
+.
+.
+.        
+    </code></pre>                  
+</div>
+
+<p>
+We also use web-sys to perform a DOM (Document Object Model) manipulation to create the element's internal shadow DOM structure. 
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+.
+.
+.
+this.attach_shadow(
+&web_sys::ShadowRootInit::new(web_sys::ShadowRootMode::Open)
+).unwrap()
+.append_child(&template_content.clone_node_with_deep(true)
+.unwrap()).unwrap();
+.
+.
+.        
+</code></pre>                  
+</div>
+<p>
+The "main" function register our custom element. 
+We have also used web_sys::console::log_1 to log the slot placeholder in our Web Component to the browser's console. 
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+.
+.
+.                
+#[wasm_bindgen(start)]        
+pub fn main() {
+
+console_error_panic_hook::set_once();
+let window = web_sys::window().unwrap();
+let document = window.document().unwrap();
+
+window.custom_elements().define(
+"webassembly-webcomponent",
+&js_sys::Function::of::&lt;WebAssemblyWebComponent>(),
+
+).unwrap();
+
+let slotted_span = 
+document.query_selector("webassembly-webcomponent span")
+.unwrap().unwrap();        
+web_sys::console::log_1(&slotted_span.assigned_slot().unwrap());        
+web_sys::console::log_1(&slotted_span.slot().into());
+
+} 
+.
+.
+.                
+</code></pre>                  
+</div>
+        
+<p>
+7. Compile the rustwasm code with the following command. The wasm module is generated in the "pkg" folder.
+</p>
+<p>
+<kbd>wasm-pack build --target web</kbd>
+</p>
+<p>                
+8. Run our development Web Server with the following command.
+</p>
+<p>
+<kbd>python3 -m http.server</kbd>
+</p>
+<p>
+9. You should see the following output on your browser:
+</p>
+<p>
+    [IMAGE]
+</p>
+
+<h5>Web Component Lifecycle callbacks</h5>
+<p>The following lifecycle callbacks of a Web Component are also supported "natively" in rustwasm.  
+    
+<ul class="list-marked">
+    <li>connectedCallback - executed when the element is added to the DOM</li>
+    <li>disconnectedCallback - executed when the element is removed from the DOM</li>
+    <li>adoptedCallback - executed when the element moved to a different page</li>
+    <li>attributeChangedCallback - executed when one of the element's attributes is changed</li>
+</ul>
+
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+        <pre><code style="color:white;">
+// Specify observed attributes so that
+// attributeChangedCallback will work
+#[wasm_bindgen(getter = observedAttributes)]
+pub fn observed_attributes() -> js_sys::Array {
+.
+.
+.
+}
+
+#[wasm_bindgen(js_name="connectedCallback")]
+pub fn connected_callback(&self) {
+    web_sys::console::log_1(&"connectedCallback.".into());
+}
+
+#[wasm_bindgen(js_name="disconnectedCallback")]
+pub fn disconnected_callback(&self) {
+    web_sys::console::log_1(&"disconnectedCallback.".into());
+}
+
+#[wasm_bindgen(js_name="adoptedCallback")]
+pub fn adopted_callback(&self) {
+    web_sys::console::log_1(&"adoptedCallback.".into());
+}
+
+#[wasm_bindgen(js_name="attributeChangedCallback")]
+pub fn attribute_changed_callback(&self, _name: &str, 
+            _old_value: Option&lt;String>, _new_value: &str) {
+    web_sys::console::log_1(&"attributeChangedCallback.".into());
+}            
+            </code></pre>                  
+        </div>
+        <p></p>
+<h4>Source Code</h4>
+<p>
+        rustwasmWebAssemblyWebComponent.zip
+</p>
+
+<h4>Summary</h4>
+<p>
+Our tutorial and sample have illustrated how you can create a W3C Web Component (Custom Element) "natively using rustwasm WebAssembly, with the help of wasm-bindgen, web-sys and js-sys. 
+If you recall, all our codes involve almost little or almost no JavaScript. Please forgive me for saying this, it appears that rustwasm is attempting to replace JavaScript with Rust in the browser "TOTALLY". Yes, you heard it right, "TOTALLY".
+</p>
+<p>The other thing interesting to note is rustwasm is doing all this without specifically requiring a runtime or framework. 
+This way, you can replace parts of your front-end web application surgically. Alternatively, frameworks that is built on top of rustwasm, has started appearing, to help you replace your front-end application in a "big bang" manner.
+rustwasm flexibility, together with its optimized output code size will appeal to many developers. 
+</p>
+<p>
+Oh, did I forget to mention the WASI (WebAssembly outside the browser) and the Gloo project of rustwasm? 
+</p>
+

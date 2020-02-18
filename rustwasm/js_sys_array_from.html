@@ -1,0 +1,43 @@
+---
+layout: rustwasm
+title: js_sys::Array::from function
+description: js_sys::Array::from function
+keyword: js_sys::Array::from function
+---
+               <h5>js_sys::Array::from function</h5>
+               <p></p>
+               <h6>Example</h6>
+                <p>Creates a new shallow copied Array from an array or iterable object.</p>
+               <div class="quote-bordered" style="text-align:left;background:black"> 
+                <pre><code style="color:white;">
+pub fn array_from() {
+    let src_arr = js_sys::Array::new();
+    src_arr.push(&"Cat A".into());
+    src_arr.push(&"Cat B".into());
+    let target_arr =js_sys::Array::from(&src_arr);
+    web_sys::console::log(&target_arr);
+    web_sys::console::log_2(&"Array Length: %d".into(),&JsValue::from(target_arr.length()));
+}
+                                </code></pre>                  
+                </div>                        
+   
+           <!--WebAssemblyMan Placeholder-->
+           <p></p>
+           <h6>Function</h6>
+           <p></p>
+
+           <div class="" style="text-align:left;background:whitesmoke"><pre><code style="color:#000;background:whitesmoke">
+                pub fn from(val: &JsValue) -> Array
+           </code></pre></div>                        
+           <p></p>
+
+           <h6>features/dependencies</h6>
+           <ul class="list-marked">
+            <li><a href=js_sys_Array.html>js-sys Array</a></li>
+        </ul>
+            <p></p>
+           <h6>Source Code</h6>
+           <ul class="list-marked">
+            <li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/js_sys_array rel="nofollow">js_sys_array</a></li>
+           <ul></ul>
+        

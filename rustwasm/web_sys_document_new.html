@@ -1,0 +1,46 @@
+---
+layout: rustwasm
+title: web_sys::Document::new function
+description: web_sys::Document::new function
+keyword: web_sys::Document::new function
+---
+<h5>web_sys::Document::new function</h5>
+<p>
+
+</p>
+<h6>Example</h6>
+<p>
+	This example calls the window getter to access its document. The URL of the document is then logged to the console. Finally, the new function is called to create a new document. The new document can be associated with the contentDocument of a frame. 
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+	pub fn document_new()
+	{
+		let window = web_sys::window().expect("global window does not exists");    
+		let document = window.document().expect("expecting a document on window");
+		web_sys::console::log_2(&"URL: %s".into(),
+								&JsValue::from_str(&document.url().unwrap()));
+		let new_document = Document::new().unwrap();	
+	}
+</code></pre>                  
+</div>                        
+
+<!--WebAssemblyMan Placeholder-->
+<p></p>
+<h6>Function</h6>
+<p></p>
+<div class="" style="text-align:left;background:whitesmoke"><pre><code style="color:#000;background:whitesmoke">
+	pub fn new() -> Result&lt;Element, JsValue>
+
+</code></pre></div>                        
+<p></p>
+
+<h6>features/dependencies</h6>
+<ul class="list-marked">
+<li><a href=web_sys_document.html>web-sys Document</a></li>
+</ul>
+<p></p>
+<h6>Source Code</h6>
+<ul class="list-marked">
+<li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/web_sys_document rel="nofollow">web_sys_document</a></li>
+<ul></ul>            

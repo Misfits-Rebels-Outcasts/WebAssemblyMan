@@ -1,0 +1,204 @@
+---
+layout: toplevelcontent
+title: Rust WebAssembly Hello World
+description: Rust WebAssembly Hello World.
+keyword: rust webassembly, rustwasm hello world
+---
+               <h4>Rust WebAssembly Hello World</h4>
+<p>      
+In this article we are going to create a WebAssembly Hello World program with Rust.   
+</p>      
+
+<h6>Prerequisites</h6>
+
+      <ul class="list-marked">
+            <li>Windows Subsystem for Linux (WSL) is installed - See https://docs.microsoft.com/en-us/windows/wsl/install-win10 or Ubuntu on VirtualBox</li>
+            <li>Rust is installed - See https://www.rust-lang.org/tools/install</li>
+    <li>wasm-pack is installed - See https://rustwasm.github.io/wasm-pack/installer/</li>    
+	<li>Python3 is installed (Used as Development Web Server) - See https://www.python.org/downloads/</li>
+	<li>Visual Studio Code as Editor (Optional)</li>
+      </ul>
+<p>
+</p>
+
+<h5>Hello World Tutorial in Rust WebAssembly</h5>
+<p>
+1. Launch WSL Terminal (or Ubuntu) and install wasm-bindgen. There are other ways to create a Hello World program without wasm-bindgen. But in this tutorial, we are going to use it as it is essential in Rust WebAssembly development.  
+</p>
+<p>
+<kbd>cargo install wasm-bindgen-cli</kbd>
+</p>
+<p>
+Rust WebAssembly enables you to surgically insert WebAssembly modules into your existing JavaScript applications, especially into your performance critical code paths. You can think of wasm-bindgen as a tool that helps you do that by generating the glue and bindings for the efficient interactions between JavaScript and WebAssembly. 
+</p>
+<p>  
+2. Next, we will like to create a new Rust WebAssembly project. Enter the following command
+</p>
+<p>
+<kbd>cargo new helloworld --lib</kbd>
+</p>
+<p>
+
+You should see the following message. A new helloworld package with your project files has been created. 
+</p>
+<p>
+Created library `helloworld` package
+</p>
+
+<p>
+3. Using a text editor, open Cargo.toml. You should see the following
+</p>
+
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+[package]
+name = "helloworld"
+version = "0.1.0"
+authors = ["djembe-waka <support@webassemblyman.com>"]
+edition = "2018"
+
+[dependencies]
+            </code></pre>                  
+        </div>
+<p>
+Change it to the following:
+</p>
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+[package]
+name = "helloworld"
+version = "0.1.0"
+authors = ["djembe-waka <support@webassemblyman.com>"]
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+wasm-bindgen = "0.2"
+            </code></pre>                  
+        </div>
+<p>
+
+The "cdylib" indicator makes this Rust project expose a C-style dynamic library that is used by linkers to produce our WebAssembly module. As described above, "wasm-bindgen" enables or facilitates high-level interactions between wasm modules and JavaScript.
+</p>
+<p>
+4. Using a text editor, open "src/lib.rs". Change it to the following:
+</p>
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+extern crate wasm_bindgen; 
+use wasm_bindgen::prelude::*; 
+
+// Import 'window.alert' 
+#[wasm_bindgen] 
+extern "C" { 
+	fn alert(s: &str); 
+} 
+
+// Export a 'helloworld' function 
+#[wasm_bindgen] 
+pub fn helloworld(name: &str) { 
+	alert(&format!("Hello World : {}!", name)); 
+} 
+
+#[wasm_bindgen(start)]
+pub fn main() -> Result&lt;(), JsValue> {
+     helloworld(&"Jackson");
+     Ok(())
+}     
+            </code></pre>                  
+        </div>
+<p>
+In the above code, "wasm_bindgen" allows us to import JavaScript things ('alert') into Rust and export Rust things ('helloworld') to JavaScript. 
+</p>
+<p>
+5. Compile the code. In your command line enter the following:
+</p>
+<p>
+<kbd>wasm-pack build --target web</kbd>
+</p>
+<p>
+If "wasm32-unknown-unknown target" is not installed, enter the following to install it.
+</p>
+
+<p>
+<kbd>rustup target add wasm32-unknown-unknown</kbd>
+</p>
+
+<p>
+If you get build dependencies errors, you can try updating your toolchain in Linux with the following commands.
+</p>
+
+<p>
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install build-essential
+sudo apt-get install libssl-dev
+sudo apt-get install pkg-config
+            </code></pre>                  
+        </div>
+</p>
+
+
+<p>
+        5. Next, use a text editor and create a "index.html" file. Change the content of the file to the following:
+        </p>
+        <p>
+        <div class="quote-bordered" style="text-align:left;background:black"> 
+        <pre><code style="color:white;">
+    &lt;html>
+    &lt;head>
+    &lt;meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+    &lt;/head>
+    &lt;body>  
+    &lt;script type="module">
+    import init from './pkg/helloworld.js';
+    async function run() {
+        await init();
+    }
+    run();
+    
+    &lt;/script>
+    &lt;/body>
+    &lt;/html>
+        </code></pre></div> 
+    </p>   
+    
+
+    <p>                
+            6. Run our development Web Server with the following  in the folder where index.html is located. 
+            
+            </p>
+            <p>
+            <kbd>python3 -m http.server</kbd>
+            </p>
+
+            <p>If python3 is not installed. You can also use basic-http-server. Simply enter the following command to install.</p>
+
+            <p>
+                <kbd>cargo install basic-http-server</kbd>
+                </p>
+<p>
+    After installation, enter the following command to start the server.
+</p>
+<p>
+    <kbd>basic-http-server</kbd>
+    </p>
+    
+<!--
+            <p>Optional <br /> Check out the <a href=https://curiousprog.com/2018/10/08/serving-webassembly-files-with-a-development-web-server/>following</a> if you want to resolve the following issue found in the console.<br /><br /> `WebAssembly.instantiateStreaming` failed because your server does not serve wasm with `application/wasm` MIME type.  
+            </p>
+-->
+
+            <p>
+            7. You should see the following output on your browser (use Google Chrome or Mozilla Firefox):
+            </p>
+            <p>
+                <img src=images/rustwasm_helloworld.png />
+            </p>
+            <p>
+            Point the browser to 127.0.0.1:8000 (for python3) 127.0.0.1:4000 (for basic-http-server). Capture a screenshot of the above on your desktop and send it to us.
+        </p>

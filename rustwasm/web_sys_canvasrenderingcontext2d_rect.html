@@ -1,0 +1,71 @@
+---
+layout: rustwasm
+title: web_sys::CanvasRenderingContext2d::rect function
+description: web_sys::CanvasRenderingContext2d::rect function
+keyword: web_sys::CanvasRenderingContext2d::rect function
+---
+<h5>web_sys::CanvasRenderingContext2d::rect function</h5>
+<p></p>
+
+
+<h6>Example</h6>
+<p>This example draws a rectangle using the rect function of CanvasRenderingContext2d on a HTML canvas. The parameters of the rect function are explained below:
+</p>
+    <ul class="list-marked">
+        <li>x - 75 (x-coordinate of the center of the circle)</li>
+        <li>y - 75 (y-coordinate of the center of the circle)</li>
+        <li>width - the width of the rectangle in pixels</li>
+        <li>height - the height of the rectangle in pixels</li>
+    </ul>
+    <p></p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+pub fn canvasrenderingcontext2d_rect()
+{
+    let document = web_sys::window().unwrap().document().unwrap();
+    let canvas = document.get_element_by_id("canvas").unwrap();
+    let canvas: web_sys::HtmlCanvasElement = canvas
+        .dyn_into::&lt;web_sys::HtmlCanvasElement>()
+        .map_err(|_| ())
+        .unwrap();
+
+    let context = canvas
+        .get_context("2d")
+        .unwrap()
+        .unwrap()
+        .dyn_into::&lt;web_sys::CanvasRenderingContext2d>()
+        .unwrap();
+
+    context.begin_path();
+
+    // x - 75 (x-coordinate of the center of the circle)
+    // y - 75 (y-coordinate of the center of the circle)
+    // width - the width of the rectangle in pixels
+    // height - the height of the rectangle in pixels
+    context
+        .rect(75.0, 75.0, 50.0, 50.0);
+
+    context.stroke();
+
+}
+</code></pre>                  
+</div>                        
+
+<!--WebAssemblyMan Placeholder-->
+<p></p>
+<h6>Function</h6>
+<p></p>
+<div class="" style="text-align:left;background:whitesmoke"><pre><code style="color:#000;background:whitesmoke">
+        pub fn rect(&self, x: f64, y: f64, w: f64, h: f64)      
+    </code></pre></div>                        
+<p></p>
+
+<h6>features/dependencies</h6>
+<ul class="list-marked">
+<li><a href=web_sys_canvasrenderingcontext2d.html>web-sys CanvasRenderingContext2d</a></li>
+</ul>
+<p></p>
+<h6>Source Code</h6>
+<ul class="list-marked">
+<li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/web_sys_canvasrenderingcontext2d rel="nofollow">web_sys_canvasrenderingcontext2d</a></li>
+<ul></ul>            

@@ -1,0 +1,60 @@
+---
+layout: rustwasm
+title: web_sys::Document::query_selector_all function
+description: web_sys::Document::query_selector_all function
+keyword: web_sys::Document::query_selector_all function
+---
+<h5>web_sys::Document::query_selector_all function</h5>
+<p>
+
+</p>
+<h6>Example</h6>
+<p>
+	This example demonstrates the use of document.query_selector_all to select multiple &lt;p> elements. 
+	</p>
+	<p>
+	The method returns a Result&lt;NodeList, JsValue>. The inner text of the first Node in the list is set to the length of the NodeList. 
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+	pub fn document_query_selector_all()
+	{
+		
+		let window = web_sys::window().expect("global window does not exists");    
+		let document = window.document().expect("expecting a document on window");
+		let val = document.query_selector_all("p")
+					.unwrap()
+					.dyn_into::&lt;web_sys::NodeList>()
+					.unwrap();
+		let num_p = val.length();            
+		val.item(0)
+			.unwrap()
+			.dyn_into::&lt;web_sys::HtmlElement>()
+			.unwrap()
+			.set_inner_text(&num_p.to_string());
+	
+		//Using set_text_content in Node    
+		//val.item(0).unwrap().set_text_content(Some(&num_p.to_string()));
+	}
+</code></pre>                  
+</div>                        
+
+<!--WebAssemblyMan Placeholder-->
+<p></p>
+<h6>Function</h6>
+<p></p>
+<div class="" style="text-align:left;background:whitesmoke"><pre><code style="color:#000;background:whitesmoke">
+	pub fn query_selector_all(&self, selectors: &str) -> Result&lt;NodeList, JsValue>
+
+</code></pre></div>                        
+<p></p>
+
+<h6>features/dependencies</h6>
+<ul class="list-marked">
+<li><a href=web_sys_document.html>web-sys Document</a></li>
+</ul>
+<p></p>
+<h6>Source Code</h6>
+<ul class="list-marked">
+<li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/web_sys_document rel="nofollow">web_sys_document</a></li>
+<ul></ul>            

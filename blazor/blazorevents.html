@@ -1,0 +1,193 @@
+---
+layout: blazor
+title: Blazor Events 
+description: Blazor Events
+keyword: blazor events, DOM events, user-defined events, custom events
+---
+<h3>Blazor Events</h3>
+<p>
+    Blazor supports the event programming model through binding. You can bind DOM events such as onclick, onchange or others to a function and trigger it by a user interaction.
+    You can also define a user-defined event and enable the event to be binded to callback functions.
+</p>
+<h4>DOM Events</h4>
+<p>
+The following illustrates binding onclick event to a function named Print. If you click on the Click Here button, the Print function will be executed
+and the "Button Clicked!" text will be displayed in the browser's console.
+</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">@page "/"
+&lt;h3>DOM Events&lt;/h3>
+
+&lt;button @onclick=Print>Click Here&lt;/button>
+
+@functions {
+    private void Print()
+    {
+    Console.WriteLine("Button Clicked!");
+    }
+}</code></pre></div>
+
+<p>
+    A Lambda expression can also be used to specify the function to execute. The following code achieve the same thing as the above. 
+</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">@page "/"
+&lt;h3>DOM Events&lt;/h3>
+
+&lt;button @onclick=@(() => Print())>ClickHere&lt;/button>
+
+@functions {
+  private void Print()
+  {
+    Console.WriteLine("Button Clicked!");
+  }
+}</code></pre></div>
+<p>
+    Using a Lambda expression can help you reduce the number of lines of code and make your code simpler in some situations.
+
+</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">@page "/"
+&lt;h3>DOM Events&lt;/h3>
+
+&lt;button @onclick=@(() => {Console.WriteLine("Button Clicked!");})>ClickHere&lt;button>
+
+@functions {
+}</code></pre></div>
+<br />
+<h4>Event Data</h4>
+<p>
+    Event data such as MouseEventArgs can be specified in the event function. In our example below, the event data arguments enables us to access properties of the mouse event such as ClientX, ClientY and others.
+
+</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">@page "/"
+&lt;h3>onclick Events&lt;/h3>
+
+&lt;button @onclick=@((e) => Print(e))>ClickHere&lt;/button>
+
+@functions {
+  private void Print(MouseEventArgs e)
+  {
+    Console.WriteLine("X :"+e.ClientX+" Y :"+e.ClientY);
+  }
+}</code></pre></div>
+<p>
+    The following is another example showing how to access the KeyboardEventArgs with the onkeypress event.
+</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">@page "/"
+    
+&lt;h3>onkeypress Event&lt;/h3>
+&lt;input type="text" @onkeypress="@(e => KeyWasPressed(e))" />
+
+@functions {
+  private void KeyWasPressed(KeyboardEventArgs args)
+  {
+    if (args.Key == "r")
+    {
+      Console.WriteLine("R was pressed");
+    }
+  }
+}</code></pre></div>
+<p>
+    And the onchange event with the ChangeEventArgs.
+</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">@page "/"
+&lt;h3>onchange Event&lt;/h3>
+
+&lt;label>
+&lt;input type="checkbox" @onchange=CheckboxChanged />
+New York
+&lt;/label>
+
+@functions {
+    void CheckboxChanged(ChangeEventArgs e)
+    {
+        Console.WriteLine("CheckboxChanged");
+    }
+}</code></pre></div>
+<br />
+<h4>User-defined Event</h4>
+<p>
+
+Besides DOM events, Blazor also supports user-defined or custom events. For example, if you have a parent and a child component
+, and you want the parent to execute a function (callback function) when certain conditions in the child component occur, you can define a user-defined event. 
+</p>
+<p>
+    You can add the following into the child component to define a user-defined event: 
+</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">[Parameter]
+Action SomethingChanged { get; set; }</code></pre></div>
+
+<p>
+    This enables you to use the child component in the following manner:
+</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+&lt;Component1 SomethingChanged=SomeCallBackFunctionInTheParent>
+&lt;/Component1>
+</code></pre></div>
+<p>
+    The following is a complete Blazor sample with parent and child component codes. When a button in the child component is clicked, the parent callback function will be executed to update a message variable.  
+</p>
+
+<p>
+    <strong>MySomethingComponent.cshtml (Child Component)</strong>
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+&lt;button @onclick=ButtonClick>ClickHere&lt;/button>
+
+@functions {
+  private void ButtonClick()
+  {
+    Console.WriteLine("Calling SomethingChanged Action");
+    SomethingChanged();
+  }
+
+  [Parameter]
+  public Action SomethingChanged { get; set; }
+}
+</code></pre></div>
+
+<p>
+    <strong>index.cshtml (Parent Page)</strong>
+</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+@using MySomethingComponent;
+
+@page "/"
+
+&lt;Mysomething SomethingChanged=ChangeMessage>&lt;/MySomething>
+
+&lt;p>@message&lt;/p>
+
+@functions {
+
+  string message;
+  private void ChangeMessage()
+  {
+    Console.WriteLine("ChangeMessage");
+    message="Message Changed";
+    StateHasChanged();
+  }
+
+}
+</code></pre></div>
+
+
+
+

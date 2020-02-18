@@ -1,0 +1,122 @@
+---
+layout: blazor
+title: Blazor while, do while loop
+description: Blazor while, do while loop
+keyword: blazor while loop, do while loop
+---
+               <h3>Blazor while loop and do while</h3>
+
+<p>A while loop is used to execute a block of codes repeatedly. The loop begins with the while keyword, followed by a condition, if true, to continue executing the loop.</p>
+
+<p>For example, you can write the following:</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+  <pre><code style="color:white;">&lt;ul>
+@{
+    var i = 1;
+    while (i < 6)
+    {
+        &lt;li>Item @i&lt;/li>     
+        i++;
+    }
+}
+&lt;/ul>
+</code></pre></div>
+
+<p>to get</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+  <pre><code style="color:white;">&lt;ul>
+  &lt;li>Item 1&lt;/li>
+  &lt;li>Item 2&lt;/li>
+  &lt;li>Item 3&lt;/li>
+  &lt;li>Item 4&lt;/li>
+  &lt;li>Item 5&lt;/li>
+&lt;/ul>
+</code></pre></div>
+
+<p>You can also use a while loop to loop through an array of objects as shown below:</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+  <pre><code style="color:white;">&lt;ul>
+@{
+    string[] items = { "Item 1", "Item 2", "Item 3" };
+    var x = 0;
+    while (x &lt; items.Length)
+    {
+        &lt;li>@items[x]&lt;/li>
+        x++;
+    }
+}
+&lt;/ul>
+</code></pre></div>
+<br />
+<h3>Blazor do while loop</h3>
+
+<p>A do loop is used to execute a blocks of code repeatedly. The loop begins with the do keyword, followed by the block of codes to execute repeatedly, and a while keyword with the condition to continue to execute the loop.</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+  <pre><code style="color:white;">&lt;ul>
+@{
+  var i = 1;
+  do 
+  {
+      &lt;li>Item @i&lt;/li>     
+      i++;
+  }
+  while (i &lt; 6);
+}
+&lt;/ul>
+</code></pre></div>
+
+<p>The do loop above will give you the following:</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+  <pre><code style="color:white;">&lt;ul>
+	&lt;li>Item 1&lt;/li>
+	&lt;li>Item 2&lt;/li>
+	&lt;li>Item 3&lt;/li>
+	&lt;li>Item 4&lt;/li>
+	&lt;li>Item 5&lt;/li>
+&lt;/ul>
+</code></pre></div>
+
+<p>You can also use a do while loop to loop through an array of objects as shown below:</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+  <pre><code style="color:white;">@page "/"
+&lt;ul>
+@{
+    Item[] Items = {
+        new Item("Item 1","12345"),
+        new Item("Item 2","12346"),
+        new Item("Item 3","12347")
+    };
+
+    var i = 0;
+    do
+    {
+        &lt;li>@Items[i].Name&lt;/li>
+        i++;
+    }
+    while (i &lt; Items.Length);
+}
+&lt;/ul>
+
+@functions {
+  public class Item
+  {
+      public Item(string name, string id)
+      {
+          Name = name;
+          Id = id;
+      }
+
+      public string Name { get; set; }
+      public string Id { get; set; }
+  }
+}
+
+
+</code></pre></div>
+    

@@ -1,0 +1,119 @@
+---
+layout: rustwasm
+title: How to add mouse events in Rust Webassembly?
+description: How to add mouse events in Rust Webassembly?
+keyword: rust mouse events, webassembly mouse down, rust webassembly mouse up, mouse move
+---
+               <h5>How to add mouse events in Rust Webassembly?</h5>
+               <p></p>
+                <h6>Example 1 - Mouse Down</h6>
+
+                <p>Create a paragraph element with an EventListener. When the mousedown event is triggered, a message will be logged to the console.</p>
+                <div class="quote-bordered" style="text-align:left;background:black"> 
+                 <pre><code style="color:white;">                    
+pub fn eventlistener_new_p_mousedown()
+{
+    let window = web_sys::window().expect("global window does not exists");    
+    let document = window.document().expect("expecting a document on window");
+    let body = document.body().expect("document expect to have have a body");
+
+    let paragraph = document.create_element("p").unwrap()
+    .dyn_into::&lt;web_sys::HtmlParagraphElement>()
+    .map_err(|_| ())
+    .unwrap();
+
+    paragraph.set_align("center");
+    paragraph.set_inner_html("&lt;br />Click within this boundary to test the mousedown event. &lt;br />Check the results in your web console.&lt;br />&lt;br />");
+
+    paragraph.style()
+        .set_property("border", "solid")
+        .map_err(|_| ())
+        .unwrap();
+
+    let on_down = EventListener::new(&paragraph, "mousedown", move |_event| {
+        web_sys::console::log_1(&"Paragrapah mousedown".into());
+    });
+    on_down.forget();
+    body.append_child(&paragraph).unwrap();
+
+}
+                                     </code></pre>                  
+                 </div>                        
+
+                 <p></p>               
+                 <h6>Example 2 - Mouse Move</h6>
+ 
+                 <p>Create a paragraph element with an EventListener. When the mousemove event is triggered, a message will be logged to the console.</p>
+                 <div class="quote-bordered" style="text-align:left;background:black"> 
+                  <pre><code style="color:white;">                    
+pub fn eventlistener_new_p_mousemove()
+{
+    let window = web_sys::window().expect("global window does not exists");    
+    let document = window.document().expect("expecting a document on window");
+    let body = document.body().expect("document expect to have have a body");
+
+    let paragraph = document.create_element("p").unwrap()
+    .dyn_into::&lt;web_sys::HtmlParagraphElement>()
+    .map_err(|_| ())
+    .unwrap();
+
+    paragraph.set_align("center");
+    paragraph.set_inner_html("&lt;br />Move within this boundary to test the mousemove event. &lt;br />Check the results in your web console.&lt;br />&lt;br />");
+
+    paragraph.style()
+        .set_property("border", "solid")
+        .map_err(|_| ())
+        .unwrap();
+
+    let on_move = EventListener::new(&paragraph, "mousemove", move |_event| {
+        web_sys::console::log_1(&"Paragrapah mousemove".into());
+    });
+    on_move.forget();
+    body.append_child(&paragraph).unwrap();
+
+}
+                                                          </code></pre>                  
+                  </div>                        
+ 
+                  <p></p>               
+                  <h6>Example 3 - Mouse Up</h6>
+  
+                  <p>Create a paragraph element with an EventListener. When the mouseup event is triggered, a message will be logged to the console.</p>
+                  <div class="quote-bordered" style="text-align:left;background:black"> 
+                   <pre><code style="color:white;">                    
+pub fn eventlistener_new_p_mouseup()
+{
+    let window = web_sys::window().expect("global window does not exists");    
+    let document = window.document().expect("expecting a document on window");
+    let body = document.body().expect("document expect to have have a body");
+
+    let paragraph = document.create_element("p").unwrap()
+    .dyn_into::&lt;web_sys::HtmlParagraphElement>()
+    .map_err(|_| ())
+    .unwrap();
+
+    paragraph.set_align("center");
+    paragraph.set_inner_html("&lt;br />Move within this boundary to test the mouseup event. &lt;br />Check the results in your web console.&lt;br />&lt;br />");
+
+    paragraph.style()
+        .set_property("border", "solid")
+        .map_err(|_| ())
+        .unwrap();
+
+    let on_up = EventListener::new(&paragraph, "mouseup", move |_event| {
+        web_sys::console::log_1(&"Paragrapah mouseup".into());
+    });
+    on_up.forget();
+    body.append_child(&paragraph).unwrap();
+}
+                </code></pre>                  
+                   </div>                        
+  
+  
+           <!--WebAssemblyMan Placeholder-->
+           <p></p>
+           <h6>Source Code</h6>
+           <ul class="list-marked">
+            <li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/gloo_events_eventlistener rel="nofollow">gloo_events_eventlistener</a></li>
+           <ul></ul>
+        

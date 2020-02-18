@@ -1,0 +1,374 @@
+---
+layout: toplevelcontent
+title: Evaluating WebAssembly for front-end web development. Emscripten vs Rust vs Blazor.
+description: Evaluating WebAssembly for front-end web development. A comparison of Emscripten, Rust and Blazor.
+keyword: emscripten, blazor, webassembly, rust, rustwasm, mono-wasm
+---
+               <h4>WebAssembly for front-end web development. Emscripten vs Rust vs Blazor.</h4>
+      
+      <br />
+      <h5>Prologue: The most popular ingredient in the Bazaar is changing</h5>
+      
+<p>In 1997, Eric Steven Raymond wrote the famous essay The Cathedral and the Bazaar where it distinguishes between two styles of software development. In the Cathedral, an isolated and secretive team of developers works on their software quietly out of public view and a team of testers helping the developers find and fix bugs. In the Bazaar, the work or project is placed in open source, sometimes in a "haphazard" manner, for everyone interested to see and "mess around". The development work is carried out in the open, sometimes in a chaotic but ultimately coherent manner by the crowd. Everyone and anyone can be a developer or a tester for the project.</p>
+<p>During the time of the essay, there are likely more Cathedrals than Bazaars. As of today, if you look closely, the Bazaar has grown significantly. Everywhere, from individuals, small passionate teams or even large organizations, are setting up stores in the Bazaar. Some of the stores are managed and evangelized by professionals paid by the Cathedrals while putting their products into open source. The idea of the Cathedral sponsoring a Bazaar store is to ensure early embracement of the public community and to gather feedback and interests for the project. The Bazaar, together with the sponsorship from Cathedrals, has led to better products and even better lives of many customers, users, and developers, including that of mine.</p>
+<p>Today, if you walk into a Bazaar, for example GitHub, many of the stores are peddling products build with one popular and "secret" ingredient, JavaScript. JavaScript is found in everything from server products, engines, frameworks, libraries, SAAS, Cloud to databases and more. This is especially so for front-end web development where JavaScript and its derived framework and transpiled languages has total monopoly. The JavaScript language is also the most popular programming language in the Bazaar (GitHub), according to reports such as Developer Skills Report by HackerRank.</p>
+<p>At the same time, in a little dark corner of every BIG Cathedral sponsored Bazaar store, an unfinished product, where programmers like us, like to call Beta, is built using a different "secret" ingredient. Though sometimes in a non prominent way, this new kid on the block ingredient is being actively explored and researched upon by the big guys for their new products and projects. The new ingredient is called WebAssembly. So what is WebAssembly really?</p>
+<p>WebAssembly is a web standard, developed by the World Wide Web Consortium (W3C), that defines an assembly-like binary code format for execution in web pages. The executing code runs nearly as fast as native machine code and is meant to speed up performance of web applications significantly.</p>
+<p>As WebAssembly is a low-level binary bytecode, it supports compilation from different programming languages. This enables many existing and commonly used libraries or applications to be compiled into WebAssembly easily. WebAssembly has been natively supported by all major browsers including Firefox, Chrome, Safari and Edge since 2007. It has started to become an alternative programming language to JavaScript, especially for front-end web development. </p>
+
+<h5>Background</h5>
+<p>I was lucky to be involved in an evaluation of WebAssembly for an in-house web frontend project. The project basically involves an Admin Dashboard where a user logs in to monitor what is going on, looks at some sales charts and orders activities. In the evaluation, our goal is to determine whether it is feasible to use WebAssembly for front end web development, and if possible, build a prototype to prove the feasibility.</p>
+<h5>What are some of our options?</h5>
+<p>As of recent times, WebAssembly based frameworks are released and announced at a rapid pace. Many of them are still early in the development stages. We think the following are mature enough for your considerations. </p>
+      <ul class="list-marked">
+      <li><strong>Emscripten</strong><br />
+<a href=https://kripken.github.io/emscripten-site/ rel="nofollow">https://kripken.github.io/emscripten-site/</a><br />
+Emscripten is a toolchain for compiling to asm.js and WebAssembly, built using LLVM, that lets you run C and C++ on the web. It is popular because of its use of the well-known programming languages C and C++. Many game engines today such as Unity, Godot Game Engine and Unreal Engine game engines, already provide an export option to HTML5, utilizing Emscripten. An interesting tidbit is Emscripten is developed by Alon Zakai (kripken in GitHub), who co-created WebAssembly & asm.js. He previously worked in Mozilla and he is now working in Google. 
+      </li>
+      <li><strong>Rust WebAssembly</strong><br />
+<a href=https://rustwasm.github.io/ rel="nofollow">https://rustwasm.github.io/</a><br />
+Rust is a programming language, designed by Graydon Hoare at Mozilla Research, focused on safety, especially safe concurrency. It is syntactically similar to C++ and is designed to provide better memory safety while maintaining high performance. It was the "most loved programming language" in the Stack Overflow Developer Survey for 2016, 2017, and 2018. The Rust language can be compiled to WebAssembly through the rustwasm toolchain and is promoted by Mozilla as their de-facto tool for WebAssembly.
+      </li>
+      <li><strong>Blazor</strong><br />
+<a href=https://blazor.net/ rel="nofollow">https://blazor.net/</a><br />
+Blazor is a WebAssembly based framework that uses .NET, C# and HTML. It is open source and maintained by Microsoft and the community to address the challenges encountered when developing single page applications. It is quite mature though still considered by Microsoft to be experimental.
+      </li>
+      </ul>
+<br />
+<h5>Which one should I use without going into the details?</h5>
+<p>1. If you have C/C++ codes or are going to develop a game, Emscripten is likely what you should be looking at first. </p>
+<p>2. If you have an existing app or website written in JavaScript and would like to improve the performance of certain parts through WebAssembly, you should look at Rust WebAssembly. 
+The following are from their website for your consideration.
+
+      <ul class="list-marked">
+<li>Lightweight. Only pay for what you use.</li>
+<li>ECMAScript modules. Just import WebAssembly modules the same way you would import JavaScript modules.</li>
+<li>Designed with the <a href=https://github.com/WebAssembly/host-bindings ref="nofollow">"host bindings"</a> proposal in mind.</li>
+</ul>
+
+<p>According to <a href=https://rustwasm.github.io/2018/06/25/vision-for-rust-and-wasm.html rel="nofollow">https://rustwasm.github.io</a></p><br />
+<strong><i>Surgically inserting Rust compiled to WebAssembly should be the best choice for speeding up the most performance-sensitive JavaScript code paths.Do not throw away your existing code base, because Rust plays well with others. Regardless of whether you are a Rust or Web developer, your natural workflow shouldn't change because Rust compiled to wasm integrates seamlessly into your preferred tools.</i></strong>
+
+<p>Mozilla has also put in a lot of effort on extremely fast performance between JavaScript and WebAssembly in their Firefox browser. If you are targeting Mozilla Firefox browser, this is a no-brainer.</p>
+
+<p><a href=https://hacks.mozilla.org/2018/10/calls-between-javascript-and-webassembly-are-finally-fast rel="nofollow">https://hacks.mozilla.org/2018/10/calls-between-javascript-and-webassembly-are-finally-fast</a></p>
+
+<p>3. If you want to develop a totally new web application front-end and you are using .NET in the backend or you would like to use C#, you should choose Blazor. It is a complete framework with capabilities of modern front-end framework such as Routing, Components, Dependency Injection and Events. You can easily leverage existing .NET libraries and the strong C# community support.</p>
+
+<h5>Programming</h5>
+<p>One of the aspects we looked at is the experience of using different tools, or more specifically, the experience of the development process.</p>
+
+<h6>Emscripten</h6>
+<p>My first experience with WebAssembly was with Emscripten. As my background was from C/C++, I may be biased. I love Emscripten. The basic concept of using Emscripten is to develop a module in WebAssembly and use JavaScript to load and execute the module.</p>
+<p>I have extracted some of the codes from my previous article on how to <a href=https://medium.com/coinmonks/develop-w3c-web-components-with-webassembly-d65938284255 rel="nofollow">Develop W3C WebComponents with WebAssembly</a> for you to get a feel of using Emscripten. </p>
+
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+class Code39 {
+public:
+  .
+  .
+  .
+  std::string encode() {  
+	std::string filteredData=filterInput(inputData);
+	int filteredlength = filteredData.length();
+	std::string result;
+	if (checkDigit==1)
+		result="*"+filteredData+generateCheckDigit(filteredData)+"*";
+	else
+		result="*"+filteredData+"*";
+	std::string mappedResult;
+	for (int x=0;x&lt;result.length();x++)
+	{	       
+	        mappedResult=mappedResult+"&#"+
+		std::to_string((unsigned char)result[x])+";";		
+    	}
+	result=mappedResult;
+	human_readable_text=result;
+	return result;
+  }
+private:
+  std::string inputData;
+  .
+  .
+  .
+};
+
+// Binding code
+EMSCRIPTEN_BINDINGS(connectcode_code39) {
+  class_&lt;Code39>("Code39")
+    .constructor&lt;>()
+    .constructor&lt;std::string, int>()
+    .function("encode", &Code39::encode)
+    .property("inputData", 
+		&Code39::getInputData, 
+		&Code39::setInputData)    
+    .
+    .
+    .
+    ;
+}
+            </code></pre>                  
+        </div>
+
+<p>The part you should focus on is "EMSCRIPTEN_BINDINGS", which defines how JavaScript and C/C++ class interacts. It may change when we have access to the DOM in future with the following WebAssembly proposal:</p>
+<p><a href=https://github.com/WebAssembly/proposals/issues/16 rel="nofollow">https://github.com/WebAssembly/proposals/issues/16</a></p>
+<p>Without access to the DOM, we must pass our results back to JavaScript for display. In our code above, the "EMSCRIPTEN_BINDINGS" defines a C++ class, an encode function and an inputData property. The rest are standard C++ programming codes. After we compile the class into WebAssembly, we can include the generated "wasm" (WebAssembly module) into JavaScript and access it as shown below:</p>
+  
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+var instance = new Module.Code39();
+instance.inputData = list.barcodeInputData;
+instance.checkDigit = 1;
+elements.innerHTML=instance.encode();
+elementsHR.innerHTML=instance.humanReadableText;
+            </code></pre>                  
+        </div>
+<br />
+<h6>Rust</h6>
+<p>For Rust, the story is like Emscripten. We must import JavaScript "things" into Rust and export Rust "things" to JavaScript. Below is an example.</p>
+
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+extern crate wasm_bindgen;
+use wasm_bindgen::prelude::*;
+// Import the `window.alert` function from the Web.
+#[wasm_bindgen]
+extern "C" {
+    fn alert(s: &str);
+}
+
+// Export a `greet` function from Rust to JavaScript, that alerts a
+// hello message.
+#[wasm_bindgen]
+pub fn greet(name: &str) {
+    alert(&format!("Hello, {}!", name));
+}
+            </code></pre>                  
+        </div>
+
+<p>The main part is the use of "wasm_bindgen" to pass values and structures across the boundary. I have extracted some snippets of code from the well-known Rust WebAssembly Game of Life sample:</p>
+<p><a href=https://rustwasm.github.io/book/game-of-life/implementing.html refl="nofollow">https://rustwasm.github.io/book/game-of-life/implementing.html</a></p>
+<p>to further demonstrate how wasm_bindgen is used.</p>
+
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+/// Public methods, exported to JavaScript.
+#[wasm_bindgen]
+impl Universe {
+    // ...
+    pub fn width(&self) -> u32 {
+        self.width
+    }
+    pub fn height(&self) -> u32 {
+        self.height
+    }
+    pub fn cells(&self) -> *const Cell {
+        self.cells.as_ptr()
+    }
+}
+            </code></pre>                  
+        </div>
+
+<p>Accessing the Rust WebAssembly methods in JavaScript:</p>
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+const universe = Universe.new();
+const width = universe.width();
+const height = universe.height();
+            </code></pre>                  
+        </div>
+
+<p>Below are some Rust programming codes to let you get a feel of using Rust.</p>
+
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+impl Universe {
+    // ...
+
+    fn live_neighbor_count(&self, row: u32, column: u32) -> u8 {
+        let mut count = 0;
+        for delta_row in [self.height - 1, 0, 1].iter().cloned() {
+            for delta_col in [self.width - 1, 0, 1].iter().cloned() {
+                if delta_row == 0 && delta_col == 0 {
+                    continue;
+                }
+
+                let neighbor_row = (row + delta_row) % self.height;
+                let neighbor_col = (column + delta_col) % self.width;
+                let idx = self.get_index(neighbor_row, neighbor_col);
+                count += self.cells[idx] as u8;
+            }
+        }
+        count
+    }
+}
+            </code></pre>                  
+        </div>
+
+<p>Rust is a programming language well-loved by its community. According to Mozilla:</p>
+<p><strong><i>Rust is the most loved language for developers with 73% of users saying they want to keep working with it. The same month this survey came out, Developer Analyst firm Redmonk charted Rust's move on the Github rankings from 46 to 18.</i></strong></p>
+<p><a href=https://medium.com/mozilla-tech/why-rust-is-the-most-loved-language-by-developers-666add782563 rel="nofollow">https://medium.com/mozilla-tech/why-rust-is-the-most-loved-language-by-developers-666add782563</a></p>
+
+<h6>Blazor</h6>
+<p>Blazor takes a different approach from Emscripten and Rust. It leverages on .NET and WebAssembly. You can think of it as having a .NET platform compiled to WebAssembly and then using it to run your .NET applications or DLLs. The Blazor framework comes with many capabilities found in modern JavaScript frameworks such as Angular and React. I will describe some of these capabilities in more details below.   </p>
+<p>The following is how a sample Blazor page (index.cshtml) looks like. As Blazor is a complete framework for a Single-Page Application, you can imagine when you first access a web URL, you are routed to this Blazor page.</p>
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+@page "/"
+@if (fruits == null)
+{
+
+}
+else
+{
+  &lt;p>@dataBinding&lt;/p>
+  &lt;ul>
+  @foreach (var fruit in fruits)
+  {
+      &lt;li>
+          @fruit
+      &lt;/li>
+  }
+  &lt;/ul>
+}
+
+@functions {
+	string[] fruits = { "Apple", "Orange", "Mango" };
+              string dataBinding = "My Farm";
+}
+            </code></pre>                  
+        </div>
+
+
+<p>The @page "/" is used for page routing, @ symbol is used for transitioning from HTML to C#, @functions contains C# programming codes, @if and @foreach are Blazor C# specific markups. The most important thing is you can easily invoke C# classes or libraries from @functions.</p>
+<p>The example also illustrates one other concept, Data Binding, that Blazor supports. For those of you who not familiar with it, Data binding is a bridge or connection between your application View and Data. When the data changes, the View automatically reflects the updated data values. With data binding, direct access to the DOM and dependency on JavaScript is minimized. </p>
+
+<p>In our example, </p>
+<kbd>  &lt;p>@dataBinding&lt;/p></kbd>
+<p>is binded to the variable</p>
+<kbd>  string dataBinding</kbd>
+
+<p>Data Binding is very useful. For example, it can be used to tie the CSS classes in a HTML div element to a C# string variable. 
+
+<p><kbd>&lt;div class=@dataBinding></kbd></p>
+
+<p>By changing the string, you can then add or remove CSS classes. The use of JavaScript to add or remove CSS classes is thus not required. It feels kind of weird but it works. </p>
+<p>The above codes in index.cshtml produce the following HTML output.</p>
+
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+My Farm
+Apple
+Orange
+Mango
+            </code></pre>                  
+        </div>
+
+<p>In our example above, it contains a mixture of HTML and C# for generating the output. You can also generate everything from C# codes. The following shows how to generate dynamic content in a Blazor component with the BuildRenderTree function.</p>
+
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+namespace BlazorExample.Pages
+{
+    [Route("/")]
+    [Layout(typeof(MainLayout))]
+    public class ClassOnlyComponent :BlazorComponent
+    {
+    protected override void BuildRenderTree(RenderTreeBuilder builder)
+    {
+        var seq = 0;
+        builder.OpenElement(seq, "h3");
+        builder.AddContent(++seq, "Hello, world!");
+        builder.CloseElement();
+    }
+    }
+}
+            </code></pre>                  
+        </div>
+
+<p>When the above component is included in a web page, it gives you the following ouput:</p>
+
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+&lt;h3>Hello, world!&lt;/h3>
+            </code></pre>                  
+        </div>
+
+<p>We have compared very briefly the ways of developing a WebAssembly based front-end using Emscripten, Rust and Blazor. As of now, before the implementation of Host Bindings  <a href=https://github.com/WebAssembly/host-bindings rel="nofollow">https://github.com/WebAssembly/host-bindings</a>, Blazor appears to be the easiest to develop on. There is no need to write codes for JavaScript to interact with WebAssembly (wasm), except to load it. However, having the .NET framework to support your development has an impact on the size of the application. Just as Spiderman said, "With Great Power Comes Great Responsibility". Please see the next section for a more detailed discussion on this. </p>
+<p>For our in-house project, we have decided to develop a prototype using Blazor. The source of our <a href=https://github.com/Misfits-Rebels-Outcasts/Blazor-Dashboard rel=nofollow>Admin Dashboard</a> prototype and in-house <a href=https://github.com/Misfits-Rebels-Outcasts/Blazor-Charts rel="nofollow">Charts</a> are available under the MIT License in GitHub, if you are interested. </p>
+
+<h5>Download Size</h5>
+<p>As a programmer, I value the feel-good factor and ease of writing codes. But I acknowledge the user experience of the application is more important. The download size of the application plays an important part in the user experience, especially for a web application. No one likes to spend time waiting for an application to load. </p>
+<p>Below are some of my findings. They are not the results of a scientific approach of comparing the tools or codes in an apple to apple manner. It is more of letting you know the download size of the WebAssembly modules generated by different tools.</p>
+
+<h6>Emscripten</h6>
+
+<p>For Emscripten, we concluded that an average of 110 lines of C++ code gives us roughly a 40KB wasm module. This is based on an average of over 20 C++ classes that we have written. The C++ classes are quite simple, involving string manipulation and minimal dependencies on other libraries.</p>
+
+<h6>Rust WebAssembly</h6>
+<p>For Rust WebAssembly, we use the Game of Life sample as the basis. I looked through the size, it is similar to what the website has claimed.</p>
+<p><a href=https://rustwasm.github.io/book/game-of-life/implementing.html rel="nofollow">https://rustwasm.github.io/book/game-of-life/implementing.html</a></p>
+<p><i>With the default release build configuration (without debug symbols), our WebAssembly binary is 29,410 bytes:</i></p>
+<p><i>After enabling LTO, setting opt-level = "z", and running wasm-opt -Oz, the resulting .wasm binary shrinks to only 17,317 bytes:</i></p>
+<p><i>And if we compress it with gzip (which nearly every HTTP server does) we get down to a measly 9,045 bytes!</i></p>
+<p><strong>Blazor</strong></p>
+<p>For Blazor, our Admin Dashboard with Charts when published, gives us a folder of <strong>9.57MB</strong>! Let me give you a breakdown.</p>
+
+<h6>Top items belonging to our prototype</h6>
+
+      <ul class="list-marked">
+<li>Blazor-Dashboard.dll 46KB</li>
+<li>ChartMan.dll 38KB</li>
+<li>Chart Components 58.4KB</li>
+<li>Images 3.94MB</li>
+<li>CSS folder 850KB</li>
+</ul>
+
+<p><strong>Top items belonging to Blazor</strong></p>
+
+      <ul class="list-marked">
+<li>mscorlib.dll 1600KB</li>
+<li>System.Core.dll 349KB</li>
+<li>mono-wasm 2029 KB</li>
+<li>mono.js 202 KB</li>
+<li>blazor.server.js 152KB</li>
+<li>blazor.webassembly.js 38KB</li>
+</ul>
+
+<p>To summarize the figures for Blazor, we have 9.57MB in total, around 5MB are our project images and CSS. The rest (4.5MB) belongs to our app and Blazor. Our app alone uses around 150KB. The size required for Blazor and our app together is quite large considering that it is just a prototype without much UI logic. Our GitHub project mentioned above provides a live demo of how the project looks like.</p>
+<p>We can probably apply Progressive Web App (PWA) capabilities, a separate concept, to Blazor so that we can download the core part and subsequently load other pages "lazily". Of course, deep in my heart, I really hope that some of these mechanisms are already part of Blazor. </p>
+<p>The following is what I found from <a href=http://blazor.net rel="nofollow">http://blazor.net</a> <strong>FAQ</strong> that could be useful to you.</p>
+
+<p><strong><i>Wouldn't the app download size be huge if it also includes a .NET runtime?</i></strong></p>
+<p><strong><i>Not necessarily. .NET runtimes come in all shapes in sizes. Early Blazor prototypes used a compact .NET runtime (including assembly execution, garbage collection, threading) that compiled to a mere 60KB of WebAssembly. Blazor now runs on Mono which is currently significantly larger. However, opportunities for size optimization abound, including merging and trimming the runtime and application binaries. Other potential download size mitigations include caching and using a CDN.</i></strong></p>
+<h6>Other notes</h6>
+<p>It is interesting to see DLLs as part of the published binaries in Blazor. Remember, Blazor IS currently NOT compiling your app into WebAssembly. It is the .NET Framework (mono specifically) that is compiled to WebAssembly and sent to your browser to run your .NET DLLs in the browser. One question that pops up is whether the Blazor framework will be bundled as part of Microsoft Edge browser or perhaps even Windows? Only time will tell.</p>
+<p>One thing I know for sure will change in the future is the support for full Static Ahead of Time (AOT) compilation for Blazor (or more specifically mono-wasm).</p>
+<p><a href=https://www.mono-project.com/news/2018/01/16/mono-static-webassembly-compilation/ rel="nofollow">https://www.mono-project.com/news/2018/01/16/mono-static-webassembly-compilation/</a></p>
+<p>From some of the videos by Microsoft, I understand that the AOT compilation will improve the performance of Blazor apps and may also reduce the download size. Or I could be wrong, as I was distracted by my delicious ramen while watching them. We plan to test this further when AOT compilation for Blazor is available. But that's for another day.</p>
+<h5>Debugging</h5>
+<p>Unfortunately, the debugging story for WebAssembly is still immature. Both Emscripten and Rust depend on logs, logging/console APIs. Blazor has a better story at the moment with some very early support for "Step and Resume" in C# codes on Chrome through Remote Debugging. </p>
+
+      <ul class="list-marked">
+<li>Emscripten<br />
+<a href=https://kripken.github.io/emscripten-site/docs/porting/Debugging.html rel="nofollow">https://kripken.github.io/emscripten-site/docs/porting/Debugging.html</a></li>
+<li>Rust WebAssembly<br />
+<a href=https://rustwasm.github.io/book/reference/debugging.html rel="nofollow">https://rustwasm.github.io/book/reference/debugging.html</a></li>
+<li>Blazor<br />
+<a href=https://blazor.net/docs/debugging.html rel="nofollow">https://blazor.net/docs/debugging.html</a></li>
+</ul>
+<br />
+<h5>Epilogue: The new ingredient is fast and there are many different ways to make it. The recipe for the ingredient is still being actively explored and improved.</h5> 
+
+<p>1. WebAssembly is Fast. Many benchmarks show the proof of this. Don't just take my word for it. Go and check out the many <a href=https://hacks.mozilla.org/2017/02/what-makes-webassembly-fast/ rel="nofollow">articles</a> out there.</p>
+<p>2. WebAssembly is Inclusive. </p>
+<p>As of today, you can compile C, C++, Go, C#, Rust, AssemblyScript, Kotlin, Python, Perl, Ruby and many more to WebAssembly. Almost every day (ok maybe not every day), some projects in GitHub will announce support for an existing programming language to compile to WebAssembly, thanks to the great work on the LLVM WebAssembly backend. With WebAssembly supporting many programming languages, the different communities can use the language that they love and target the largest platform in the world - the web.</p>
+<p>3. The big guys are getting involved.</p>
+<p>Microsoft, Google, Mozilla to name a few. Yes, the guys who develop platforms.</p>
+<p>4. WebAssembly is still improving</p>
+<p>More languages are going to support compilation to WebAssembly. This is especially with proposals of access to the DOM and Garbage collection <a href=https://github.com/WebAssembly/proposals/issues/16 rel="nofollow">https://github.com/WebAssembly/proposals/issues/16</a>, and support for Host Bindings <a href=https://github.com/WebAssembly/host-bindings rel="nofollow">https://github.com/WebAssembly/host-bindings</a>. With Garbage collection, we can expect languages such as Java, to have a significant role in this field.</p>
+
+        
+                
+

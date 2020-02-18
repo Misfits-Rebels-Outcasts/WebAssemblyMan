@@ -1,0 +1,89 @@
+---
+layout: rustwasm
+title: web-sys
+description: web-sys - Raw API bindings for Web APIs
+keyword: web-sys, web apis
+---
+               <h5>web-sys</h5>
+                <p>web-sys is a crate, a library in Rust, that contains Raw API bindings for Web APIs. 
+                For example, if you need to use the "Window.console.log" function (browser's debugging console) in rustwasm, one way to do this is, you can define
+                define the bindings for this WEB API using "wasm-bindgen". Alternatively, you can save some work on the definition by simply making use of web_sys.
+                To use an API in web_sys, you will just need to enable the features for the types used in the API.        
+                </p>
+                <p>The Cargo.toml below enables the use of the "Window" object and also other useful Web APIs objects (or Structs in Rust) such as "Document" or "HtmlElement".</p>
+                <p>Cargo.toml</p>
+
+                <div class="quote-bordered" style="text-align:left;background:black"> 
+                    <pre><code style="color:white;">[package]
+name = "dom"
+version = "0.1.0"
+authors = ["www.webassemblyman.com"]
+edition = "2019"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+wasm-bindgen = "0.2.50"
+
+[dependencies.web-sys]
+version = "0.3.4"
+features = [
+  'Document',
+  'Element',
+  'HtmlElement',
+  'Node',
+  'Window',
+]       
+        </code></pre>                  
+        </div>
+        <p>After enabling the features of the Web APIs in web_sys, you can easily use them in your rustwasm programs as shown below. The exanple below illustrates how to add a &lt;p&gt; element to the Document Object Model (DOM).</p>
+<p>src/lib.rs</p>
+        <div class="quote-bordered" style="text-align:left;background:black"> 
+            <pre><code style="color:white;">
+use wasm_bindgen::prelude::*;
+
+#[wasm_bindgen(start)]
+pub fn run() -> Result&lt;(), JsValue> {
+
+    let window = web_sys::window().expect("no window exists");
+    let document = window.document().expect("window should have a document");
+    let body = document.body().expect("document should have a body");                
+    let val = document.create_element("p")?;
+    val.set_inner_html("Hello World from webassemblyMan!");                
+    body.append_child(&val)?;                
+    Ok(())
+}       
+</code></pre>                  
+</div>
+<p> </p>
+                <h6>Modules</h6>
+                <ul class="list-marked">
+                <li><a href=web_sys_console.html>console</a></li>
+                <li>css</li>
+                </ul>
+                <p></p>
+                <h6>Functions</h6>
+                <ul class="list-marked">
+                <li>window - Getter for the Window object</li>
+                </ul>
+                <p></p>
+                <h6>Structs</h6>
+                <ul class="list-marked">
+                        <li>Attr - The Attr object</li>
+                        <li>AttributeNameValue - The AttributeNameValue dictionary</li>
+                        <li><a href=web_sys_canvasrenderingcontext2d.html>CanvasRenderingContext2d</a></li>
+                        <li><a href=web_sys_document.html>Document</a></li>
+                        <li><a href=web_sys_fontface.html>FontFace</a></li>
+                        <li><a href=web_sys_htmlcanvaselement.html>HTMLCanvasElement</a></li>
+                        <li><a href=web_sys_svgelement.html>SvgElement</a> - The SVGElement object</li>
+                                    </ul>
+                                    <p></p>
+
+                <h6>Enums</h6>
+                <ul class="list-marked">
+                <li>AlignSetting</li>
+                        <li>ConsoleLevel</li>
+                        <li>ConsoleLogLevel</li>
+                    </ul>
+

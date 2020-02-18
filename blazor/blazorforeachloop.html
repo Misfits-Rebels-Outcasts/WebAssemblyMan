@@ -1,0 +1,77 @@
+---
+layout: blazor
+title: Blazor foreach loop and in
+description: Blazor foreach loop and in
+keyword: blazor foreach loop, foreach in
+---
+                             <h3>Blazor foreach loop and in</h3>
+              <p>The foreach loop is commonly used to execute a block of codes for every item present in a collection as shown in the following Blazor .cshtml</p>
+              <div class="quote-bordered" style="text-align:left;background:black"> 
+                <pre><code style="color:white;">@page "/"
+
+&lt;ul>
+@foreach (var item in items)
+{
+  &lt;li>
+    @item
+  &lt;/li>
+}
+&lt;/ul>
+
+@functions {
+  string[] items = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+}
+</code></pre></div>
+
+            <p>The above will give you</p>
+            <div class="quote-bordered" style="text-align:left;background:black"> 
+              <pre><code style="color:white;">&lt;ul>
+&lt;li>Item 1&lt;/li>
+&lt;li>Item 2&lt;/li>
+&lt;li>Item 3&lt;/li>
+&lt;li>Item 4&lt;/li>
+&lt;li>Item 5&lt;/li>
+&lt;/ul>
+</code></pre></div>
+           
+            <p>A more useful example involving the use of class objects is shown below:</p>
+            <div class="quote-bordered" style="text-align:left;background:black"> 
+              <pre><code style="color:white;">@page "/"
+
+&lt;ul>
+    @foreach (var item in items)
+    {
+      &lt;li>
+        Name - @item.Name Id - @item.Id
+        &lt;/li>
+    }
+    &lt;/ul>
+
+@functions {
+    public class Item
+    {
+        public Item(string name, string id)
+        {
+            Name = name;
+            Id = id;
+        }
+
+        public string Name { get; set; }
+        public string Id { get; set; }
+    }
+
+    Item[] items = new Item[] {
+        new Item("Todo 1","1234"),
+        new Item("Todo 2","1235")
+  };
+
+}
+          </code></pre></div>
+            
+            <p>This will give you:</p>
+            <div class="quote-bordered" style="text-align:left;background:black"> 
+              <pre><code style="color:white;">&lt;ul>
+&lt;li>Name - Todo 1 Id - 1234&lt;/li> 
+&lt;li>Name - Todo 2 Id - 1235&lt;/li>
+&lt;/ul>
+              </code></pre></div>

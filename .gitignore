@@ -1,0 +1,8 @@
+_includes/
+_layouts/
+_site/
+.jekyll-cache/
+css/
+fonts/
+images/
+js/

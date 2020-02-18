@@ -1,0 +1,68 @@
+---
+layout: rustwasm
+title: web_sys::FontFace::new_with_str function
+description: web_sys::FontFace::new_with_str function
+keyword: web_sys::FontFace::new_with_str function
+---
+<h5>web_sys::FontFace::new_with_str function</h5>
+<p>
+
+</p>
+<h6>Example</h6>
+<p>
+This example uses the new_with_str method to create a new instance of FontFace. 
+The method takes in two parameters, a name that will be used as the font face value for font-family properties, and a 
+second parameter, the font source, which can be a URL or binary font data. 
+In our scenario below, both a URL to a True Type font and an Open Type font are demonstrated.
+</p>
+
+<p>
+Free Fonts, courtesy of BarcodeResource
+</p>
+<p>
+https://barcoderesource.com/freebarcodefont.shtml
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+    pub fn web_sys_fontface_new_with_str() 
+    {
+        let window = web_sys::window().expect("global window does not exists");    
+        let _document = window.document().expect("expecting a document on window");
+        let _fontface_ttf = FontFace::new_with_str("barcodefont", 
+                            "url(ConnectCode39.ttf)").unwrap();
+        let _fontface_otf = FontFace::new_with_str("barcodefont", 
+                            "url(ConnectCode39.otf)").unwrap();
+        
+        /*
+        let promise_ttf=fontface_ttf.load().unwrap();
+        let promise_otf=fontface_otf.load().unwrap();
+    
+        let result= wasm_bindgen_futures::JsFuture::from(promise_ttf).await;
+        let result= wasm_bindgen_futures::JsFuture::from(promise_otf).await;
+    
+        document.fonts().add(&fontface_ttf);    
+        document.fonts().add(&fontface_otf);    
+        */
+    
+    }    </code></pre>                  
+</div>                        
+
+<!--WebAssemblyMan Placeholder-->
+<p></p>
+<h6>Function</h6>
+<p></p>
+<div class="" style="text-align:left;background:whitesmoke"><pre><code style="color:#000;background:whitesmoke">
+	pub fn new_with_str(family: &str, source: &str) -> Result&lt;FontFace, JsValue>
+
+</code></pre></div>                        
+<p></p>
+
+<h6>features/dependencies</h6>
+<ul class="list-marked">
+<li><a href=web_sys_fontface.html>web-sys FontFace</a></li>
+</ul>
+<p></p>
+<h6>Source Code</h6>
+<ul class="list-marked">
+<li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/web_sys_fontface rel="nofollow">web_sys_fontface</a></li>
+<ul></ul>            

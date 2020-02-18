@@ -1,0 +1,60 @@
+---
+layout: toplevelcontent
+title: WebAssembly Control Flow Instructions
+description: WebAssembly Control Flow Instructions.
+keyword: webassembly control flow instructions, if, else, loop, br, return, nop, end, br_if, block, br_table
+---
+               <h4>WebAssembly Control Flow Instructions</h4>
+<p>      
+WebAssembly control flow is expressed in structured instructions such as if, else, br, loop, return and block. Below is a list of the instructions.  
+</p>
+      <ul class="list-marked">
+	<li>if - The beginning of an if instruction.</li> 
+	<li>then - The then block of an if instruction.</li>
+	<li>else - The else block of an if instruction.</li>
+	<li>loop - A labeled block used to create loops.</li>
+	<li>block - A sequence of instructions, often used within expressions. </li>
+	<li>br - Branch to the given label in a containing instruction or block. </li>
+	<li>br_if - Identical to a branch, but with a prerequisite condition. </li>
+	<li>br_table - Branches, but instead of to a label it jumps to a function index in a table.  </li>
+	<li>return - Returns a value from the instruction.  </li>
+	<li>end - Marks the end of a block, loop, if, or a function.</li>
+	<li>nop - An operation that does nothing. </li>
+      </ul>
+
+<p>
+</p>
+
+<h5>Usage of if then else</h5>
+<p>
+If the value of $x is less than 10, then return the value of 10, else return the value of $x.
+</p>
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+(module
+  (func $min10 (param $x i32) (result i32)
+   (if (result i32)
+    (i32.lt_s
+     (get_local $x)
+     (i32.const 10)
+    )
+    (then
+     (i32.const 10)
+    )
+    (else
+     (get_local $x)
+    )
+   )
+  )  
+  (export "min10" (func $min10))
+)
+            </code></pre>                  
+        </div>
+
+<p>Complete Sample Source code</p>
+      <ul class="list-marked">
+	<li><a href=wat/wat_if_then_else.zip>wat if then else</a></li>
+      </ul>	
+        
+                
+

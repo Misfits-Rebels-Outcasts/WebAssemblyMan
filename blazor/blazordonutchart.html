@@ -1,0 +1,305 @@
+---
+layout: blazor
+title: Blazor Donut Chart 
+description: Blazor Donut Chart
+keyword: blazor donut chart, webassembly blazor donut chart
+---
+<h3>Blazor Donut Chart</h3>
+<p>
+    <img width="40%" height=40%" src=images/blazordonutchart.png />
+</p>
+<h4>Usage</h4>
+<p>
+  &lt;DonutChart InputData="10,30,20,10,10,10,5,5" 
+                 InputLabels="App Store,Website,Partners,Direct,Channels,Retail,Distributors,Affiliates">
+  &lt;/DonutChart>
+
+</p>
+<p>
+Please see WebAssemblyMan <a href=blazorcharts.html>Blazor Charts</a> project on how to include this donut chart in your Blazor project.
+</p>
+
+<h5>Source Code</h5>
+<p>
+<ul class="list-marked">
+ <li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/Blazor-Charts/tree/master/DonutChart rel="nofollow">Blazor Donut Chart</a></li>
+</ul>
+</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+    <pre><code style="color:white;">
+      protected override void BuildRenderTree(RenderTreeBuilder builder)
+      {
+
+          var seq = 0;
+          builder.OpenElement(seq, "figure");
+          builder.AddAttribute(++seq, "class", "donut-chart");
+          builder.OpenElement(++seq, "div");
+          builder.AddAttribute(++seq, "class", "main");
+
+          SVG svg = new SVG() { { "width", "80%" }, { "height", "80%" }, { "viewBox", "0 0 42 42" } };
+          Rectangle rect = new Rectangle() { { "class", "background-rect" }, { "width", "100%" }, { "height", "100%" }, { "fill", "white" } };
+          Circle hole = new Circle() { { "class", "hole" }, { "cx", "21" }, { "cy", "21" }, { "r", "15.915" } };
+          Circle ring = new Circle() { { "class", "ring" }, { "cx", "21" }, { "cy", "21" }, { "r", "15.915" }};
+
+          int[] inputData = { 30, 30, 40 };
+          string[] colors = { "#ce4b99", "#27A844", "#377bbc","#fe2712", "#fc600a", "#fb9902","#fccc1a", "#fefe33", "#b2d732", "#66b032", "#347c98", "#0247fe", "#4424d6","#8601af","#c21460" };
+
+          double counterClockwiseDefaultOffset = 25;
+          double preceedingTotalPercent = 0;
+          double offset = counterClockwiseDefaultOffset;
+          List&lt;Circle> segments = new List&lt;Circle>();
+          string[] inputDataArr = InputData.Split(',');
+          string[] inputLabelsArr = InputLabels.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+          int counter = 0;            
+          foreach (string dataStr in inputDataArr)
+          {
+              double data = double.Parse(dataStr);
+              double percent = data;
+              double reversePercent = 100 - percent;
+              offset = 100 - preceedingTotalPercent + counterClockwiseDefaultOffset;
+              preceedingTotalPercent = preceedingTotalPercent + percent;
+              Circle segment = new Circle() { {"class", "segment-"+(1+counter++).ToString()}, { "cx", "21" }, { "cy", "21" }, { "r", "15.915" }, { "stroke-dasharray", percent + " " + reversePercent }, { "stroke-dashoffset", offset.ToString() } };
+              segments.Add(segment);
+          }
+
+          Text numberText = new Text() { { "x", "50%" }, { "y", "50%" }, { "class", "donut-number" }, { "content", "100" } };
+          Text labelText = new Text() { { "x", "50%" }, { "y", "50%" }, { "class", "donut-label" }, { "content", "Sales" } };
+          Group grp = new Group() { { "class", "donut-text" } };
+          grp.AddItems(numberText,labelText);
+
+          svg.AddItems(rect, hole, ring);
+          
+          foreach (Circle segment in segments)
+          {
+              svg.AddItems(segment);
+          }
+          svg.AddItems(grp);
+          
+          BlazorRenderer blazorRenderer = new BlazorRenderer();
+          blazorRenderer.Draw(seq, builder, svg);
+          
+          builder.OpenElement(++seq, "figcaption");
+          builder.AddAttribute(++seq, "class", "donut-key");
+          builder.OpenElement(++seq, "ul");
+          builder.AddAttribute(++seq, "class", "donut-key-list");
+          builder.AddAttribute(++seq, "aria-hidden", "true");
+          builder.AddAttribute(++seq, "style", "list-style-type: none;");
+
+          counter = 0;
+          foreach (string dataStr in inputDataArr)
+          {
+              double data = double.Parse(dataStr);
+              builder.OpenElement(++seq, "li");
+              builder.OpenElement(++seq, "span");
+              builder.AddAttribute(++seq, "class", "legend-dot-"+(counter+1).ToString());
+              builder.CloseElement();
+
+              string labels="";
+              if (counter&lt;sinputLabelsArr.Length)
+              {
+                  labels=inputLabelsArr[counter];
+                  counter++;
+              }
+
+              builder.AddContent(++seq, labels+" "+"("+data.ToString()+")");
+              builder.CloseElement();
+          }
+          builder.CloseElement();
+          builder.CloseElement();
+          
+          builder.CloseElement();
+          builder.CloseElement(); 
+
+      }
+</code></pre>                  
+</div>                        
+<p>
+    The elements generated and the CSS class values used by the donut chart. 
+    </p>
+    <p>
+      <img src=images/blazordonutchartcssoutline.png />
+    </p>
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+        <pre><code style="color:white;">
+          .donut-chart{
+          }
+          
+              .donut-chart div {
+                  background:white;
+                  border: white;
+                  border-style: solid;
+                  border-width: 1px;
+              }
+          
+              .donut-chart div svg{
+                  display: block;
+                  margin: auto;
+          
+              }
+          
+              .donut-chart div svg .background-rect{
+                  width:100%;
+                  height:100%;
+                  fill:white;
+                  stroke:white;
+                  stroke-width:0.2;            
+              }
+          
+              .donut-chart div svg .hole{
+                  fill: #fff;
+              }
+          
+              .donut-chart div svg .ring{
+                  fill: transparent;
+                  stroke-width:3;
+                  stroke:#d2d3d4;
+              }
+          
+              .donut-chart div svg .segment-1{    
+                  fill:transparent;
+                  stroke-width:5;
+                  stroke:#ce4b99
+              }
+              .donut-chart div svg .segment-2{    
+                  fill:transparent;
+                  stroke-width:5;
+                  stroke:#27A844
+              }
+              .donut-chart div svg .segment-3{    
+                  fill:transparent;
+                  stroke-width:5;
+                  stroke:#377bbc
+              }
+              .donut-chart div svg .segment-4{    
+                  fill:transparent;
+                  stroke-width:5;
+                  stroke:#ff4b99
+              }
+              .donut-chart div svg .segment-5{    
+                  fill:transparent;
+                  stroke-width:5;
+                  stroke:#ffA844
+              }
+              .donut-chart div svg .segment-6{    
+                  fill:transparent;
+                  stroke-width:5;
+                  stroke:#bb7bbc
+              }
+              .donut-chart div svg .segment-7{    
+                  fill:transparent;
+                  stroke-width:5;
+                  stroke:#554b99
+              }
+              .donut-chart div svg .segment-8{    
+                  fill:transparent;
+                  stroke-width:5;
+                  stroke:#88A844
+              }
+              .donut-chart div svg .segment-9{    
+                  fill:transparent;
+                  stroke-width:5;
+                  stroke:#EEA844
+              }
+              .donut-chart div svg .segment-10{    
+                  fill:transparent;
+                  stroke-width:5;
+                  stroke:#FFF844
+              }
+          
+              .donut-chart div svg .donut-text {
+                  fill: #000;
+                  transform: translateY(0.25em);
+              }
+              
+              .donut-chart div svg g .donut-number {
+                  font-size: 0.5em;
+                  line-height: 1;
+                  text-anchor: middle;
+                  transform: translateY(-0.25em);
+              }
+              
+              .donut-chart div svg g .donut-label {
+                  font-size: 0.2em;
+                  text-transform: uppercase;
+                  text-anchor: middle;
+                  transform: translateY(0.3em);
+              }
+          
+              .donut-chart div .donut-key{
+                  margin: 20px;
+              }
+          
+              .donut-chart div .donut-key [class*="legend-"] {
+                  margin: 5px;
+                  margin-right: 10px;
+                  display: inline-block;
+                  vertical-align: middle;
+                  width: 20px;
+                  height: 20px;
+                  /*
+                  width: 26px;
+                  height: 26px;
+                  */
+                  border-radius: 50%;
+              }
+          
+              .donut-chart div figcaption .donut-key-list {
+                  margin: 0;
+                  padding: 0;
+                  list-style: none;
+                  font-size: 0.9em;
+              }
+          
+              .donut-chart div figcaption .donut-key-list li {
+                  margin: 0 0 8px;
+                  padding: 0;
+          
+              }
+          
+              .donut-chart div figcaption ul .legend-dot-1 {
+                  background:#ce4b99;
+                  transform: translateY(-0.1em);
+              }
+              .donut-chart div figcaption ul .legend-dot-2 {
+                  background:#27A844;
+                  transform: translateY(-0.1em);
+              }
+              .donut-chart div figcaption ul .legend-dot-3 {
+                  background:#377bbc;
+                  transform: translateY(-0.1em);
+              }
+              .donut-chart div figcaption ul .legend-dot-4 {
+                  background:#ff4b99;
+                  transform: translateY(-0.1em);
+              }
+              .donut-chart div figcaption ul .legend-dot-5 {
+                  background:#ffA844;
+                  transform: translateY(-0.1em);
+              }
+              .donut-chart div figcaption ul .legend-dot-6 {
+                  background:#bb7bbc;
+                  transform: translateY(-0.1em);
+              }
+              .donut-chart div figcaption ul .legend-dot-7 {
+                  background:#554b99;
+                  transform: translateY(-0.1em);
+              }
+              .donut-chart div figcaption ul .legend-dot-8 {
+                  background:#88A844;
+                  transform: translateY(-0.1em);
+              }
+              .donut-chart div figcaption ul .legend-dot-9 {
+                  background:#EEA844;
+                  transform: translateY(-0.1em);
+              }
+              .donut-chart div figcaption ul .legend-dot-10 {
+                  background:#FFF844;
+                  transform: translateY(-0.1em);
+              }
+          
+                  </code></pre>                  
+    </div>  
+    <p></p> 
+    

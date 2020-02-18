@@ -1,0 +1,27 @@
+---
+layout: rustwasm
+title: How to log to the console in Rust WebAssembly?
+description: How to log to the console in Rust WebAssembly?
+keyword: rust webassembly console, rustwasm console, rustwasm log, rust webassembly log
+---
+               <h5>How to log to the console in Rust WebAssembly?</h5>
+               <p></p>
+               <h6>Example</h6>
+               <p>The web_sys::console::log_2 function output a string with 1 substituion to the web console.</p>                
+
+               <div class="quote-bordered" style="text-align:left;background:black"> 
+                <pre><code style="color:white;">
+pub fn console_log2() {
+     web_sys::console::log_2(&"%s : Hello World".into(),&"John".into());
+}
+                                    </code></pre>                  
+                </div>                        
+   
+           <!--WebAssemblyMan Placeholder-->
+           <p></p>
+        <h6>Source Code</h6>
+        <ul class="list-marked">
+         <li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/web_sys_console rel="nofollow">web_sys_console</a></li>
+        <ul></ul>
+  
+     

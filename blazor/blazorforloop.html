@@ -1,0 +1,142 @@
+---
+layout: blazor
+title: Blazor for loop
+description: Blazor for loop
+keyword: blazor for loop, for loop
+---
+               <h3>Blazor for loop</h3>
+                <p>Loops are used to execute a block of code repeatedly. For example, instead of</p>
+                <div class="quote-bordered" style="text-align:left;background:black"> 
+                  <pre><code style="color:white;">&lt;ul>
+    &lt;li>Item 1&lt;/li>
+    &lt;li>Item 2&lt;/li>
+    &lt;li>Item 3&lt;/li>
+    &lt;li>Item 4&lt;/li>
+    &lt;li>Item 5&lt;/li>
+&lt;/ul></code></pre>                  
+        </div>
+        
+        <p>You can write the following:</p>
+        <div class="quote-bordered" style="text-align:left;background:black"> 
+          <pre><code style="color:white;">&lt;ul>
+    @for (int x=1;x<6;x++)
+    {
+        &lt;li>
+            Item @x
+        &lt;/li>
+    }
+&lt;/ul></code></pre>                  
+            </div>
+            
+    <p>
+A for loop has the following syntax:
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+  <pre><code style="color:white;">for (expression 1; expression 2; expression 3) {
+    code block to be executed
+}</code></pre>                  
+        </div>
+        <p>
+            expression 1 is used for initializing a value (var x = 1) to a variable before the loop starts; expression 2 defines the condition (x < 6) for the loop to continue running; expression 3 is used for updating the variable value (x++) before the next iteration.
+        </p>
+        <p>
+        Besides incrementing the variable values, you can choose to decrement it in the same manner:
+        </p>
+        <div class="quote-bordered" style="text-align:left;background:black"> 
+          <pre><code style="color:white;">&lt;ul>
+  @for (int x = 5; x > 0; x--)
+  {
+    &lt;li>
+      Item @x
+    &lt;/li>
+  }
+&lt;/ul></code></pre>                  
+      </div>
+    
+    <p>This will return the following:</p>
+    
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">&lt;ul>
+  &lt;li>Item 5&lt;/li>
+  &lt;li>Item 4&lt;/li>
+  &lt;li>Item 3&lt;/li>
+  &lt;li>Item 2&lt;/li>
+  &lt;li>Item 1&lt;/li>
+&lt;/ul></code></pre>                  
+      </div>
+    
+    <p>Omission of expression in a for loop</p>
+    <p>It is possible to omit the expressions in the for loop, For example, the following gives you an infinite loop:</p>
+    
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">@for ( ; ; )
+{
+  Item            
+}</code></pre>                  
+    </div>
+    
+    <p>The for loop is also commonly used to loop through items (though we typically recommend a <a href=blazorforeachloop.html></a>foreach loop</a>a> for such purpose) in an array as follows:</p>
+    
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">@page "/"    
+&lt;ul>
+@for (int x = 0; x < @items.Length; x++)
+{       
+  &lt;li>
+    @items[@x]
+  &lt;/li>
+}
+&lt;/ul>
+
+@functions {
+  string[] items = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+}</code></pre>                  
+  </div>
+    <br />
+    <h4>Break or Continue</h4>
+    <p>Sometimes, you may need to skip an iteration of the loop or maybe stop the entire loop when some condition occurs. This is when the
+    break and continue keyword comes in useful. The break will exit the loop completely, continue will just skip the current iteration.</p>
+    
+    <p>In the following example, the else part will not be executed when x is 0. Thus the continue keyword helps skip the iteration when x is 0.</p>
+    
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">&lt;ul>
+  @for (int x = 0; x &lt; 6; x++)
+  {
+      if (x == 0)
+      {
+          continue;
+      }
+      else
+      {
+          &lt;li>
+              Item @x
+          &lt;/li>
+      }
+  }
+&lt;/ul></code></pre>                  
+  </div>
+    
+    <p>In the following, none of the items will be displayed. This is because when x is 0, the break portion will be executed and the for loop will be skipped entirely.</p>
+    
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+        <pre><code style="color:white;">&lt;ul>
+  @for (int x = 0; x &lt; 6; x++)
+  {
+      if (x == 0)
+      {
+        break;
+      }
+      else
+      {
+        &lt;li>
+          Item @x
+        &lt;/li>
+      }
+  }
+&lt;/ul>
+
+
+</code></pre>                  
+  </div>
+    

@@ -1,0 +1,61 @@
+---
+layout: rustwasm
+title: web_sys::CanvasRenderingContext2d::set_fill_style function
+description: web_sys::CanvasRenderingContext2d::set_fill_style function
+keyword: web_sys::CanvasRenderingContext2d::set_fill_style function
+---
+<h5>web_sys::CanvasRenderingContext2d::set_fill_style function</h5>
+<p></p>
+
+
+<h6>Example</h6>
+<p>
+    This example sets the CSS fillStyle property of the canvas element, draws a rectangle and fill the rectangle with the current fillStyle. Finally, fill_style method is called to retrieve and log the CSS fillStyle property to the console. 
+</p>
+    <p></p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+pub fn htmlcanvaselement_get_set_fill_style()
+{
+    let document = web_sys::window().unwrap().document().unwrap();
+    let canvas = document.get_element_by_id("canvas").unwrap();
+    let canvas: web_sys::HtmlCanvasElement = canvas
+        .dyn_into::&lt;web_sys::HtmlCanvasElement>()
+        .map_err(|_| ())
+        .unwrap();
+    
+    let context = canvas
+        .get_context("2d")
+        .unwrap()
+        .unwrap()
+        .dyn_into::&lt;web_sys::CanvasRenderingContext2d>()
+        .unwrap();
+
+    //context.set_fill_style(&"#0000FF".into());     
+    context.set_fill_style(&"rgb(150,50,0)".into());        
+    
+    context.fill_rect(15.0, 15.0, 80.0, 80.0);
+
+    web_sys::console::log_2(&"Color : %s ".into(),&context.fill_style().into());
+}
+</code></pre>                  
+</div>                        
+
+<!--WebAssemblyMan Placeholder-->
+<p></p>
+<h6>Function</h6>
+<p></p>
+<div class="" style="text-align:left;background:whitesmoke"><pre><code style="color:#000;background:whitesmoke">
+        pub fn set_fill_style(&self, fill_style: &JsValue)  
+    </code></pre></div>                        
+<p></p>
+
+<h6>features/dependencies</h6>
+<ul class="list-marked">
+<li><a href=web_sys_canvasrenderingcontext2d.html>web-sys CanvasRenderingContext2d</a></li>
+</ul>
+<p></p>
+<h6>Source Code</h6>
+<ul class="list-marked">
+<li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/web_sys_canvasrenderingcontext2d rel="nofollow">web_sys_canvasrenderingcontext2d</a></li>
+<ul></ul>            

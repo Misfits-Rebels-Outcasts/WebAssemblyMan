@@ -1,0 +1,436 @@
+---
+layout: rustwasm-donut-chart
+title: How to create a SVG donut chart in Rust WebAssembly (rustwasm)?
+description: rustwasm SVG Donut Chart 
+keyword: donut chart, svg donut chart, donut web component, rustwasm donut
+---
+<h5>How to create a SVG donut chart in Rust WebAssembly (rustwasm)?</h5>
+      <script type="module">
+  
+        import init from './donut-chart-webcomponent/example.js';
+  
+        async function run() {
+          await init();
+        }
+    
+        run();
+
+      </script>
+
+<p>
+This example illustrates how to create a SVG Donut Chart with Rust WebAssembly <a href=https://www.webassemblyman.com/rustwasm/web-sys.html>web-sys</a> and <a href=https://www.webassemblyman.com/rustwasm/wasm-bindgen.html>wasm-bindgen</a>. 
+</p>
+
+<p align="center"><i><strong>Live WebAssembly Donut Chart Demo</strong></i></p>
+
+<table>
+<tr>
+<td width="30%"></td>
+<td>
+<figure id="donut-chart"></figure>
+</td>
+<td width="30%"></td>
+</tr>
+</table>
+
+<p></p>
+
+<h6>Donut Chart Example</h6>
+<p>
+    The first part of the code is structured to be as simple and straight forward as possible. All parameters, CSS settings, and labels are hardcoded with the aim of making the source code easy to understand. Subsequently, the code will be refactored to support all the required parameters and also as a W3C compliant web component.
+</p>
+<p>
+    The basic steps of creating the donut chart is described below:
+</p>    
+<p>
+    1. Create a "figure" element (with <a href=https://www.webassemblyman.com/rustwasm/web_sys_document_create_element.html>create-element</a>) and add a "svg" element containing a "rect" as background.
+</p>
+<p>
+    2. Create two concentrix circles in svg (<a href=https://www.webassemblyman.com/rustwasm/web_sys_document_create_element_ns.html>create-element_ns</a>) and lay them over each other to produce the effect of a donut chart with a ring and a hole.
+</p>
+<p>
+    3. Create additional circles and use the CSS "stroke-dasharray" and "stroke-dashoffset" effect to create the different segments of the donut chart. 
+    For example, the first circle is used to paint a donut chart segment representing 40% of the chart.
+    The second circle is used to draw the segment representing the next 20% of the chart in another color. And finally, a third segment for the rest of the 40% in a different color. 
+    A detailed explanation of "stroke-dasharray" and "stroke-dashoffset" is available in a later section.
+</p>
+<p>
+    4. Create a "g" element to group the "svg text" objects that appears within the donut chart.
+</p>
+<p>
+</p>
+<p>
+    5. Finally, add a "figcaption" and "ul" (HTML unordered list) to provide a legend for the chart. The different steps are highlighted with comments below.
+</p>
+
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+    pub fn rust_webassembly_svg_donut_chart()-> Result&lt;(), JsValue>
+    {
+        let window = web_sys::window().expect("global window does not exists");    
+        let document = window.document().expect("expecting a document on window");
+        let body = document.body().expect("document expect to have have a body");
+        
+        //Step 1
+        let figure = document.create_element("figure")?;
+        let div = document.create_element("div")
+        .unwrap()
+        .dyn_into::&lt;web_sys::HtmlDivElement>()
+        .unwrap();
+        div.set_attribute("class","doughnut-main")?;
+        let svg = document
+                    .create_element_ns(Some("http://www.w3.org/2000/svg"), 
+                                        "svg")?;
+        svg.set_attribute("width","300px")?;
+        svg.set_attribute("height","300px")?;
+        svg.set_attribute("viewBox","0 0 42 42")?;    
+        let rect = document
+                    .create_element_ns(Some("http://www.w3.org/2000/svg"), 
+                                        "rect")?;
+        rect.set_attribute("width","100%")?;
+        rect.set_attribute("height","100%")?;
+        rect.set_attribute("fill","white")?;
+
+        //Step 2
+        let hole = document
+                    .create_element_ns(Some("http://www.w3.org/2000/svg"), 
+                                        "circle")?;
+        hole.set_attribute("class","hole")?;
+        hole.set_attribute("cx","21")?;
+        hole.set_attribute("cy","21")?;
+        hole.set_attribute("r","15.91549430918954")?;
+        hole.set_attribute("fill","#fff")?;
+    
+        let ring = document
+                    .create_element_ns(Some("http://www.w3.org/2000/svg"), 
+                                        "circle")?;
+        ring.set_attribute("class","ring")?;
+        ring.set_attribute("cx","21")?;
+        ring.set_attribute("cy","21")?;
+        ring.set_attribute("r","15.91549430918954")?;
+        ring.set_attribute("fill","transparent")?;
+        ring.set_attribute("stroke","#d2d3d4")?;
+        ring.set_attribute("stroke-width","3")?;
+    
+        //Step 3
+        let seg1 = document
+                    .create_element_ns(Some("http://www.w3.org/2000/svg"), 
+                                        "circle")?;
+        seg1.set_attribute("cx","21")?;
+        seg1.set_attribute("cy","21")?;
+        seg1.set_attribute("r","15.91549430918954")?;
+        seg1.set_attribute("fill","transparent")?;
+        seg1.set_attribute("stroke","#ce4b99")?;
+        seg1.set_attribute("stroke-width","5")?;
+        seg1.set_attribute("stroke-dasharray","40 60")?;
+        seg1.set_attribute("stroke-dashoffset","25")?;
+    
+        let seg2 = document
+                    .create_element_ns(Some("http://www.w3.org/2000/svg"), 
+                                        "circle")?;
+        seg2.set_attribute("cx","21")?;
+        seg2.set_attribute("cy","21")?;
+        seg2.set_attribute("r","15.91549430918954")?;
+        seg2.set_attribute("fill","transparent")?;
+        seg2.set_attribute("stroke","#27A844")?;
+        seg2.set_attribute("stroke-width","5")?;
+        seg2.set_attribute("stroke-dasharray","20 80")?;
+        seg2.set_attribute("stroke-dashoffset","85")?;
+    
+        let seg3 = document
+                    .create_element_ns(Some("http://www.w3.org/2000/svg"), 
+                                        "circle")?;
+        seg3.set_attribute("cx","21")?;
+        seg3.set_attribute("cy","21")?;
+        seg3.set_attribute("r","15.91549430918954")?;
+        seg3.set_attribute("fill","transparent")?;
+        seg3.set_attribute("stroke","#377bbc")?;
+        seg3.set_attribute("stroke-width","5")?;
+        seg3.set_attribute("stroke-dasharray","40 60")?;
+        seg3.set_attribute("stroke-dashoffset","65")?;
+    
+        //Step 4
+        let g = document
+                    .create_element_ns(Some("http://www.w3.org/2000/svg"), "g")?;
+        g.set_attribute("class","doughnut-text")?;
+    
+        let g_text1 = document
+                        .create_element_ns(Some("http://www.w3.org/2000/svg"), "text")?;
+        g_text1.set_attribute("x","50%")?;
+        g_text1.set_attribute("y","50%")?;
+        g_text1.set_attribute("class","doughnut-number")?;
+        g_text1.set_text_content(Some("100"));
+        g.append_child(&g_text1)?;
+    
+        let g_text2 = document
+                        .create_element_ns(Some("http://www.w3.org/2000/svg"), "text")?;
+        g_text2.set_attribute("x","50%")?;
+        g_text2.set_attribute("y","50%")?;
+        g_text2.set_attribute("class","doughnut-label")?;
+        g_text2.set_text_content(Some("Sales"));
+        g.append_child(&g_text2)?;
+
+        //Step 5
+        let figcaption = document.create_element("figcaption")?;
+        figcaption.set_attribute("class","doughnut-key")?;
+    
+        let ul = document.create_element("ul")
+        .unwrap()
+        .dyn_into::&lt;web_sys::HtmlUListElement>()
+        .unwrap();
+    
+        ul.set_attribute("class","doughnut-key-list")?;
+        ul.set_attribute("aria-hidden","true")?;
+    
+        ul.style()
+        .set_property("list-style-type", "none")?;
+    
+        let li1 = document.create_element("li")?;
+        let span1a = document.create_element("span")?;
+        
+        span1a.set_attribute("class","round-dot dot-red")?;
+        let span1b = document.create_element("span")?;
+        span1b.set_text_content(Some("App Store (40)"));                
+        li1.append_child(&span1a).unwrap();
+        li1.append_child(&span1b).unwrap();
+        ul.append_child(&li1).unwrap();
+    
+        let li2 = document.create_element("li")?;
+        let span2a = document.create_element("span")?;
+        span2a.set_attribute("class","round-dot dot-green").unwrap();
+        let span2b = document.create_element("span")?;
+        span2b.set_text_content(Some("Website (20)"));                
+        li2.append_child(&span2a).unwrap();
+        li2.append_child(&span2b).unwrap();
+        ul.append_child(&li2).unwrap();
+        
+        let li3 = document.create_element("li")?;
+        let span3a = document.create_element("span")?;
+        span3a.set_attribute("class","round-dot dot-blue").unwrap();
+        let span3b = document.create_element("span")?;
+        span3b.set_text_content(Some("Partners (40)"));                
+        li3.append_child(&span3a).unwrap();
+        li3.append_child(&span3b).unwrap();
+        ul.append_child(&li3).unwrap();
+    
+        figcaption.append_child(&ul).unwrap();
+        svg.append_child(&rect).unwrap();
+        svg.append_child(&hole).unwrap();
+        svg.append_child(&ring).unwrap();
+        
+        svg.append_child(&seg1).unwrap();
+        svg.append_child(&seg2).unwrap();
+        svg.append_child(&seg3).unwrap();
+        
+        svg.append_child(&g).unwrap();
+        div.append_child(&svg).unwrap();
+        figure.append_child(&div).unwrap();
+        figure.append_child(&figcaption).unwrap();
+        body.append_child(&figure).unwrap();
+    
+        Ok(())
+    
+                  
+    }
+</code></pre>                  
+</div>  
+<p></p> 
+
+<h6>How are the donut chart segments drawn?</h6>
+<p>The donut chart uses the attributes "stroke-dasharray" and "stroke-dashoffset" for drawing the different segments.</p>
+<ul class="list-marked">
+    <li>Segment 1<br /><br />
+        <kbd>seg1.set_attribute("stroke-dasharray","40 60")?;</kbd><br /><br />
+        The above property sets the stroke of the circle with a length of 40 followed by a gap of length 60. This represents a segment of 40% followed by an empty gap for the rest of the 60% of the circle.<br />
+        <br />
+        <kbd>seg1.set_attribute("stroke-dashoffset","25")?;</kbd><br /><br />
+        A stroke using "stroke-dasharray", by default, starts on the right side at 3 o'clock of the circle. The "stroke-dashoffset" of 25 moves the stroke counter-clockwise by 25%. This will enable us to start the stroke at the 12 o'clock position.<br /><br />        
+    </li>
+    <li>Segment 2<br /><br />
+        <kbd>seg2.set_attribute("stroke-dasharray","20 80")?;</kbd><br /><br />
+        The above property sets the stroke of the circle with a length of 20 followed by a gap of length 80. This represents a segment of 20% followed by an empty gap for the rest of the 80% of the circle.<br />
+        <br />
+        <kbd>seg2.set_attribute("stroke-dashoffset","85")?;</kbd><br /><br />
+        The "stroke-dashoffset" of 85 moves the stroke counter-clockwise by 85% (25% + 60%). <br />
+        25% to start at 12 o'clock. <br />
+        60% to move the segment counter clockwise to where the previous segment ends. 100% - 40%, where 40% is the length of the first segment. <br /><br />
+    </li>
+    <li>Segment 3<br /><br />
+        <kbd>seg3.set_attribute("stroke-dasharray","40 60")?;</kbd><br /><br />
+        The above property sets the stroke of the circle with a length of 40 followed by a gap of length 60. This represents a segment of 40% followed by an empty gap for the rest of the 60% of the circle.<br />
+        <br />
+        <kbd>seg3.set_attribute("stroke-dashoffset","85")?;</kbd><br /><br />
+        The stroke-dashoffset of 65 moves the stroke counter-clockwise by 65% (25% + 40%). <br />
+        25% to start at 12 o'clock. <br />
+        40% to move the segment counter clockwise to where the previous segments ends. 100% - 40% - 20%, where 40% is length of the first segment and 20% is the length of the second segment.<br /><br />
+    </li>
+
+</ul>    
+<p></p>
+<h6>HTML Output</h6>
+<p>
+The following illustrates the HTML/SVG output of the donut chart program above.
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+    <pre><code style="color:white;">
+        &lt;figure id="donut-chart">&lt;/figure>
+        &lt;figure>
+          &lt;div class="doughnut-main">
+              &lt;svg width="100%" height="100%" viewBox="0 0 42 42">
+                  &lt;rect width="100%" height="100%" fill="white" />
+                  &lt;circle class="hole" cx="21" cy="21" r="15.91549430918954" 
+                        fill="#fff">&lt;/circle>
+                  &lt;circle class="ring" cx="21" cy="21" 
+                        r="15.91549430918954" fill="transparent" 
+                        stroke="#d2d3d4" stroke-width="3">&lt;/circle>
+                  &lt;circle cx="21" cy="21" r="15.91549430918954" 
+                        fill="transparent" stroke="#ce4b99" 
+                        stroke-width="5" stroke-dasharray="40 60" stroke-dashoffset="25">
+                      &lt;title>App Store&lt;/title>
+                      &lt;desc>40% (40 out of 100)&lt;/desc>
+                  &lt;/circle>
+      
+                  &lt;circle cx="21" cy="21" r="15.91549430918954" 
+                        fill="transparent" stroke="#27A844" 
+                        stroke-width="5" stroke-dasharray="20 80" stroke-dashoffset="85">
+                      &lt;title>Website&lt;/title>
+                      &lt;desc>20% (20 out of 100)&lt;/desc>
+                  &lt;/circle>
+                  &lt;circle cx="21" cy="21" r="15.91549430918954" 
+                        fill="transparent" stroke="#377bbc" 
+                        stroke-width="5" stroke-dasharray="40 60" stroke-dashoffset="65">
+                      &lt;title>Partners&lt;/title>
+                      &lt;desc>40% (40 out of 100)&lt;/desc>
+                  &lt;/circle>     
+                  &lt;g class="doughnut-text">
+                      &lt;text x="50%" y="50%" class="doughnut-number">
+                          100
+                      &lt;/text>
+                      &lt;text x="50%" y="50%" class="doughnut-label">
+                          Sales
+                      &lt;/text>
+                  &lt;/g>
+              &lt;/svg>
+          &lt;/div>     
+          &lt;figcaption class="doughnut-key">
+              &lt;ul class="doughnut-key-list" aria-hidden="true" 
+                    style="list-style-type: none;">
+                  &lt;li>
+                      &lt;span class="round-dot dot-red">&lt;/span> &lt;span>App Store (40)&lt;/span>
+                  &lt;/li>
+                  &lt;li>
+                      &lt;span class="round-dot dot-green">&lt;/span> Website (20)
+                  &lt;/li>
+                  &lt;li>
+                      &lt;span class="round-dot dot-blue">&lt;/span> Partners (40)
+                  &lt;/li>
+              &lt;/ul>
+          &lt;/figcaption>
+      &lt;/figure>  
+    </code></pre>                  
+</div>  
+<p></p> 
+<h6>CSS</h6>
+<p>
+The CSS Style Sheet values used by the SVG donut chart. 
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+    <pre><code style="color:white;">
+        .doughnut-text {
+            fill: #000;
+            transform: translateY(0.25em);
+          }
+    
+          .doughnut-number {
+            font-size: 0.5em;
+            line-height: 1;
+            text-anchor: middle;
+            transform: translateY(-0.25em);
+          }
+    
+          .doughnut-label {
+            font-size: 0.2em;
+            text-transform: uppercase;
+            text-anchor: middle;
+            transform: translateY(0.3em);
+          }
+    
+          figure {
+            display: flex;
+            justify-content: space-around;
+            flex-direction: column;
+            margin-left: -15px;
+            margin-right: -15px;
+          }
+    
+          .doughnut-main,
+          .doughnut-legend {
+            flex: 1;
+            padding-left: 15px;
+            padding-right: 15px;
+            align-self: flex-start;
+          }
+    
+          .doughnut-main svg {
+    
+              height: auto;
+    
+          }
+    
+          .doughnut-legend {
+            min-width: calc(8 / 12);
+          }
+    
+          .doughnut-legend [class*="dot-"] {
+              margin-right: 6px;
+          }
+    
+          .doughnut-legend-list {
+    
+            margin: 0;
+            padding: 0;
+            list-style: none;
+    
+          }
+    
+          .doughnut-legend-list li {
+              margin: 0 0 8px;
+              padding: 0;
+          }
+    
+          .dot-red {
+    
+            background-color: #c84b95;
+    
+          }
+    
+          .dot-green {
+    
+            background-color: #27A844;
+          }
+    
+          .dot-blue {
+    
+            background-color: #3779b8;
+    
+          }
+    
+          .round-dot {
+            margin: 5px;
+            display: inline-block;
+            vertical-align: middle;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+    
+          }    
+    </code></pre>                  
+</div>  
+<p></p> 
+
+<h6>Source Code</h6>
+<ul class="list-marked">
+<li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/rustwasm-charts/tree/master/donutchart/example rel="nofollow">rustwasm-donutchart</a></li>
+<ul></ul>            
+<p></p>

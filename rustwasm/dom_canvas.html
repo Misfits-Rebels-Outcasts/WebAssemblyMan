@@ -1,0 +1,86 @@
+---
+layout: rustwasm
+title: HTML DOM canvas Object for Rust WebAssembly
+description: HTML DOM canvas Object for Rust WebAssembly
+keyword: canvas, dom canvas, html canvas, rust webassembly canvas, rustwasm canvas, canvas element
+---
+<h5>HTML DOM canvas Object for Rust WebAssembly</h5>
+<p></p>
+<h6>Create a canvas Object</h6>
+<p>You can create an &lt;canvas> object using the document.create_element method.</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+    let canvas = document.create_element("canvas")
+    .unwrap()
+    .dyn_into::&lt;web_sys::HtmlCanvasElement>()
+    .unwrap();
+</code></pre>                  
+</div>                           
+<p></p>
+{% include aa1.html %}
+
+<h6>Access a canvas Object</h6>
+<p>You can access an &lt;canvas> object using the document.get_element_by_id method.</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+    let button = document.get_element_by_id("my-canvas")
+    .unwrap()
+    .dyn_into::&lt;web_sys::HtmlCanvasElement>()
+    .unwrap();
+</code></pre>                  
+</div>                           
+<p></p>
+{% include aa2.html %}
+
+<h6>Properties</h6>
+<ul class="list-marked">
+    <li><p>fillStyle - The color, gradient, or pattern used to fill the drawing.</p>
+        <a class="button" href="web_sys_canvasrenderingcontext2d_fill_style.html" style="text-transform:lowercase;color:black">fill_style</a>
+        <a class="button" href="web_sys_canvasrenderingcontext2d_set_fill_style.html" style="text-transform:lowercase;color:black">set_fill_style</a>
+    </li>    
+    <li><p>width - The width of the canvas.</p>
+        <a class="button" href="#" style="text-transform:lowercase;color:lightgray">width</a>
+        <a class="button" href="web_sys_htmlcanvaselement_set_width.html" style="text-transform:lowercase;color:black">set_width</a>
+    </li>    
+    <li><p>height - The height of the canvas.</p>
+        <a class="button" href="#" style="text-transform:lowercase;color:lightgray">height</a>
+        <a class="button" href="web_sys_htmlcanvaselement_set_height.html" style="text-transform:lowercase;color:black">set_height</a>
+    </li>    
+</ul>
+
+{% include aa3.html %}
+<p></p>
+<h6>Functions</h6>
+<ul class="list-marked">
+    <li><a href=web_sys_htmlcanvaselement_get_context.html>get_context</a></li>
+</ul>
+
+{% include aa4.html %}
+<p></p>
+
+
+
+            <h6>features/dependencies</h6>
+            <ul class="list-marked">
+            <li><a href=web_sys_htmlcanvaselement.html>web-sys HtmlCanvasElement</a></li>
+        </ul>
+<p></p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+        features = [
+        'HtmlCanvasElement',
+        ]
+</code></pre>                  
+</div>                           
+<p></p>
+                
+
+            <p></p>
+            <h6>Source Code</h6>
+            <ul class="list-marked">
+            <li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/create_access_html_objects rel="nofollow">create_access_html_objects</a></li>
+            <ul></ul>            
+                    
+{% include aa5.html %}

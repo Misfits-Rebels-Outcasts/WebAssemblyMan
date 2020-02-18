@@ -1,0 +1,61 @@
+---
+layout: rustwasm
+title: js-sys
+description: js-sys - Raw bindings for JavaScript's standard, built-in objects, including their methods and properties.
+keyword: js-sys, JavaScript objects
+---
+               <h5>js-sys</h5>
+                <p>js-sys is a crate, a library in Rust, that contains bindings for JavaScript's standard, built-in objects, including their methods and properties. 
+                </p>
+                <p>The Cargo.toml below enables the use of js-sys.</p>
+                <p>Cargo.toml</p>
+
+                <div class="quote-bordered" style="text-align:left;background:black"> 
+                    <pre><code style="color:white;">[package]
+name = "dom"
+version = "0.1.0"
+authors = ["www.webassemblyman.com"]
+edition = "2019"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+wasm-bindgen = "0.2.50"
+
+[dependencies.js-sys]
+version = "0.3.4"
+
+        </code></pre>                  
+        </div>
+        <p>After enabling the features of the JavaScript objects in js_sys, you can easily use them in your rustwasm programs as shown below. </p>
+<p>src/lib.rs</p>
+        <div class="quote-bordered" style="text-align:left;background:black"> 
+            <pre><code style="color:white;">
+                use wasm_bindgen::prelude::*;
+
+                #[wasm_bindgen(start)]
+                pub fn run() -> Result&lt;(), JsValue> {
+                    let array = js_sys::Array::new();
+                    array.push(&"Hello".into());
+                    web_sys::console::log(&array);
+                    Ok(())
+                }       
+</code></pre>                  
+</div>
+<p> </p>
+                <h6>Structs</h6>
+                <ul class="list-marked">
+                        <li><a href=js_sys_array.html>Array</a></li>
+                        <li>ArrayBuffer</li>                        
+                        <li>Boolean</li>                        
+                        <li>DataView</li>
+                        <li>Date</li>
+                        <li>Error</li>
+                        <li>EvalError</li>
+                        <li>Float32Array</li>
+                        <li>Float64Array</li>
+                        <li>Function</li>
+                                    </ul>
+                                    <p></p>
+

@@ -1,0 +1,161 @@
+---
+layout: blazor
+title: Blazor Charts 
+description: Blazor Charts
+keyword: blazor charts, blazor chart libraries, webassembly blazor charts
+---
+<h3>Blazor Charts</h3>
+<p>
+    <i>Elegantly Simple WebAssembly Blazor Charts</i>
+</p>
+<p>
+    This is a collection of Blazor Charts that are Elegantly Simple with the following key design principles:
+</p>
+<p>
+<ul class="list-marked">
+    <li>Simple as in Less is More <br />
+        The components or charts aim to be good enough for most people, and is simple and easy to use.     
+    </li>
+    <li>Vanilla and Minimal Dependencies <br />
+        The components or charts are developed with minimal dependencies to external libraries or frameworks.
+        Wherever possible, it utilizes the underlying programming language in a plain vanilla manner.     
+    </li>
+    <li>Adaptable<br />
+        The component or chart being simple, vanilla and with minimal dependencies makes it adaptable. 
+        Whenever the platform or framework changes, it is easy to adapt the chart to keep it current and up to date.
+            </li>
+    <li>Elegant as in easy to understand and change <br />
+        The source code is structured to be easy to understand, compile, change, extend or port.
+    </li>
+</ul>
+</p>
+<h3>Type of Charts</h3>
+<p>
+<ul class="list-marked">
+    <li><a href=blazordonutchart.html>Donut Chart</a></li>
+    <li><a href=blazorpiechart.html>Pie Chart</a></li>
+    <li><a href=blazorbarchart.html>Horizontal Bar Chart</a></li>
+    <li><a href=blazorbarchart.html#verticalbarchart>Vertical Bar Chart</a></li>
+    <li><a href=blazorlinechart.html>Line Chart</a></li>
+    <li>Sparkline</li>
+    <li>Sparkline Columns</li>
+    <li>Win Lose</li>
+    <li>Win Lose Draw</li>
+    <li>Bullet Bars</li>
+    <li>Bar Graphs</li>
+    <li>Mini Pie</li>    
+</ul>
+</p>
+<h5>Source Code</h5>
+<p>
+<ul class="list-marked">
+ <li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/Blazor-Charts rel="nofollow">Blazor Charts</a></li>
+<ul></ul>
+</p>
+<h5>How to build and use the charts?</h5>
+<p>
+Using the dotnet CLI, create a new Blazor project
+</p>
+<kbd>dotnet new blazorwasm -o BlazorProject</kbd>
+<p>
+Clone the Blazor Charts Library
+</p>
+<kbd>git clone https://github.com/Misfits-Rebels-Outcasts/Blazor-Charts.git</kbd>
+<p>
+Add a reference from the BlazorProject to specific Blazor Charts Library. Go to the BlazorProject folder, edit the BlazorProject.csproj and add in the following:
+</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+    <pre><code style="color:white;">
+
+&lt;Project...> 
+.
+.
+.
+&lt;ItemGroup>
+    &lt;ProjectReference Include="../Blazor-Charts/DonutChart/DonutChart.csproj" />
+
+&lt;/ItemGroup>
+&lt;/Project>
+
+</code></pre></div>
+<p>
+If you are using other charts such as the Pie Chart, change the above to "../Blazor-Charts/PieChart/PieChart.csproj".     
+</p>
+<p>
+Edit Index.razor in the Pages folder of the BlazorProject
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+@using WebAssemblyMan
+
+@page "/"
+
+&lt;h1>Hello, world!&lt;/h1>
+
+Welcome to your new app.
+
+&lt;DonutChart InputData="10,30,20,10,10,10,5,5" 
+                   InputLabels="App Store,Website,Partners,
+                   Direct,Channels,Retail,Distributors,Affiliates">
+&lt;/DonutChart>
+  
+&lt;SurveyPrompt Title="How is Blazor working for you?" />
+</code></pre></div>
+<p>
+@using enables us to use the Blazor Charts library.  &lt;DonutChart> is the tag where we declare to use our chart component.
+If you are using other charts such as the Pie Chart, change the above to "&lt;PieChart InputData="50,30,20" ...>&lt;PieChart>".         
+</p>
+<p>
+Edit index.html to include the Chart Stylesheet.
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+&lt;!DOCTYPE html>
+&lt;html>
+
+&lt;head>
+    .
+    .
+    .
+    &lt;link href="_content/DonutChart/styles.css" rel="stylesheet" />
+&lt;head>
+
+&lt;body>
+.
+.
+.
+&lt;/body>
+
+&lt;/html>    
+</code></pre></div>
+</p>
+<p>
+    If you are using other charts such as the Pie Chart, change the above to "&lt;link href="_content/PieChart/styles.css" rel="stylesheet" />".         
+</p>
+<p>
+    Run the BlazorProject
+</p>
+<kbd>dotnet run</kbd>
+<p>
+    You should see a web page with the Blazor chart.
+</p>
+
+<h4>Our Philosophy</h4>
+<p>
+Have you thought about how many times you use, reuse, written or rewritten your components and charts? Everyday, day after day, components after components and charts after charts. 
+We definitely have. That is why we build own components and charts to be adaptable, vanilla with minimal dependencies and elegantly simple. 
+The Elegantly Simple design ensures our components and charts are build to last. As new frameworks and libraries are released, you will be able to easily adapt the components charts to the new version.
+When you hire new people to maintain a project utilizing these components and charts, they will have no problems understanding how the components and charts work.
+</p>
+<p>
+We provide good documentation on the components and charts so that you do not need to guess or figure out how we have designed and implemented them.
+</p>
+<p>
+We also test our components and charts with different scenarios vigorously, so that you know you can be assured of its quality, robustness and reliability. 
+</p>
+<p>
+Whether you are a project manager, software developer or business executive from a Fortune 500 company, or a free-lancer, a consultant or an entrepreneur joining the business world, we hope that you will find our WebAssembly components and charts useful as we have put together our best experience, invest our best effort and time to develop them.
+</p>
+
+

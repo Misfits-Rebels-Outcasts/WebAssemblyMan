@@ -1,0 +1,103 @@
+---
+layout: blazor
+title: Blazor Data Binding 
+description: Blazor Data Binding
+keyword: blazor data binding, data binding
+---
+<h3>Blazor Data Binding</h3>
+<p>
+    Blazor is a component-based framework that supports powerful capabilities such as data binding. Data binding is simply a bridge or connection between your application View and Data. When the data changes, the View automatically reflects the updated data values. With data binding, direct access to the DOM is minimized.
+    In terms of development, you just need to point or connect a HTML element with a variable defined in your program. 
+    For example, you can write the following:
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">@page "/"
+&lt;h3>Data Binding&lt;/h3>
+
+&lt;p>@dataBinding&lt;/p>
+
+@functions {
+    string dataBinding = "Test Data Binding";
+}</code></pre></div>
+
+<p>When you run the above, your web page will display "Test Data Binding". To make the example more interesting, we are going to bind to the same variable with the input HTML element using the bind keyword. 
+After running the program, you can change the input value, press the Enter key and see that the value in @dataBinding changes automatically.</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">@page "/"
+&lt;h3>Data Binding&lt;/h3>
+
+Enter value: &lt;input type="text" @bind=dataBinding />&lt;br />
+&lt;p>@dataBinding&lt;/p>
+
+@functions {
+    string dataBinding = "Test Data Binding";
+}</code></pre></div>
+
+<p>To make the example more meaningful, you can use bind to display a list of values.</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">@page "/"
+&lt;h3>Data Binding</h3>
+
+&lt;ul>
+    @foreach (var day in days)
+    {
+      &lt;li>@day&lt;/li>
+    }
+&lt;/ul>
+
+@functions {
+	private List&lt;string> days { get; set; } = new List&lt;string>
+        {
+	        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+        };
+}</code></pre></div>
+
+<p>The following example shows how to display the days in a drop down list using the HTML select element. When the selection changes, the SelectDay function will be executed to update the selectedDay value.</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">@page "/"
+    
+&lt;select @onchange=SelectDay>
+    @foreach (var day in days)
+    {
+      &lt;option value=@day>@day&lt;/option>
+    }
+&lt;/select>
+
+&lt;p>Today is :@selectedDay&lt;/p>
+
+@functions {
+    private List&lt;string>
+    days { get; set; } = new List&lt;string>
+    {
+    	"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+    };
+    string selectedDay = "Monday";
+    void SelectDay(ChangeEventArgs e)
+    {
+    	selectedDay = e.Value.ToString();
+    	Console.WriteLine("Today is: " + selectedDay);
+    }
+}</code></pre></div>
+<br />
+<h4>Format Bindings</h4>
+
+<p>If you wish to format a bound value, you can use the format-value attribute. The Birthday for input element uses the format-value="dd.MM.yyyy".</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">@page "/"
+&lt;h3>Data Binding&lt;/h3>
+
+&lt;input type="text" @bind="Birthday" format-value="dd.MM.yyyy" />
+&lt;p>
+    You are born on the @Birthday
+&lt;/p>
+@functions {
+	public DateTime Birthday { get; set; } = DateTime.Today;
+}</code></pre></div>
+
+
+
+

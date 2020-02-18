@@ -1,0 +1,115 @@
+---
+layout: rustwasm
+title: How to manipulate the DOM in Rust Webassembly?
+description: How to manipulate the DOM in Rust Webassembly?
+keyword: dom, dom manipulation
+---
+<h5>How to manipulate the DOM in Rust Webassembly?</h5>
+<p>
+
+</p>
+<h6>Example 1</h6>
+<p>This example demonstrates the get_element_by_id method of the document element. The method retrieves the "paragraphId" element and then log its inner text to the console.</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+	pub fn document_get_element_by_id()
+	{
+		let window = web_sys::window().expect("global window does not exists");    
+		let document = window.document().expect("expecting a document on window");
+		//let body = document.body().expect("document expect to have have a body");
+		let val = document.get_element_by_id("paragraphId")
+		.unwrap()
+		.dyn_into::&lt;web_sys::HtmlElement>()
+		.unwrap();
+		web_sys::console::log_2(&"URL: %s".into(),&JsValue::from_str(&val.inner_text()));
+	}
+</code></pre>                  
+</div>  
+<p></p>                      
+<h6>Example 2</h6>
+<p>Create an Element node by tagName (e.g. "p", "div"). </p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+	pub fn document_create_element()
+	{
+		let window = web_sys::window().expect("global window does not exists");    
+		let document = window.document().expect("expecting a document on window");
+		let body = document.body().expect("document expect to have have a body");
+		let val = document.create_element("p").unwrap();
+		val.set_inner_html("Hello World from WebAssemblyMan!");
+		body.append_child(&val).unwrap();
+	}	
+</code></pre>                  
+</div>                        
+
+<p></p>
+
+<h6>Example 3</h6>
+<p>
+This example demonstrates the use of document.query_selector to select a &lt;p> element. If there are multiple &lt;p> element, the first one gets selected. 
+</p>
+<p>
+The method returns a Result&lt;Option&lt;Element>, JsValue>, thus requiring multiple unwrap in the code below. After getting the HtmlElement, the set_inner_text method is called to set a "Hello..." message. 
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+    pub fn document_query_selector()
+    {
+        let window = web_sys::window().expect("global window does not exists");    
+        let document = window.document().expect("expecting a document on window");
+        let val = document.query_selector("p")
+                    .unwrap()
+                    .unwrap()
+                    .dyn_into::&lt;web_sys::HtmlElement>()
+                    .unwrap();
+        val.set_inner_text(&"Hello from querySelector");
+    }
+</code></pre>                  
+</div>                        
+
+<p></p>
+
+<h6>Source Code for Example 1, 2 & 3</h6>
+<ul class="list-marked">
+<li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/web_sys_document rel="nofollow">web_sys_document</a></li>
+<ul></ul>            
+<p></p>
+<h6>Example 4</h6>
+<p>This example gets the HTML canvas element, set the width/height, get the 2d rendering context, use the context to draw a rectangle and fill it with color.</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+    pub fn htmlcanvaselement_set_width_height()
+    {
+        let document = web_sys::window().unwrap().document().unwrap();
+        let canvas = document.get_element_by_id("canvas").unwrap();
+        let canvas: web_sys::HtmlCanvasElement = canvas
+            .dyn_into::&lt;web_sys::HtmlCanvasElement>()
+            .map_err(|_| ())
+            .unwrap();
+    
+        canvas.set_width(500);
+        canvas.set_height(500);
+        
+        let context = canvas
+            .get_context("2d")
+            .unwrap()
+            .unwrap()
+            .dyn_into::&lt;web_sys::CanvasRenderingContext2d>()
+            .unwrap();
+    
+        context.begin_path();
+    
+        context
+            .rect(75.0, 75.0, 50.0, 50.0);
+    
+        context.fill();
+    
+    }    
+</code></pre>                  
+</div>                        
+
+<p></p>
+<h6>Source Code</h6>
+<ul class="list-marked">
+<li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/web_sys_canvasrenderingcontext2d rel="nofollow">web_sys_canvasrenderingcontext2d</a></li>
+<ul></ul>            

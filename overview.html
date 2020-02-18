@@ -1,0 +1,196 @@
+---
+layout: toplevelcontent
+title: Example Project Overview
+description: Example Project Overview.
+keyword: project overview
+---
+               <h4>Brief overview on building your sample/example project</h4>
+
+<p>
+1. Let's assumed that you have spent time learning Rust WebAssembly and studied our previous tutorials. And now, you are ready to create a sample project.
+After investigation, you think that you are insterested to learn and implement samples for <a href=https://rustwasm.github.io/wasm-bindgen/api/web_sys/struct.Document.html>web_sys::Document</a>.
+At this point, simply drop us a message to check with us to reserve this struct for your implmentation.
+</p>
+<p>
+2. Select 5 (or 10 depending on which stage you are in) functions from this Struct. Let's assumed that you have selected the following functions to create examples for.
+</p>
+
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+pub fn create_element(&self, local_name: &str) -> Result&lt;Element, JsValue>
+pub fn body(&self) -> Option&lt;HtmlElement>
+pub fn get_element_by_id(&self, element_id: &str) -> Option&lt;Element>
+pub fn get_elements_by_class_name(&self, class_names: &str) -> HtmlCollection
+pub fn get_elements_by_name(&self, element_name: &str) -> NodeList
+            </code></pre>                  
+        </div>
+<p>
+After selection, please inform us of your selection to prevent duplicate implementation with others. 
+We may also provide you with advice to start with more popular or widely used functions. The key is to communicate with us continuously.
+Initially, we will typically allow you you to reserve the entire struct (and even a few more without naming the functions specifically) for implementation.
+</p>
+<p>
+3. In your command line, enter the following command to create a new sample project.
+</p>
+<p>
+<kbd>cargo new web_sys_document --lib</kbd>
+</p>
+<p>
+For consistency, change the Struct name from Document to lower case "document" when we use it in our project name. We will also like to append the crate name "web-sys" in front with the "-" replace as an underscore "_".  The final project name becomes "web_sys_document". 
+</p>
+<p>
+If you have selected a Struct from js-sys, you can use "cargo new js_sys_xxx --lib" where "xxx" is the Struct name in lower case.
+</p>
+<p>
+4. Once the project is created, change the Cargo.toml file to include the "features" required. 
+</p>
+<p>
+Cargo.toml
+</p>
+<p>
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+.
+.
+.
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+js-sys = "0.3.32"
+wasm-bindgen = "0.2.55"
+
+[dependencies.web-sys]
+version = "0.3.4"
+features = [
+  'Document',
+  'Element',
+  'HtmlElement',
+  'Node',
+  'Window',
+]             
+            </code></pre>                  
+        </div>
+</p>
+<p>
+5. Let's say we want to implement a sample for the "create_element" function. We will modify "lib.rs" to be as follow: 
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+use wasm_bindgen::prelude::*;
+
+//Create a paragraph element and append it to the HTML body.
+pub fn document_create_element()
+{
+    let window = web_sys::window().expect("global window does not exists");    
+    let document = window.document().expect("expecting a document on window");
+    let body = document.body().expect("document expect to have have a body");
+    let val = document.create_element("p").unwrap();
+    val.set_inner_html("Hello World from WebAssemblyMan!");
+    body.append_child(&val).unwrap();
+}
+
+#[wasm_bindgen(start)]
+pub fn start() {
+    document_create_element();
+}
+            </code></pre>                  
+        </div>
+</p>
+<p>
+<strong>Recommendations</strong>
+</p>
+<p>
+Make sure the example is place in a function (e.g. "document_create_element" : Struct name in lower case followed by "_" and the "create_element" function name.) as shown above.
+</p>
+<p>
+Make sure the example is meaningful and illustrates what the "create_element" function does.
+</p>
+<p>
+Make sure to add a meaningful description of the function as comments.
+</p>
+
+<p>
+6. Compile the program in the command line terminal with the following:
+</p>
+<p>
+<kbd>wasm-pack build --target web</kbd>
+</p>
+<p>
+7. Next, add an "index.html" file and import the generated "web_sys_document.js"
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+&lt;html>
+    &lt;head>
+      &lt;meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+    &lt;/head>
+    &lt;body>  
+      &lt;script type="module">
+  
+        import init from './pkg/web_sys_document.js';
+  
+        async function run() {
+          await init();
+        }
+    
+        run();
+      &lt;/script>
+    &lt;/body>  
+&lt;/html>
+            </code></pre>                  
+        </div>
+</p>
+<p>
+8. In the folder containing "index.html", run the following command to launch the project.
+</p>
+<p>
+<kbd>python3 -m http.server</kbd>
+</p>
+<p>
+You can also use other http server such as "cargo install basic-http-server" and then "basic-http-server".  
+</p>
+
+<p>
+9. Launch your browser (Chrome or Firefox) to test the output on "127.0.0.1:8000". You should see "Hello World from WebAssemblyMan!". The complete example is available at the following for reference:
+</p>
+<p>
+https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/web_sys_document
+</p>
+<p>
+10. Finally, proceed to implement examples for the other functions.
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+document_body();
+document_get_element_by_id();
+document_get_elements_by_class_name();
+document_get_elements_by_name();
+            </code></pre>                  
+        </div>
+</p>
+<p>
+See how the examples will be used for documentation on our website.
+</p>
+<p>
+https://www.webassemblyman.com/rustwasm/web_sys_document_create_element.html
+</p>
+<p>
+<strong>Important Notes</strong>
+</p>
+<p>
+Take time to learn, understand and appreciate Rust WebAssembly while you build the samples. The thing we value most is the knowledge you have gained.
+</p>
+<p>
+A good place to learn is https://github.com/rustwasm/wasm-bindgen/tree/master/crates/web-sys/tests/wasm. You can also look at HTML/Javascript samples and then implement it in rustwasm. 
+</p>
+<p>
+We recommend starting with the easier HTML***Element (e.g. HTMLParagraphElement) etc. Let's say you are implmenting for HTMLParagraphElement (web_sys_htmlparagraphelement), make sure NOT to implement the methods found in the base (Deref Target HTMLElement, Element) class
+</p>
+<p>
+  <strong>Further Steps</strong>
+  </p>
+  <p>
+    Create a GitHub account if you do not have one yet. You will soon be contributing to WebAssemblyMan GitHub repository through Fork/Pull Requests. You may also be creating web pages through a Static Web Site Generator. We will be sharing more with you soon.
+  </p>
+  <p>
+    Hint : This is a golden opportunity to build up your GitHub account, which may be your biggest takeaway besides the knowledge gain.
+  </p>
+  

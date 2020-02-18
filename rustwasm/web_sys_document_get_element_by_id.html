@@ -1,0 +1,47 @@
+---
+layout: rustwasm
+title: web_sys::Document::get_element_by_id function
+description: web_sys::Document::get_element_by_id function
+keyword: web_sys::Document::get_element_by_id function
+---
+<h5>web_sys::Document::get_element_by_id function</h5>
+<p>
+
+</p>
+<h6>Example</h6>
+<p>This example demonstrates the get_element_by_id method of the document element. The method retrieves the "paragraphId" element and then log its inner text to the console.</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+	pub fn document_get_element_by_id()
+	{
+		let window = web_sys::window().expect("global window does not exists");    
+		let document = window.document().expect("expecting a document on window");
+		//let body = document.body().expect("document expect to have have a body");
+		let val = document.get_element_by_id("paragraphId")
+		.unwrap()
+		.dyn_into::&lt;web_sys::HtmlElement>()
+		.unwrap();
+		web_sys::console::log_2(&"URL: %s".into(),&JsValue::from_str(&val.inner_text()));
+	}
+</code></pre>                  
+</div>                        
+
+<!--WebAssemblyMan Placeholder-->
+<p></p>
+<h6>Function</h6>
+<p></p>
+<div class="" style="text-align:left;background:whitesmoke"><pre><code style="color:#000;background:whitesmoke">
+	pub fn get_element_by_id(&self, element_id: &str) -> Option&lt;Element>
+
+</code></pre></div>                        
+<p></p>
+
+<h6>features/dependencies</h6>
+<ul class="list-marked">
+<li><a href=web_sys_document.html>web-sys Document</a></li>
+</ul>
+<p></p>
+<h6>Source Code</h6>
+<ul class="list-marked">
+<li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/web_sys_document rel="nofollow">web_sys_document</a></li>
+<ul></ul>            

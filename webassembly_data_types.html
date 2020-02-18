@@ -1,0 +1,80 @@
+---
+layout: toplevelcontent
+title: WebAssembly Data Types.
+description: WebAssembly Data Types.
+keyword: webassembly data types
+---
+               <h4>WebAssembly Data Types</h4>
+<p>      
+WebAssembly (as of v1.0) has only four data types.
+</p>
+      <ul class="list-marked">
+	<li>i32 : 32 Bit Integer</li>
+	<li>i64 : 64 Bit Integer</li>
+	<li>f32 : 32 Bit Floating Point Number</li>
+	<li>f64 : 64 Bit Floating Point Number</li>
+      </ul>
+
+<p>
+</p>
+
+<h5>Usage of i32 for addition</h5>
+<br />
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+(module
+  (func $addi32 (param $lhs i32) (param $rhs i32) (result i32)
+    get_local $lhs
+    get_local $rhs
+    i32.add)
+  (export "addi32" (func $addi32))
+)
+            </code></pre>                  
+    </div>
+<br />
+<h5>Usage of i64 for addition</h5>
+<br />
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+(module
+  (func $addi64 (param $lhs i64) (param $rhs i64) (result i64)
+    get_local $lhs
+    get_local $rhs
+    i64.add)
+  (export "addi64" (func $addi64))
+)
+            </code></pre>                  
+    </div>
+<br />
+<h5>Usage of f32 for addition</h5>
+<br />
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+(module
+  (func $add (param $lhs f32) (param $rhs f32) (result f32)
+    get_local $lhs
+    get_local $rhs
+    f32.add)
+  (export "addf32" (func $addf32))
+)
+            </code></pre>                  
+    </div>
+<br />
+<h5>Usage of f64 for addition</h5>
+<br />
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+(module
+  (func $addf64 (param $lhs f64) (param $rhs f64) (result f64)
+    get_local $lhs
+    get_local $rhs
+    f64.add)
+  (export "addf64" (func $addf64))
+)
+            </code></pre>                  
+        </div>
+<p>
+
+        
+                
+

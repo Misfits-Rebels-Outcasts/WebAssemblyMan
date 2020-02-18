@@ -1,0 +1,58 @@
+---
+layout: rustwasm
+title: web_sys::FontFace::load function
+description: web_sys::FontFace::load function
+keyword: web_sys::FontFace::load function
+---
+<h5>web_sys::FontFace::load function</h5>
+<p>
+
+</p>
+<h6>Example</h6>
+<p>
+This example asynchronously loads a true type Code 39 barcode font using the FontFace load method. After the font is loaded, it is added to the Document to display a barcode in a div element.
+The load method returns a JavaScript Promise which is wrap in a Rust JsFuture. The await keyword yields control of the current thread until the font is loaded. Finally, the loaded font is added to the list of fonts available in the HTML document element.
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+    pub async fn web_sys_fontface_load() 
+    {
+        let window = web_sys::window().expect("global window does not exists");    
+        let document = window.document().expect("expecting a document on window");
+        let fontface = FontFace::new_with_str("barcodefont", 
+                        "url(ConnectCode39.ttf)").unwrap();
+        let promise=fontface.load().unwrap();
+        let _result= wasm_bindgen_futures::JsFuture::from(promise).await;
+        document.fonts().add(&fontface).unwrap();
+    }    
+</code></pre>                  
+</div>                        
+<p></p>
+<h6>HTML div element using the "barcodefont" font-face</h6>
+<p></p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+    <pre><code style="color:white;">
+        &lt;div style="font-weight: normal; font-style: normal; line-height:normal; 
+        font-family: 'barcodefont', sans-serif; font-size: 32px">*12345678*&lt;/div>
+    </code></pre>                  
+    </div>                        
+    
+<!--WebAssemblyMan Placeholder-->
+<p></p>
+<h6>Function</h6>
+<p></p>
+<div class="" style="text-align:left;background:whitesmoke"><pre><code style="color:#000;background:whitesmoke">
+	pub fn load(&self) -> Result&lt;Promise, JsValue>
+
+</code></pre></div>                        
+<p></p>
+
+<h6>features/dependencies</h6>
+<ul class="list-marked">
+<li><a href=web_sys_fontface.html>web-sys FontFace</a></li>
+</ul>
+<p></p>
+<h6>Source Code</h6>
+<ul class="list-marked">
+<li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/web_sys_fontface rel="nofollow">web_sys_fontface</a></li>
+<ul></ul>            

@@ -1,0 +1,60 @@
+---
+layout: toplevelcontent
+title: Blazor Hello World.
+description: Blazor Hello World.
+keyword: blazor, blazor hello world
+---
+           <h3>What is Blazor?</h3>
+		<p class="first-letter">
+
+      Blazor is a WebAssembly based front end web application framework that uses .NET, C# and HTML.
+      It is open source and maintained by Microsoft and the community to address the many challenges encountered
+      in developing single page applications.</p>
+      
+      <p>Note - Blazor is currently experimental and should not be used in production. This website is still under construction.</p>
+             
+      <h3>How does Blazor works?</h3>
+      
+      <p>A Blazor app consists of compiled .NET assemblies that are downloaded and run in a web browser using a WebAssembly-based .NET runtime. The app can also call into 
+      JavaScript or access the DOM through Javascript interop APIs. As Blazor is a component-based framework that supports features such as bindings, direct access to the DOM is minimized.</p>
+      
+      <h3>"Hello World" application in Blazor</h3>
+      <p><strong>Requirements</strong></p>
+      <ul class="list-marked">
+      <li>Install .NET Core SDK  2.1 (or later)</li>
+      </ul>
+  
+      <p>Install latest Blazor Templates with command-line (Windows Command Prompt or MAC Terminal)</p>
+      <br />
+       
+      <kbd>dotnet new -i Microsoft.AspNetCore.Blazor.Templates</kbd>
+      
+      <p>Create the Blazor app</p>
+      <br />
+      
+      <kbd>dotnet new blazorwasm -o BlazorHelloWorld</kbd>
+      
+      <p>Start the Blazor app</p>
+      <br />
+      
+      <kbd>cd BlazorHelloWorld</kbd>
+      <br /><br />
+      <kbd>dotnet run</kbd>
+      
+      <p>You should see the following output:</p>
+
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+Hosting environment: Production
+Content root path: ......BlazorHelloWorld
+Now listening on: http://localhost:5000
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+            </code></pre>                  
+        </div>
+
+      <p>Launch your browser and point it to http://localhost:5000
+      </p>
+                
+
+

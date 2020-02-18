@@ -1,0 +1,118 @@
+---
+layout: blazor
+title: Blazor Cascading Values and Parameters 
+description: Blazor Cascading Values and Parameters
+keyword: blazor cascading values, blazor cascading parameters, cascading values, cascading parameters
+---
+<h3>Cascading Values and Parameters</h3>
+<p>
+In Blazor, you can pass a value from a parent to a child component using component parameters. You will have to write all the wiring code from the parent to all the descendants to pass the value.
+Another more convenient way of doing this is by using cascading values and parameters. To do this, you simply specify a CascadingValue in the parent component for passing to the descendant components.
+In the descendant components, simply specify a CascadingParameter to retrieve the value. 
+</p>
+<p>
+For example, the following passes the string "Hello Title" (CascadingValue) to the descendant components, including those of @Body.
+</p>
+<p>
+MainLayout.razor  (Parent)
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+    <pre><code style="color:white;">
+@inherits LayoutComponentBase
+
+&lt;CascadingValue Value="@TitleValue" Name="TitleValue">
+&lt;div class="content px-4">
+        @Body
+&lt;/div>
+&lt;/CascadingValue>
+
+@functions{
+	string TitleValue="Hello Title";
+}
+</code></pre></div>
+
+<p>
+To access TitleValue, simply specify the CascadingParameter attribute. By default, Cascading values can automatically bound to Cascading parameters by type. 
+In our case, we specify a Name in our CascadingParemeter to clearly indicate the variable we want to bind to. 
+</p>
+
+<p>
+index.razor (Child)
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+    <pre><code style="color:white;">
+&lt;h3>@Title&lt;/h3>
+
+@functions{
+        [CascadingParameter (Name = "TitleValue")] protected string Title { get; set; }
+}
+</code></pre></div>
+<p>
+If index.shtml uses a <a href="blazorcomponents.html">Blazor Component</a>, we can also easily access TitleValue using a similar syntax.
+</p>
+<p>
+GrandchildComponent.razor
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+    <pre><code style="color:white;">
+&lt;h3>@Title&lt;/h3>
+
+@functions{
+        [CascadingParameter (Name = "TitleValue")] protected string Title { get; set; }
+}
+</code></pre></div>
+
+<p>
+Instead of passing (cascade) a single value, you can also pass a class object with multiple attributes as shown below:
+</p>
+<p>
+Shapes/Rectangle.cs
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+    <pre><code style="color:white;">
+namespace Shapes
+{
+    public class Rectangle
+    {       
+        public double Width { get; set; }
+        public double Height { get; set; }
+    }
+}
+</code></pre></div>
+
+<p>
+MainLayout.razor (Parent)
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+    <pre><code style="color:white;">
+@inherits LayoutComponentBase
+@using Shapes
+
+&lt;CascadingValue Value="@rect" Name="RectangleValue">
+&lt;div class="content px-4">
+        @Body
+&lt;/div>
+&lt;/CascadingValue>
+
+@functions{
+	Rectangle rect= new Rectangle { Width=5.0,Height=5.0};
+}
+</code></pre></div>
+
+<p>
+To use the attribute in the child component, you can do the following:
+</p>
+
+<p>index.razor (Child)</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+    <pre><code style="color:white;">
+&lt;p>@rectParam.Width&lt;/p>
+
+@functions{
+        [CascadingParameter (Name = "RectangleValue")] 
+        protected Rectangle rectParam { get; set; }
+}
+</code></pre></div>
+
+

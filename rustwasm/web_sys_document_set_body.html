@@ -1,0 +1,53 @@
+---
+layout: rustwasm
+title: web_sys::Document::set_body function
+description: web_sys::Document::set_body function
+keyword: web_sys::Document::set_body function
+---
+<h5>web_sys::Document::set_body function</h5>
+<p>
+
+</p>
+<h6>Example</h6>
+<p>
+	This example creates a new body element, set the bgColor by dynamically casting it to HtmlBodyElement, and assign the created element to the document by calling set_body. 
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+	pub fn document_set_body()
+	{
+		let window = web_sys::window().expect("global window does not exists");    
+		let document = window.document().expect("expecting a document on window");
+		let body = document.create_element("body").unwrap();
+		let body_html_body_element = body
+		.dyn_into::&lt;web_sys::HtmlBodyElement>()
+		.unwrap();
+		body_html_body_element.set_bg_color("lightgreen");    
+		let body_html_element = body_html_body_element
+								.dyn_into::&lt;web_sys::HtmlBodyElement>()
+								.unwrap();
+		document.set_body(Some(&body_html_element));
+		
+	}
+</code></pre>                  
+</div>                        
+
+<!--WebAssemblyMan Placeholder-->
+<p></p>
+<h6>Function</h6>
+<p></p>
+<div class="" style="text-align:left;background:whitesmoke"><pre><code style="color:#000;background:whitesmoke">
+	pub fn set_body(&self, body: Option&lt;&HtmlElement>)
+
+</code></pre></div>                        
+<p></p>
+
+<h6>features/dependencies</h6>
+<ul class="list-marked">
+<li><a href=web_sys_document.html>web-sys Document</a></li>
+</ul>
+<p></p>
+<h6>Source Code</h6>
+<ul class="list-marked">
+<li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/web_sys_document rel="nofollow">web_sys_document</a></li>
+<ul></ul>            

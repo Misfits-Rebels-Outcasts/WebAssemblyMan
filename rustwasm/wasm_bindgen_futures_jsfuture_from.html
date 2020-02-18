@@ -1,0 +1,63 @@
+---
+layout: rustwasm
+title: wasm_bindgen_futures::JsFuture::from function
+description: wasm_bindgen_futures::JsFuture::from function
+keyword: wasm_bindgen_futures::JsFuture::from function
+---
+               <h5>wasm_bindgen_futures::JsFuture::from function</h5>
+               <p></p>
+               <h6>Example</h6>
+                <p>
+                    Many web APIs works asynchornously using Promise. Rust on the other hand uses JsFuture for handling asychronous operations elegantly.
+                    This example demonstrates wrapping a JavaScript Promise into a Rust JsFuture. Basically, a PNG image is retrieved using the window.fetch_with_request method.
+                    The response is then placed into an image element in the DOM.
+                </p>
+                <p>
+                    The use of JsFuture await is shown below. In the example, resp_value is getting a value from the fetch_with_request method asynchronously. 
+                    During "await" for the value, other tasks are allowed to take over the current thread.
+                    When the value is finally available, the function will then proceed to the next line of code to continue its execution.
+                </p>
+
+               <div class="quote-bordered" style="text-align:left;background:black"> 
+                <pre><code style="color:white;">                                    
+pub async fn wasm_bindgen_future_jsfuture_from()
+{
+    let window = web_sys::window().expect("global window does not exists");    
+    let document = window.document().expect("expecting a document on window");
+    let image:HtmlImageElement = document
+                    .get_element_by_id("my-image").unwrap().dyn_into().unwrap();    
+    let request = Request::new_with_str("/webassembly.png").unwrap();
+
+    //Wrap Promise into JsFuture
+    let resp_value = JsFuture::from(window.fetch_with_request(&request)).await;
+    let response:Response = resp_value.unwrap().dyn_into().unwrap();
+
+    //Wrap Promise into JsFuture
+    let blob_value = JsFuture::from(response.blob().unwrap()).await;
+    let blob:Blob = blob_value.unwrap().dyn_into().unwrap();
+    let object_url = Url::create_object_url_with_blob(&blob);
+    image.set_src(&object_url.unwrap());
+
+}
+                                                        </code></pre>                  
+                </div>                        
+   
+           <!--WebAssemblyMan Placeholder-->
+           <p></p>
+           <h6>Function</h6>
+           <p></p>
+
+           <div class="" style="text-align:left;background:whitesmoke"><pre><code style="color:#000;background:whitesmoke">
+            fn from(js: Promise) -> JsFuture
+           </code></pre></div>                        
+           <p></p>
+
+           <h6>features/dependencies</h6>
+           <ul class="list-marked">
+            <li><a href=wasm-bindgen-futures.html>wasm-bindgen-futures</a></li>
+        </ul>
+            <p></p>
+           <h6>Source Code</h6>
+           <ul class="list-marked">
+            <li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/wasm_bindgen_futures_jsfuture rel="nofollow">wasm_bindgen_futures_jsfuture</a></li>
+           <ul></ul>

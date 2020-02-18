@@ -1,0 +1,138 @@
+---
+layout: toplevelcontent
+title: WebAssembly WAT Hello World.
+description: WebAssembly WAT Hello World.
+keyword: webassembly wat hello world
+---
+               <h4>WebAssembly WAT Hello World</h4>
+<p>      
+As of the current version of WebAssembly (v1.0), it is not possible to have just a one liner of code in WAT (WebAssembly Text Format) to get our venerable "Hello World" program. It is actually simpler to have a function that performs simple arithmetic to add, multiply or subtract two numbers. However, for the sake of tradition, this tutorial is going to illustrate how you can develop a "Hello World" program in WAT. There are slightly more codes but is really not that diffcult. 
+</p>
+      <ul class="list-marked">
+	<li><a href=https://github.com/WebAssembly/wabt rel=nofollow>WebAssembly Binary Toolkit</a> (wabt)<br />The toolkit contains wat2wasm binary which we need to compile our WAT to Webassembly.</li>
+	<li><a href=wat/hello_world.zip>WAT Hello World Source</a></li>
+	<li>Simple HTTP Server such as npm or others</li>
+      </ul>
+<p>
+</p>
+
+<h5>Hello World Tutorial in WebAssembly WAT</h5>
+<p>
+1. WebAssembly does not have access to Javascript variables currently. It can only read and write to it's own linear memory in an array buffer.
+Our first step is to declare a WebAssembly module and a single page of memory to store our "Hello World" string. Simply open up a text editor and enter the following WAT codes. 
+</p>
+<p>
+The data line below stores our "Hello World" string into the memory page starting at offset 0. The export line enables our WebAssembly memory to be used externally from our host container. We will be using Javascript to access the "Hello Wolrd" memory later.
+</p>
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+;; hello_world.wat
+
+(module
+
+  ;; Import our myprint function 
+  (import "env" "jsprint" (func $jsprint (param i32)))
+
+  ;; Define a single page memory of 64KB.
+  (memory $0 1)
+
+  ;; Store the Hello World (null terminated) string at byte offset 0 
+  (data (i32.const 0) "Hello World!\00")
+
+  ;; Export the memory so it can be access in the host environment.
+  (export "pagememory" (memory $0))
+
+  ;; Define a function to be called from our host
+  (func $helloworld
+    (call $jsprint (i32.const 0))
+  )
+
+  ;; Export the wasmprint function for the host to call.
+  (export "helloworld" (func $helloworld))
+)
+
+            </code></pre>                  
+    </div>
+<p>
+From the above, you will notice an exported "helloworld" WebAssembly function and an imported "jsprint" Javascript function. The calling sequence is shown below.
+</p>
+<p>Javascript -> WebAssembly helloworld -> Javascript jsprint</p>
+<p>
+A web page will contain Javascript codes that calls the "helloworld" WebAssembly function. This WebAssembly function will then pass the address of our "Hello World" string stored in the memory back to the host "jsprint" function. The "jsprint" function will print out the "Hello World" contents onto the web page. This interfacing between Javascript and WebAssembly is still required in the current version of WebAssembly.
+</p>
+<p>
+2. Compile the above using wat2wasm from our WebAssembly Binary Toolkit.
+</p>
+<p>
+<kbd>wat2wasm hello_world.wat</kbd>
+</p>
+<p>
+You will get the following .wasm binary format file as output.
+</p>
+<p>
+<strong>hello_world.wasm</strong>
+</p>
+<p>
+3. The following is the Javascript that loads the hello_world.wasm WebAssembly module. Upon loading, we will call the helloworld() function. Notice that the jsprint Javascript function is also defined below.
+</p>
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+var memory;
+
+fetch('./hello_world.wasm').then(response =>
+  response.arrayBuffer()
+).then(bytes => WebAssembly.instantiate(bytes, {
+  env: {
+    jsprint: function jsprint(byteOffset) {
+      var s = '';
+      var a = new Uint8Array(memory.buffer);
+      for (var i = byteOffset; a[i]; i++) {
+        s += String.fromCharCode(a[i]);
+      }
+      document.write(s);
+    }
+  }
+})
+).then(results => {
+  instance = results.instance;
+  memory = instance.exports.pagememory;
+  instance.exports.helloworld();
+}).catch(console.error);
+            </code></pre>                  
+    </div>
+
+<p>
+4. Finally, let's define a HTML document that loads our Javascript which in turns load our WebAssembly module.
+</p>        
+
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+&lt;!DOCTYPE html>
+
+&lt;html>
+
+&lt;head>
+  &lt;meta charset="utf-8">
+  &lt;style>
+    body {
+      background-color: rgb(255, 255, 255);
+    }
+  &lt;/style>
+&lt;/head>
+
+&lt;body>
+  &lt;span id="container"></span>
+  &lt;script src="./hello_world.js"></script>
+&lt;/body>
+
+&lt;/html>
+            </code></pre>                  
+    </div>
+        
+<p>
+5. You can now load the hello_world.html in your browser to view the Hello World output on a web page. Please note that in some environments you will require a simple web server such as npm http server to view the hello_world.html web page.
+</p>
+
+                
+                
+

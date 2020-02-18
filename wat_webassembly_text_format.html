@@ -1,0 +1,60 @@
+---
+layout: toplevelcontent
+title: WAT - WebAssembly Text Format.
+description: WebAssembly Text Format - WAT.
+keyword: WAT, WebAssembly Text Format
+---
+               <h4>WAT - WebAssembly Text Format</h4>
+<p>      
+WebAssembly has a binary format and a text format. The binary format (.wasm) is a compact binary instruction format for a stack-based virtual machine and is designed to be a portable compilation target for other higher-level languages such as C, C++, Rust, C#, Go, Python and many more.  The text format (.wat) is a human readable format designed to help developers view the source of an WebAssembly module. The text format can also be used for writing codes that can be compiled to the binary format.
+</p>
+<p>
+The code below shows an <a href="wat_multiply.wat">example of the .wat format</a> for multiplying two numbers.
+</p>
+
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+(module
+  (func $multiply (param $lhs i32) (param $rhs i32) (result i32)
+    get_local $lhs
+    get_local $rhs
+    i32.mul)
+  (export "multiply" (func $multiply))
+)
+            </code></pre>                  
+        </div>
+<p>
+The <a href="https://github.com/WebAssembly/wabt" rel="nofollow">WebAssembly Binary Toolkit</a> contains a wat2wasm tool that enables you to compile the text format to the binary format.
+</p>
+<p>
+<kbd>wat2wasm wat_multiply.wat</kbd>
+</p>
+<p>
+You will get the following .wasm binary format file as output.
+</p>
+<p>
+<strong>wat_multiply.wasm</strong>
+</p>
+
+
+<p>
+The source code of the Javascript that loads the .wasm file is illustrated below.
+Click to see the <a href=wat_multiply.html onclick='window.open("wat_multiply.html", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400"); return false;'>demo</a>.</p>
+
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+      <pre><code style="color:white;">
+fetch('./wat_multiply.wasm').then(response =>
+  response.arrayBuffer()
+).then(bytes => WebAssembly.instantiate(bytes)
+).then(results => {
+  instance = results.instance;
+
+  console.log("Multiply Result is " +
+    instance.exports.multiply(2,5));
+
+}).catch(console.error);
+            </code></pre>                  
+        </div>
+        
+                
+

@@ -1,0 +1,82 @@
+---
+layout: rustwasm
+title: HTML DOM div Object for Rust WebAssembly
+description: HTML DOM div Object for Rust WebAssembly
+keyword: div, dom div, html div, rust webassembly div, rustwasm div, div element
+---
+<h5>HTML DOM div Object for Rust WebAssembly</h5>
+<p></p>
+<h6>Create a div Object</h6>
+<p>You can create an &lt;div> object using the document.create_element method.</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+    let div = document.create_element("div")
+    .unwrap()
+    .dyn_into::&lt;web_sys::HtmlDivElement>()
+    .unwrap();
+</code></pre>                  
+</div>                           
+<p></p>
+{% include aa1.html %}
+
+<h6>Access a div Object</h6>
+<p>You can access an &lt;div> object using the document.get_element_by_id method.</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+    let div = document.get_element_by_id("my-div")
+    .unwrap()
+    .dyn_into::&lt;web_sys::HtmlDivElement>()
+    .unwrap();
+</code></pre>                  
+</div>                           
+<p></p>
+{% include aa2.html %}
+
+<h6>Properties</h6>
+<ul class="list-marked">
+    <li><p>width - The width of the div.</p>
+        <a class="button" href="#" style="text-transform:lowercase;color:lightgray">width</a>
+        <a class="button" href="#" style="text-transform:lowercase;color:lightgray">set_width</a>
+    </li>    
+    <li><p>height - The height of the div.</p>
+        <a class="button" href="#" style="text-transform:lowercase;color:lightgray">height</a>
+        <a class="button" href="#" style="text-transform:lowercase;color:lightgray">set_height</a>
+    </li>    
+</ul>
+
+{% include aa3.html %}
+<p></p>
+<h6>Functions</h6>
+<ul class="list-marked">
+    <li></li>
+</ul>
+
+{% include aa4.html %}
+<p></p>
+
+
+
+            <h6>features/dependencies</h6>
+            <ul class="list-marked">
+            <li>web-sys HtmlDivElement</li>
+        </ul>
+<p></p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+        features = [
+        'HtmlDivElement',
+        ]
+</code></pre>                  
+</div>                           
+<p></p>
+                
+
+            <p></p>
+            <h6>Source Code</h6>
+            <ul class="list-marked">
+            <li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/create_access_html_objects rel="nofollow">create_access_html_objects</a></li>
+            <ul></ul>            
+                    
+{% include aa5.html %}

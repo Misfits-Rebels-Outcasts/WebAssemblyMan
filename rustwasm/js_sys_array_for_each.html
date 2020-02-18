@@ -1,0 +1,43 @@
+---
+layout: rustwasm
+title: js_sys::Array::for_each function
+description: js_sys::Array::for_each function
+keyword: js_sys::Array::for_each function
+---
+               <h5>js_sys::Array::for_each function</h5>
+               <p></p>
+               <h6>Example</h6>
+                <p>Executes the provided function for each of the element in the array.</p>
+               <div class="quote-bordered" style="text-align:left;background:black"> 
+                <pre><code style="color:white;">
+pub fn array_for_each() {
+    let arr = js_sys::Array::new();
+    arr.push(&JsValue::from("Apple"));
+    arr.push(&JsValue::from("Orange"));    
+    arr.for_each(&mut |obj, idx, _arr| 
+        web_sys::console::log_3(&"Array Object %d: %s ".into(),&JsValue::from(idx),&obj)
+    );
+}                    
+                                    </code></pre>                  
+                </div>                        
+   
+           <!--WebAssemblyMan Placeholder-->
+           <p></p>
+           <h6>Function</h6>
+           <p></p>
+
+           <div class="" style="text-align:left;background:whitesmoke"><pre><code style="color:#000;background:whitesmoke">
+            pub fn for_each(&self, callback: &mut dyn FnMut(JsValue, u32, Array))
+           </code></pre></div>                        
+           <p></p>
+
+           <h6>features/dependencies</h6>
+           <ul class="list-marked">
+            <li><a href=js_sys_Array.html>js-sys Array</a></li>
+        </ul>
+            <p></p>
+           <h6>Source Code</h6>
+           <ul class="list-marked">
+            <li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/js_sys_array rel="nofollow">js_sys_array</a></li>
+           <ul></ul>
+        
