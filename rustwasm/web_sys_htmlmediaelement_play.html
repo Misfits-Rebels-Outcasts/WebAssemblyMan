@@ -1,0 +1,73 @@
+---
+layout: rustwasm
+title: web_sys::HtmlMediaElement::play method
+description: web_sys::HtmlMediaElement::play method
+keyword: web_sys::HtmlMediaElement::play method
+---
+<h5>web_sys::HtmlMediaElement::play method</h5>
+<p>
+
+</p>
+<h6>Example</h6>
+<p>This example demonstrates the use of the play method of web-sys HtmlMediaElement. 
+    A HTML button is first created and associated with a button click event. 
+    When the button is clicked, the play method of the HTML video element is executed.
+    The play method returns a promise that is wrapped in a JsFuture.
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+pub fn web_sys_htmlmediaelement_play(){
+    let window = web_sys::window().expect("global window does not exists");    
+    let document = window.document().expect("expecting a document on window");
+    let body = document.body().expect("document expect to have have a body");
+    let button = document.create_element("button")
+                    .unwrap()
+                    .dyn_into::&lt;web_sys::HtmlButtonElement>()
+                    .unwrap();
+    button.set_text_content(Some("Play"));
+
+    let paragraph = document.get_element_by_id("message")
+                    .unwrap()
+                    .dyn_into::&lt;web_sys::HtmlParagraphElement>()
+                    .unwrap();
+                        
+    let on_click = EventListener::new(&button, "click", move |_event| {
+        let _video = document.get_element_by_id("my-video")
+        .unwrap()
+        .dyn_into::&lt;web_sys::HtmlMediaElement>()
+        .unwrap();
+    
+        let promise=_video.play().unwrap();
+        
+        let _future = async{
+            let _result= wasm_bindgen_futures::JsFuture::from(promise).await;
+        };
+        paragraph.set_text_content(Some("Playing..."));
+    
+    });
+
+    on_click.forget();     
+    body.append_child(&button).unwrap();
+}    
+</code></pre>                  
+</div>                        
+
+{% include aa1.html %}
+<p></p>
+<h6>Method</h6>
+<p></p>
+<div class="" style="text-align:left;background:whitesmoke"><pre><code style="color:#000;background:whitesmoke">
+    pub fn play(&self) -> Result&lt;Promise, JsValue>
+
+</code></pre></div>                        
+<p></p>
+
+<h6>features/dependencies</h6>
+<ul class="list-marked">
+<li><a href=web_sys_htmlmediaelement.html>web-sys HtmlMediaElement</a></li>
+</ul>
+<p></p>
+<h6>Source Code</h6>
+<ul class="list-marked">
+<li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/WebAssemblyMan-rustwasm/tree/master/rustwasm/web_sys_htmlmediaelement rel="nofollow">web_sys_htmlmediaelement</a></li>
+<ul></ul>            
