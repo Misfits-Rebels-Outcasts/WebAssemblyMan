@@ -1,0 +1,130 @@
+---
+layout: blazor
+title: Blazor Sparklines 
+description: Blazor Sparklines
+keyword: blazor sparklines,sparkline charts, webassembly blazor sparklines chart
+---
+<h3>Blazor Sparklines</h3>
+<p>
+    Sparklines are used in data intense dashboard to display summary information or trends. They commonly appear in a table or as part of a text paragraph. 
+    This unique project uses True Type Sparkline Fonts to render many disfferent types of sparklines and does not require a SVG or Canvas element. 
+    The sparkline font is downloaded once and used to display the Sparkline charts in a table or text paragraph multiple times.    
+</p>
+
+<p>
+    <img width="70%" height=70%" src=images/blazorsparklines.png />
+</p>
+
+<h4>Type of Sparkline Charts</h4>
+<p>
+<ul class="list-marked">
+    <li><a href=blazorsparkline.html>Sparklines</a></li>
+    <li>Column Bars</li>
+    <li>Bullet Bars</li>
+    <li>Win Lose Draw</li>
+    <li>Mini Pie</li>    
+    <li>Bar Graphs</li>
+</ul>
+</p>
+
+<h5>Source Code</h5>
+<p>
+<ul class="list-marked">
+ <li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/Blazor-Sparkline rel="nofollow">Blazor Sparklines</a></li>
+</ul>
+</p>
+{% include aa1.html %}
+
+<h5>How to build and use the sparklines?</h5>
+
+<p>
+Using the dotnet CLI, create a new Blazor project
+</p>
+<kbd>dotnet new blazorwasm -o BlazorProject</kbd>
+<p>
+Clone the Blazor Sparklines Library
+</p>
+<kbd>git clone https://github.com/Misfits-Rebels-Outcasts/Blazor-Sparkline.git</kbd>
+<p>
+Add a reference from the BlazorProject to the specific Blazor Sparklines Library. Go to the BlazorProject folder, edit the BlazorProject.csproj and add in the following:
+</p>
+
+<div class="quote-bordered" style="text-align:left;background:black"> 
+    <pre><code style="color:white;">
+
+&lt;Project...> 
+.
+.
+.
+&lt;ItemGroup>
+    &lt;ProjectReference Include="../Blazor-Sparkline/Sparklines/Sparklines.csproj" />
+
+&lt;/ItemGroup>
+&lt;/Project>
+
+</code></pre></div>
+<p>
+If you are using other sparkline charts such as the Column Bars, change the above to "../Blazor-Sparkline/ColumnBars/ColumnBars.csproj".     
+</p>
+<p>
+Edit Index.razor in the Pages folder of the BlazorProject
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+@using WebAssemblyMan
+
+@page "/"
+
+&lt;h1>Hello, world!&lt;/h1>
+
+Welcome to your new app.
+
+&lt;Sparkline InputData="60,0,16,25,48,45,1,0,6,37,78,79,90,90,91,99,80,0,40,0,0,56" 
+              GenerateText="true" SegmentWidth="30">
+&lt;/Sparkline>
+
+&lt;SurveyPrompt Title="How is Blazor working for you?" />
+</code></pre></div>
+<p>
+@using enables us to use the Blazor Sparklines library within our project.  &lt;Sparkline> is the tag where we declare our use of the sparkline component.
+If you are using other charts such as the Column Bars, change the above to "&lt;ColumnBars InputData="50,30,20" ...>&lt;ColumnBars>".         
+</p>
+<p>
+Edit index.html to include the Sparkline Stylesheet.
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+<pre><code style="color:white;">
+&lt;!DOCTYPE html>
+&lt;html>
+
+&lt;head>
+    .
+    .
+    .
+    &lt;link href="_content/Sparklines/styles.css" rel="stylesheet" />
+&lt;head>
+
+&lt;body>
+.
+.
+.
+&lt;/body>
+
+&lt;/html>    
+</code></pre></div>
+</p>
+<p>
+    If you are using other sparklines such as the Column Bars, change the above to "&lt;link href="_content/ColumnBars/styles.css" rel="stylesheet" />".         
+</p>
+<p>
+    Run the BlazorProject
+</p>
+<kbd>dotnet run</kbd>
+<p>
+    You should see a web page with the Sparkline Chart.
+</p>
+<p>
+    <img width="40%" height=40%" src=images/blazorsparkline.png />
+</p>
+    
+

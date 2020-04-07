@@ -1,0 +1,187 @@
+---
+layout: blazor
+title: Blazor Sparkline 
+description: Blazor Sparkline
+keyword: blazor sparkline,sparkline chart, webassembly blazor sparkline chart
+---
+
+<h3>Sparklines</h3>
+<p>
+    <img width="40%" height=40%" src=images/blazorsparkline.png />
+</p>
+<h4>Usage</h4>
+
+<p>
+  &lt;Sparkline InputData="60,0,16,25,48,45,1,0,6,37,78,79,90,90,91,99,80,0,40,0,0,56" 
+                GenerateText="true" SegmentWidth="30">
+  &lt;/Sparkline>
+
+</p>
+<h4>Parameters</h4>
+<p>
+GenerateText - Generate the optional text that displays the Start, Stop, Min and Max of the Sparkline.
+</p>
+<p>
+SegmentWidth - The length or width of a segment of the Sparkline.
+</p>
+<h5>Project</h5>
+<p>
+<ul class="list-marked">
+ <li><a href=blazorsparklines.html >Blazor Sparklines</a></li>
+</ul>
+</p>
+
+<h5>Source Code</h5>
+<p>
+<ul class="list-marked">
+ <li>GitHub - <a href=https://github.com/Misfits-Rebels-Outcasts/Blazor-Sparkline rel="nofollow">Blazor Sparklines</a></li>
+</ul>
+</p>
+
+{% include aa1.html %}
+
+<h5>Font Name</h5>
+<p>
+<ul class="list-marked">
+ <li>Sparklines.ttf</li>
+</ul>
+</p>
+
+<h5>How the Sparkline is drawn using a font?</h5>
+<p>
+At its simplest, you can imagine the Sparkline font to consist of a series of characters representing dots (pixels) at different height.
+The input data is mapped to a series of different dots in the font to draw a Sparkline. This enables the use of a font and code without SVG or Canvas to draw a Sparkline on the web.
+</p>
+
+<h5>Font Map</h5>
+<p>
+<ul class="list-marked">
+ <li>0x0030 - Character representing a dot at 0 percent.</li>
+ <li>.</li>
+ <li>.</li>
+ <li>.</li>
+ <li>0x0062 - Character representing a dot at 100 percent.</li>
+</ul>
+</p>
+
+<h5>Algorithm</h5>
+<p>
+The following illustrates the algorithm for drawing the Sparkline using the font. The variable pcy0 is the current y value while pcy1 is the next y value.
+To draw the sparkline, the Bresenham algorith is used to calculate a series of dots required to draw a line from pcy0 to pcy1.
+</p>
+<p>
+<img src=images/blazorsparklinesegment.png />
+</p>
+<div class="quote-bordered" style="text-align:left;background:black"> 
+    <pre><code style="color:white;">
+        private string DrawSparkline(string inputLine)
+        {
+            .    
+            .    
+            .    
+            for (int y = 0; y &lt; inputDataArr.Length; y++)
+            {
+                if (y &lt; inputDataArr.Length - 1)
+                {
+                    double pcy0 = 0, pcy1 = 0;
+                    double.TryParse(inputDataArr[y],out pcy0);
+                    pcy0=pcy0 / max * 100;
+                    double.TryParse(inputDataArr[y+1],out pcy1);
+                    pcy1=pcy1 / max * 100;
+
+                    if (y == 0)
+                    {
+                        //Start Dot
+                        sparklineStr=drawLine(pcy0, pcy1, 0, sparklineStr,y); 
+                    }
+                    else if (y + 1 == inputDataArr.Length - 1)
+                    {
+                        //End Dot
+                        sparklineStr=drawLine(pcy0, pcy1, 1, sparklineStr,y); 
+                    }
+                    else
+                    {
+                        //Use Bresenham Algorithm to draw the line
+                        sparklineStr=drawLine(pcy0, pcy1, -1, sparklineStr,y); 
+                    }
+                }
+            }
+
+            return sparklineStr;
+        }
+
+</code></pre>                  
+</div>                        
+<p>
+    The CSS class values used by the Sparkline chart. 
+    </p>
+    <div class="quote-bordered" style="text-align:left;background:black"> 
+        <pre><code style="color:white;">
+    @font-face {
+        font-family: Sparklines;
+        src: url("Sparklines.otf") format("opentype");
+    }
+    
+    .Sparklines {
+        font-weight: normal;
+        font-style: normal;
+        line-height: normal;
+        font-family: 'Sparklines', sans-serif;
+        font-size: 18px;
+        animation: pulse;
+        animation-duration: 0.01s;
+        animation-iteration-count: 1;
+    }
+    
+    .Sparklines .segment{    
+        color:#000000
+    }
+    
+    .Sparklines .sparkline-start{    
+        color:#ce4b99
+    }
+    
+    .Sparklines .sparkline-stop{    
+        color:#27A844
+    }
+    
+    .Sparklines .text-start{    
+        font-family:sans-serif;
+        font-size:18px;
+        color:#000000;
+    }
+    
+    .Sparklines .text-stop{    
+        font-family:sans-serif;
+        font-size:18px;
+        color:#000000
+    }
+    
+    .Sparklines .text-min-max{    
+        font-family:sans-serif;
+        font-size:18px;
+        color:#000000
+    }
+    
+    @keyframes pulse {
+        0% {
+            font-size: 0px;
+        }
+    
+        100% {
+            font-size: 18px;
+        }
+    }
+            
+                  </code></pre>                  
+    </div>  
+    <p></p> 
+
+    <h5>Road Map</h5>
+    <p>
+    <ul class="list-marked">
+     <li>Sparklines2X.ttf - A single font character is used to represent two dots. This will reduce the number of font characters that needs to be generated.</li>
+     <li>SparklinesX.ttf - A single font character is used to represent a line segment at a specific angle.</li>
+    </ul>
+    </p>
+    
